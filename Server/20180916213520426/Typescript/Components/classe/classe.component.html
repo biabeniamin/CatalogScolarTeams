@@ -1,0 +1,146 @@
+<div class="container">
+	<div class="card rerun">
+		<form (submit)="classeService.GetClasses()">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update">
+			</div>
+		</form>
+
+		<form (submit)="updateLive($event)">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update Live">
+			</div>
+		</form>
+
+		<form (submit)="addClasse($event)">
+			<div class="input-container">
+			<input type="text" placeholder= "Name" id="Name" />
+			<div class="bar"></div>
+			</div>
+			<select id=ClassRoomIdDropDown (change)="classRoomChanged($event.target.value)">
+				<option [value]="classRoom.classRoomId" *ngFor= "let classRoom of classRoomService.classRooms | async" >
+				{{classRoom.classRoomId}}
+				{{classRoom.name}}
+				</option>
+			</select>
+			
+			<select id=UserIdDropDown (change)="userChanged($event.target.value)">
+				<option [value]="user.userId" *ngFor= "let user of userService.users | async" >
+				{{user.userId}}
+				{{user.firstName}}
+				{{user.lastName}}
+				{{user.email}}
+				{{user.type}}
+				</option>
+			</select>
+			
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Add">
+			</div>
+		</form>
+
+		<tbody>
+			<tr>
+				<th>
+					ClasseId
+				</th>
+				<th>
+					UserId
+				</th>
+				<th>
+					ClassRoomId
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					CreationTime
+				</th>
+				<th>
+					classRoom.ClassRoomId
+				</th>
+				<th>
+					classRoom.Name
+				</th>
+				<th>
+					classRoom.CreationTime
+				</th>
+				<th>
+					user.UserId
+				</th>
+				<th>
+					user.FirstName
+				</th>
+				<th>
+					user.LastName
+				</th>
+				<th>
+					user.Email
+				</th>
+				<th>
+					user.Type
+				</th>
+				<th>
+					user.CreationTime
+				</th>
+			</tr>
+			<tr *ngFor="let classe of classeService.classes | async; let i = index">
+				<td>
+					{{classe.classeId}}
+				</td>
+				<td>
+					{{classe.userId}}
+				</td>
+				<td>
+					{{classe.classRoomId}}
+				</td>
+				<td>
+					{{classe.name}}
+				</td>
+				<td>
+					{{classe.creationTime}}
+				</td>
+				<td *ngIf="classe.classRoom">
+					{{classe.classRoom.classRoomId}}
+				</td>
+				<td *ngIf="classe.classRoom">
+					{{classe.classRoom.name}}
+				</td>
+				<td *ngIf="classe.classRoom">
+					{{classe.classRoom.creationTime}}
+				</td>
+				<td *ngIf="classe.user">
+					{{classe.user.userId}}
+				</td>
+				<td *ngIf="classe.user">
+					{{classe.user.firstName}}
+				</td>
+				<td *ngIf="classe.user">
+					{{classe.user.lastName}}
+				</td>
+				<td *ngIf="classe.user">
+					{{classe.user.email}}
+				</td>
+				<td *ngIf="classe.user">
+					{{classe.user.type}}
+				</td>
+				<td *ngIf="classe.user">
+					{{classe.user.creationTime}}
+				</td>
+			</tr>
+		</tbody>
+
+		<form (submit)="getClassesByClasseId($event)">
+			<h3>Get Classes by ClasseId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "ClasseId" id="ClasseId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by ClasseId">
+			</div>
+		</form>
+		
+
+	</div>
+</div>

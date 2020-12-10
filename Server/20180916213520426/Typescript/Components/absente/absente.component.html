@@ -1,0 +1,115 @@
+<div class="container">
+	<div class="card rerun">
+		<form (submit)="absenteService.GetAbsente()">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update">
+			</div>
+		</form>
+
+		<form (submit)="updateLive($event)">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update Live">
+			</div>
+		</form>
+
+		<form (submit)="addAbsente($event)">
+			<div class="input-container">
+			<input type="text" placeholder= "Date" id="Date" />
+			<div class="bar"></div>
+			</div>
+			<select id=UserIdDropDown (change)="userChanged($event.target.value)">
+				<option [value]="user.userId" *ngFor= "let user of userService.users | async" >
+				{{user.userId}}
+				{{user.firstName}}
+				{{user.lastName}}
+				{{user.email}}
+				{{user.type}}
+				</option>
+			</select>
+			
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Add">
+			</div>
+		</form>
+
+		<tbody>
+			<tr>
+				<th>
+					AbsenteId
+				</th>
+				<th>
+					UserId
+				</th>
+				<th>
+					Date
+				</th>
+				<th>
+					CreationTime
+				</th>
+				<th>
+					user.UserId
+				</th>
+				<th>
+					user.FirstName
+				</th>
+				<th>
+					user.LastName
+				</th>
+				<th>
+					user.Email
+				</th>
+				<th>
+					user.Type
+				</th>
+				<th>
+					user.CreationTime
+				</th>
+			</tr>
+			<tr *ngFor="let absente of absenteService.absente | async; let i = index">
+				<td>
+					{{absente.absenteId}}
+				</td>
+				<td>
+					{{absente.userId}}
+				</td>
+				<td>
+					{{absente.date}}
+				</td>
+				<td>
+					{{absente.creationTime}}
+				</td>
+				<td *ngIf="absente.user">
+					{{absente.user.userId}}
+				</td>
+				<td *ngIf="absente.user">
+					{{absente.user.firstName}}
+				</td>
+				<td *ngIf="absente.user">
+					{{absente.user.lastName}}
+				</td>
+				<td *ngIf="absente.user">
+					{{absente.user.email}}
+				</td>
+				<td *ngIf="absente.user">
+					{{absente.user.type}}
+				</td>
+				<td *ngIf="absente.user">
+					{{absente.user.creationTime}}
+				</td>
+			</tr>
+		</tbody>
+
+		<form (submit)="getAbsenteByAbsenteId($event)">
+			<h3>Get Absente by AbsenteId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "AbsenteId" id="AbsenteId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by AbsenteId">
+			</div>
+		</form>
+		
+
+	</div>
+</div>

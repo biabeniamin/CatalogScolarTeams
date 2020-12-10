@@ -1,0 +1,63 @@
+<div class="container">
+	<div class="card rerun">
+		<form (submit)="classRoomService.GetClassRooms()">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update">
+			</div>
+		</form>
+
+		<form (submit)="updateLive($event)">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update Live">
+			</div>
+		</form>
+
+		<form (submit)="addClassRoom($event)">
+			<div class="input-container">
+			<input type="text" placeholder= "Name" id="Name" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Add">
+			</div>
+		</form>
+
+		<tbody>
+			<tr>
+				<th>
+					ClassRoomId
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					CreationTime
+				</th>
+			</tr>
+			<tr *ngFor="let classRoom of classRoomService.classRooms | async; let i = index">
+				<td>
+					{{classRoom.classRoomId}}
+				</td>
+				<td>
+					{{classRoom.name}}
+				</td>
+				<td>
+					{{classRoom.creationTime}}
+				</td>
+			</tr>
+		</tbody>
+
+		<form (submit)="getClassRoomsByClassRoomId($event)">
+			<h3>Get ClassRooms by ClassRoomId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "ClassRoomId" id="ClassRoomId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by ClassRoomId">
+			</div>
+		</form>
+		
+
+	</div>
+</div>

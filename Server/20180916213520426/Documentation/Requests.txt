@@ -1,0 +1,148 @@
+------------ClassRooms----------
+http://192.168.0.100:5000/ClassRooms.php?cmd=getClassRooms - GET request -return all ClassRooms
+
+http://192.168.0.100:5000/ClassRooms.php?cmd=getClassRoomsByClassRoomId&classRoomId=value - GET request -return ClassRooms filtered by ClassRoomId
+
+
+
+http://192.168.0.100:5000/ClassRooms.php?cmd=addClassRoom- POST request with following parameters
+name : VARCHAR(50)
+add a new ClassRoom with specified data and returns the ClassRoom with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/ClassRooms.php?cmd=updateClassRoom- PUT request with following parameters
+classRoomId : INT
+name : VARCHAR(50)
+update a ClassRoom by id and returns the ClassRoom with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/ClassRooms.php?cmd=updateClassRoom&classRoomId=0 - DELETE request
+deletes a ClassRoom by id and returns the ClassRoom with id == 0 if succeeded
+
+
+------------Classes----------
+http://192.168.0.100:5000/Classes.php?cmd=getClasses - GET request -return all Classes
+
+http://192.168.0.100:5000/Classes.php?cmd=getClassesByClasseId&classeId=value - GET request -return Classes filtered by ClasseId
+
+
+
+http://192.168.0.100:5000/Classes.php?cmd=addClasse- POST request with following parameters
+userId : INT
+classRoomId : INT
+name : VARCHAR(50)
+add a new Classe with specified data and returns the Classe with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Classes.php?cmd=updateClasse- PUT request with following parameters
+classeId : INT
+userId : INT
+classRoomId : INT
+name : VARCHAR(50)
+update a Classe by id and returns the Classe with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Classes.php?cmd=updateClasse&classeId=0 - DELETE request
+deletes a Classe by id and returns the Classe with id == 0 if succeeded
+
+
+------------Users----------
+http://192.168.0.100:5000/Users.php?cmd=getUsers - GET request -return all Users
+
+http://192.168.0.100:5000/Users.php?cmd=getUsersByUserId&userId=value - GET request -return Users filtered by UserId
+
+
+
+http://192.168.0.100:5000/Users.php?cmd=addUser- POST request with following parameters
+firstName : VARCHAR(30)
+lastName : VARCHAR(30)
+email : VARCHAR(30)
+type : INT
+add a new User with specified data and returns the User with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Users.php?cmd=updateUser- PUT request with following parameters
+userId : INT
+firstName : VARCHAR(30)
+lastName : VARCHAR(30)
+email : VARCHAR(30)
+type : INT
+update a User by id and returns the User with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Users.php?cmd=updateUser&userId=0 - DELETE request
+deletes a User by id and returns the User with id == 0 if succeeded
+
+
+------------Marks----------
+http://192.168.0.100:5000/Marks.php?cmd=getMarks - GET request -return all Marks
+
+http://192.168.0.100:5000/Marks.php?cmd=getMarksByMarkId&markId=value - GET request -return Marks filtered by MarkId
+
+
+
+http://192.168.0.100:5000/Marks.php?cmd=addMark- POST request with following parameters
+userId : INT
+value : INT
+add a new Mark with specified data and returns the Mark with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Marks.php?cmd=updateMark- PUT request with following parameters
+markId : INT
+userId : INT
+value : INT
+update a Mark by id and returns the Mark with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Marks.php?cmd=updateMark&markId=0 - DELETE request
+deletes a Mark by id and returns the Mark with id == 0 if succeeded
+
+
+------------Absente----------
+http://192.168.0.100:5000/Absente.php?cmd=getAbsente - GET request -return all Absente
+
+http://192.168.0.100:5000/Absente.php?cmd=getAbsenteByAbsenteId&absenteId=value - GET request -return Absente filtered by AbsenteId
+
+
+
+http://192.168.0.100:5000/Absente.php?cmd=addAbsente- POST request with following parameters
+userId : INT
+date : DATETIME
+add a new Absente with specified data and returns the Absente with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Absente.php?cmd=updateAbsente- PUT request with following parameters
+absenteId : INT
+userId : INT
+date : DATETIME
+update a Absente by id and returns the Absente with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Absente.php?cmd=updateAbsente&absenteId=0 - DELETE request
+deletes a Absente by id and returns the Absente with id == 0 if succeeded
+
+
+------------Notifications----------
+http://192.168.0.100:5000/Notifications.php?cmd=getNotifications - GET request -return all Notifications
+
+http://192.168.0.100:5000/Notifications.php?cmd=getNotificationsByNotificationId&notificationId=value - GET request -return Notifications filtered by NotificationId
+
+
+
+http://192.168.0.100:5000/Notifications.php?cmd=addNotification- POST request with following parameters
+title : VARCHAR(20)
+message : TEXT
+add a new Notification with specified data and returns the Notification with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Notifications.php?cmd=updateNotification- PUT request with following parameters
+notificationId : INT
+title : VARCHAR(20)
+message : TEXT
+update a Notification by id and returns the Notification with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Notifications.php?cmd=updateNotification&notificationId=0 - DELETE request
+deletes a Notification by id and returns the Notification with id == 0 if succeeded
+
+
