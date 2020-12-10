@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import './App.css';
 import * as microsoftTeams from "@microsoft/teams-js";
 import axios from 'axios';
+import Select from 'react-select'
 
 class DataTable extends Component {
   render() {
@@ -50,7 +51,11 @@ class Tab extends React.Component {
 
     axios.get('http://localhost/catalog/ClassRooms.php?cmd=getClassRooms')
       .then(res => {
-        this.setState({ classes: res.data });
+        let selectOptions = res.data.map(d => ({
+          "value" : d.classRoomId,
+          "label" : d.name
+        }))
+        this.setState({ classes: res.data , selectOptions: selectOptions});
         console.log(res.data);
       })
       .catch(function (error) {
@@ -74,6 +79,9 @@ class Tab extends React.Component {
         <h3>Hello World!</h3>
         <h1>Congratulations {userName}!</h1> <h3>This is the tab you made :-)</h3>
         {this.state.classes[0].name}
+        <div>
+        <Select options={this.state.selectOptions} defaultValue={{label: "name", value: 0}}/>
+      </div>
         <table className="table table-striped table-dark">
           <thead className="thead-dark">
             <tr>
