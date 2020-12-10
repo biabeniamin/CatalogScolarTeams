@@ -38,6 +38,18 @@ function GetMarks($database)
 	return $marks;
 }
 
+function GetMarksByClasseIdUserId($database, $classeId, $userId)
+{
+	$data = $database->ReadData("SELECT * FROM Marks WHERE ClasseId = $classeId and UserId = $userId");
+	$marks = ConvertListToMarks($data);
+	if(0== count($marks))
+	{
+		return [GetEmptyMark()];
+	}
+	CompleteUsers($database, $marks);
+	CompleteClasses($database, $marks);
+	return $marks;
+}
 function GetMarksByMarkId($database, $markId)
 {
 	$data = $database->ReadData("SELECT * FROM Marks WHERE MarkId = $markId");
@@ -172,6 +184,21 @@ if(CheckGetParameters(["cmd"]))
 			echo json_encode(GetLastMark($database));
 	}
 
+	else if("getMarksByClasseIdUserId" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'classeId',
+			'userId'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetMarksByClasseIdUserId($database, 
+				$_GET["classeId"],
+				$_GET["userId"]
+			));
+		}
+	
+	}
 	else if("getMarksByMarkId" == $_GET["cmd"])
 	{
 		if(CheckGetParameters([
