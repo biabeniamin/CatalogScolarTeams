@@ -70,6 +70,10 @@ class Tab extends React.Component {
     });
   }
 
+  roomClassChanged(e){
+    console.log(e);
+  }
+
   render() {
 
     let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
@@ -80,7 +84,7 @@ class Tab extends React.Component {
         <h1>Congratulations {userName}!</h1> <h3>This is the tab you made :-)</h3>
         {this.state.classes[0].name}
         <div>
-        <Select options={this.state.selectOptions} defaultValue={{label: "name", value: 0}}/>
+        <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
       </div>
         <table className="table table-striped table-dark">
           <thead className="thead-dark">
