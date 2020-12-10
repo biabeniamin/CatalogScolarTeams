@@ -51,6 +51,19 @@ function GetClassesByClasseId($database, $classeId)
 	return $classes;
 }
 
+function GetClassesByClassRoomId($database, $classeId)
+{
+	$data = $database->ReadData("SELECT * FROM Classes WHERE ClassRoomId = $classeId");
+	$classes = ConvertListToClasses($data);
+	if(0== count($classes))
+	{
+		return [GetEmptyClasse()];
+	}
+	CompleteClassRooms($database, $classes);
+	CompleteUsers($database, $classes);
+	return $classes;
+}
+
 function CompleteClasses($database, $classes)
 {
 	$classesList = GetClasses($database);
@@ -181,6 +194,20 @@ if(CheckGetParameters(["cmd"]))
 			$database = new DatabaseOperations();
 			echo json_encode(GetClassesByClasseId($database, 
 				$_GET["classeId"]
+			));
+		}
+	
+	}
+
+	else if("getClassesByClassRoomId" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'classRoomId'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetClassesByClassRoomId($database, 
+				$_GET["classRoomId"]
 			));
 		}
 	
