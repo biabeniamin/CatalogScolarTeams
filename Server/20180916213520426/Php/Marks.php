@@ -7,6 +7,7 @@ require_once 'Models/Mark.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
 require_once 'Users.php';
+require_once 'Classes.php';
 function ConvertListToMarks($data)
 {
 	$marks = [];
@@ -14,6 +15,7 @@ function ConvertListToMarks($data)
 	foreach($data as $row)
 	{
 		$mark = new Mark(
+		$row["ClasseId"], 
 		$row["UserId"], 
 		$row["Value"] 
 		);
@@ -32,6 +34,7 @@ function GetMarks($database)
 	$data = $database->ReadData("SELECT * FROM Marks");
 	$marks = ConvertListToMarks($data);
 	$marks = CompleteUsers($database, $marks);
+	$marks = CompleteClasses($database, $marks);
 	return $marks;
 }
 
@@ -44,6 +47,7 @@ function GetMarksByMarkId($database, $markId)
 		return [GetEmptyMark()];
 	}
 	CompleteUsers($database, $marks);
+	CompleteClasses($database, $marks);
 	return $marks;
 }
 
@@ -81,7 +85,8 @@ function CompleteMarks($database, $marks)
 
 function AddMark($database, $mark)
 {
-	$query = "INSERT INTO Marks(UserId, Value, CreationTime) VALUES(";
+	$query = "INSERT INTO Marks(ClasseId, UserId, Value, CreationTime) VALUES(";
+	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetClasseId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetUserId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetValue()).", ";
 	$query = $query . "NOW()"."";
@@ -92,6 +97,7 @@ function AddMark($database, $mark)
 	$mark->SetMarkId($id);
 	$mark->SetCreationTime(date('Y-m-d H:i:s'));
 	$mark->SetUser(GetUsersByUserId($database, $mark->GetUserId())[0]);
+	$mark->SetClasse(GetClassesByClasseId($database, $mark->GetClasseId())[0]);
 	return $mark;
 	
 }
@@ -116,6 +122,7 @@ function DeleteMark($database, $markId)
 function UpdateMark($database, $mark)
 {
 	$query = "UPDATE Marks SET ";
+	$query = $query . "ClasseId=" . $mark->GetClasseId().", ";
 	$query = $query . "UserId=" . $mark->GetUserId().", ";
 	$query = $query . "Value=" . $mark->GetValue()."";
 	$query = $query . " WHERE MarkId=" . $mark->GetMarkId();
@@ -132,6 +139,7 @@ function UpdateMark($database, $mark)
 function TestAddMark($database)
 {
 	$mark = new Mark(
+		0,//ClasseId
 		0,//UserId
 		0//Value
 	);
@@ -142,6 +150,7 @@ function TestAddMark($database)
 function GetEmptyMark()
 {
 	$mark = new Mark(
+		0,//ClasseId
 		0,//UserId
 		0//Value
 	);
@@ -184,11 +193,13 @@ if(CheckGetParameters(["cmd"]))
 	if("addMark" == $_GET["cmd"])
 	{
 		if(CheckPostParameters([
+			'classeId',
 			'userId'
 		]))
 		{
 			$database = new DatabaseOperations();
 			$mark = new Mark(
+				IssetValueNull($_POST['classeId']),
 				IssetValueNull($_POST['userId']),
 				IssetValueNull($_POST['value'])
 			);
@@ -205,6 +216,7 @@ if(CheckGetParameters(["cmd"]))
 	{
 		$database = new DatabaseOperations();
 		$mark = new Mark(
+			$_POST['classeId'],
 			$_POST['userId'],
 			$_POST['value']
 		);
@@ -237,6 +249,7 @@ function GetLastMark($database)
 	$data = $database->ReadData("SELECT * FROM Marks ORDER BY CreationTime DESC LIMIT 1");
 	$marks = ConvertListToMarks($data);
 	$marks = CompleteUsers($database, $marks);
+	$marks = CompleteClasses($database, $marks);
 	return $marks;
 }
 
