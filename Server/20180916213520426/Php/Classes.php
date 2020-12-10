@@ -38,9 +38,9 @@ function GetClasses($database)
 	return $classes;
 }
 
-function GetClassesByClasseId($database, $classeId)
+function GetClassesByClassRoomId($database, $classRoomId)
 {
-	$data = $database->ReadData("SELECT * FROM Classes WHERE ClasseId = $classeId");
+	$data = $database->ReadData("SELECT * FROM Classes WHERE ClassRoomId = $classRoomId");
 	$classes = ConvertListToClasses($data);
 	if(0== count($classes))
 	{
@@ -50,10 +50,9 @@ function GetClassesByClasseId($database, $classeId)
 	CompleteUsers($database, $classes);
 	return $classes;
 }
-
-function GetClassesByClassRoomId($database, $classeId)
+function GetClassesByClasseId($database, $classeId)
 {
-	$data = $database->ReadData("SELECT * FROM Classes WHERE ClassRoomId = $classeId");
+	$data = $database->ReadData("SELECT * FROM Classes WHERE ClasseId = $classeId");
 	$classes = ConvertListToClasses($data);
 	if(0== count($classes))
 	{
@@ -185,20 +184,6 @@ if(CheckGetParameters(["cmd"]))
 			echo json_encode(GetLastClasse($database));
 	}
 
-	else if("getClassesByClasseId" == $_GET["cmd"])
-	{
-		if(CheckGetParameters([
-			'classeId'
-			]))
-		{
-			$database = new DatabaseOperations();
-			echo json_encode(GetClassesByClasseId($database, 
-				$_GET["classeId"]
-			));
-		}
-	
-	}
-
 	else if("getClassesByClassRoomId" == $_GET["cmd"])
 	{
 		if(CheckGetParameters([
@@ -208,6 +193,19 @@ if(CheckGetParameters(["cmd"]))
 			$database = new DatabaseOperations();
 			echo json_encode(GetClassesByClassRoomId($database, 
 				$_GET["classRoomId"]
+			));
+		}
+	
+	}
+	else if("getClassesByClasseId" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'classeId'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetClassesByClasseId($database, 
+				$_GET["classeId"]
 			));
 		}
 	
