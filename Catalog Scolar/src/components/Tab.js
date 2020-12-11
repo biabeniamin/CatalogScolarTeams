@@ -111,6 +111,7 @@ class Tab extends React.Component {
 
   studentChanged(e){
     console.log(e);
+    this.setState({ selectedStudent: e.value});
     axios.get(`http://localhost/catalog/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass}&studentId=${e.value}`)
       .then(res => {
         console.log(res.data);
@@ -133,12 +134,21 @@ class Tab extends React.Component {
 
   markDateChanged(event) {
     console.log(event);
-    this.setState({markDate: event});
+    let date=new Date(event+" UTC")
+    date = date.getUTCFullYear() + '-' +
+        ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+        ('00' + date.getUTCHours()).slice(-2) + ':' + 
+        ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+        ('00' + date.getUTCSeconds()).slice(-2);
+    console.log(date);
+    this.setState({markDate: date, markDisplayedDate: event});
   }
 
   handleSubmit(event) {
     alert('An essay was submitted: ' + this.state.value);
-    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark`, {classeId:0, studentId:0, teacherId:0, value:0, date:"2020-12-09 00:00:00"})
+    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark`, {classeId:this.state.selectedClass, studentId:this.state.selectedStudent, teacherId:1, 
+                                              value:this.state.markValue, date:this.state.markDate})
     .then(res => {
       console.log(res.data);
       //this.setState({ classes: res.data , marks: res.data});
@@ -187,8 +197,8 @@ class Tab extends React.Component {
           </label>
           <DatePicker   
             onChange={this.markDateChanged.bind(this)}
-            selected={this.state.markDate}
-            
+            selected={this.state.markDisplayedDate}
+            dateFormat="MM-y-MM-dd"
           />
           <input type="submit" value="Submit" />
         </form>
