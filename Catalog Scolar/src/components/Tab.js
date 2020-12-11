@@ -128,7 +128,7 @@ class Tab extends React.Component {
 
   markChanged(event) {
     console.log(event);
-    //this.setState({value: event.target.value});
+    this.setState({markValue: event.value});
   }
 
   markDateChanged(event) {
@@ -138,6 +138,15 @@ class Tab extends React.Component {
 
   handleSubmit(event) {
     alert('An essay was submitted: ' + this.state.value);
+    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark`, {classeId:0, studentId:0, teacherId:0, value:0, date:"2020-12-09 00:00:00"})
+    .then(res => {
+      console.log(res.data);
+      //this.setState({ classes: res.data , marks: res.data});
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
     event.preventDefault();
   }
 
@@ -176,15 +185,14 @@ class Tab extends React.Component {
           <label>
             Name:
           </label>
-          <input type="text" onChange={this.handleChange.bind(this)} />
-          
-          <input type="submit" value="Submit" />
-        </form>
-        <DatePicker   
+          <DatePicker   
             onChange={this.markDateChanged.bind(this)}
             selected={this.state.markDate}
             
           />
+          <input type="submit" value="Submit" />
+        </form>
+        
 
       </div>
     );
