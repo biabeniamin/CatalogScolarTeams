@@ -21,7 +21,7 @@ class DataTable extends Component {
                   {this.props.obj.value}
               </td>
               <td>
-                  {this.props.obj.class}
+                  {this.props.obj.date}
               </td>
               <td>
                   {this.props.obj.creationTime}
@@ -198,7 +198,7 @@ class Tab extends React.Component {
           <DatePicker   
             onChange={this.markDateChanged.bind(this)}
             selected={this.state.markDisplayedDate}
-            dateFormat="MM-y-MM-dd"
+            dateFormat="dd/MM/yyyy"
           />
           <input type="submit" value="Submit" />
         </form>
