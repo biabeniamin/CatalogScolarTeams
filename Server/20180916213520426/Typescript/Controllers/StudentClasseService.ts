@@ -34,6 +34,14 @@ export class StudentClasseService
 		};
 	}
 	
+	GetStudentClassesByClasseId(classeId)
+	{
+		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByClasseId&classeId=${classeId}`);
+	}
+	GetStudentClassesByStudentId(studentId)
+	{
+		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByStudentId&studentId=${studentId}`);
+	}
 	GetStudentClassesByStudentClasseId(studentClasseId)
 	{
 		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByStudentClasseId&studentClasseId=${studentClasseId}`);

@@ -38,6 +38,26 @@ export class StudentClasseComponent implements OnInit
 		this.studentClasseService.AddStudentClasse(studentClasse);
 	}
 	
+	getStudentClassesByClasseId(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let classeId = target.querySelector('#ClasseId').value;
+		console.log(classeId);
+		this.studentClasseService.GetStudentClassesByClasseId(classeId).subscribe(data =>{
+			this.studentClasseService.studentClasses.next(data);
+		});
+	}
+	getStudentClassesByStudentId(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let studentId = target.querySelector('#StudentId').value;
+		console.log(studentId);
+		this.studentClasseService.GetStudentClassesByStudentId(studentId).subscribe(data =>{
+			this.studentClasseService.studentClasses.next(data);
+		});
+	}
 	getStudentClassesByStudentClasseId(event)
 	{
 		event.preventDefault();

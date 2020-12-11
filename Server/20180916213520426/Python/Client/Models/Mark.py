@@ -9,6 +9,7 @@ class Mark:
 	studentId : int
 	teacherId : int
 	value : int
+	date : str
 	creationTime : str
 	
 

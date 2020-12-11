@@ -17,6 +17,10 @@
 			<input type="text" placeholder= "Value" id="Value" />
 			<div class="bar"></div>
 			</div>
+			<div class="input-container">
+			<input type="text" placeholder= "Date" id="Date" />
+			<div class="bar"></div>
+			</div>
 			<select id=TeacherIdDropDown (change)="teacherChanged($event.target.value)">
 				<option [value]="teacher.teacherId" *ngFor= "let teacher of teacherService.teachers | async" >
 				{{teacher.teacherId}}
@@ -65,6 +69,9 @@
 				</th>
 				<th>
 					Value
+				</th>
+				<th>
+					Date
 				</th>
 				<th>
 					CreationTime
@@ -130,6 +137,9 @@
 				</td>
 				<td>
 					{{mark.value}}
+				</td>
+				<td>
+					{{mark.date}}
 				</td>
 				<td>
 					{{mark.creationTime}}

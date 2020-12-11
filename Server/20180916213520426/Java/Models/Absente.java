@@ -15,10 +15,14 @@ import java.util.Date;
 public class Absente
 {
 	private Integer  absenteId;
+	private Integer  classeId;
+	private Integer  studentId;
 	private Integer  teacherId;
 	private Date date;
 	private Date creationTime;
 	private Teacher teacher;
+	private Student student;
+	private Classe classe;
 	
 	public Integer  getAbsenteId()
 	{
@@ -28,6 +32,26 @@ public class Absente
 	public void setAbsenteId(Integer  absenteId)
 	{
 		this.absenteId = absenteId;
+	}
+	
+	public Integer  getClasseId()
+	{
+		return this.classeId;
+	}
+	
+	public void setClasseId(Integer  classeId)
+	{
+		this.classeId = classeId;
+	}
+	
+	public Integer  getStudentId()
+	{
+		return this.studentId;
+	}
+	
+	public void setStudentId(Integer  studentId)
+	{
+		this.studentId = studentId;
 	}
 	
 	public Integer  getTeacherId()
@@ -70,26 +94,54 @@ public class Absente
 		this.teacher = teacher;
 	}
 	
-	
-	public Absente(Integer  teacherId, Date date)
+	public Student getStudent()
 	{
+		return this.student;
+	}
+	
+	public void setStudent(Student student)
+	{
+		this.student = student;
+	}
+	
+	public Classe getClasse()
+	{
+		return this.classe;
+	}
+	
+	public void setClasse(Classe classe)
+	{
+		this.classe = classe;
+	}
+	
+	
+	public Absente(Integer  classeId, Integer  studentId, Integer  teacherId, Date date)
+	{
+		this.classeId = classeId;
+		this.studentId = studentId;
 		this.teacherId = teacherId;
 		this.date = date;
 	}
 	
-	public Absente(Integer  teacherId, Date date, Teacher teacher)
+	public Absente(Integer  classeId, Integer  studentId, Integer  teacherId, Date date, Teacher teacher, Student student, Classe classe)
 	{
 		this(
+			0, //ClasseId
+			0, //StudentId
 			0, //TeacherId
 			new Date(0) //Date
 		);
 		this.teacher = teacher;
+		this.student = student;
+		this.classe = classe;
 	
 	}
 	
 	public Absente()
 	{
 		this(
+			0, //ClasseId
+			0, //StudentId
 			0, //TeacherId
 			new Date(0) //Date
 		);

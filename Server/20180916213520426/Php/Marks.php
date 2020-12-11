@@ -19,7 +19,8 @@ function ConvertListToMarks($data)
 		$row["ClasseId"], 
 		$row["StudentId"], 
 		$row["TeacherId"], 
-		$row["Value"] 
+		$row["Value"], 
+		$row["Date"] 
 		);
 	
 		$mark->SetMarkId($row["MarkId"]);
@@ -102,11 +103,12 @@ function CompleteMarks($database, $marks)
 
 function AddMark($database, $mark)
 {
-	$query = "INSERT INTO Marks(ClasseId, StudentId, TeacherId, Value, CreationTime) VALUES(";
+	$query = "INSERT INTO Marks(ClasseId, StudentId, TeacherId, Value, Date, CreationTime) VALUES(";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetClasseId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetStudentId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetTeacherId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetValue()).", ";
+	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$mark->GetDate()) . "', ";
 	$query = $query . "NOW()"."";
 	
 	$query = $query . ");";
@@ -144,7 +146,8 @@ function UpdateMark($database, $mark)
 	$query = $query . "ClasseId=" . $mark->GetClasseId().", ";
 	$query = $query . "StudentId=" . $mark->GetStudentId().", ";
 	$query = $query . "TeacherId=" . $mark->GetTeacherId().", ";
-	$query = $query . "Value=" . $mark->GetValue()."";
+	$query = $query . "Value=" . $mark->GetValue().", ";
+	$query = $query . "Date='" . $mark->GetDate() . "'";
 	$query = $query . " WHERE MarkId=" . $mark->GetMarkId();
 	
 	$result = $database->ExecuteSqlWithoutWarning($query);
@@ -162,7 +165,8 @@ function TestAddMark($database)
 		0,//ClasseId
 		0,//StudentId
 		0,//TeacherId
-		0//Value
+		0,//Value
+		'2000-01-01 00:00:00'//Date
 	);
 	
 	AddMark($database, $mark);
@@ -174,7 +178,8 @@ function GetEmptyMark()
 		0,//ClasseId
 		0,//StudentId
 		0,//TeacherId
-		0//Value
+		0,//Value
+		'2000-01-01 00:00:00'//Date
 	);
 	
 	return $mark;
@@ -240,7 +245,8 @@ if(CheckGetParameters(["cmd"]))
 				IssetValueNull($_POST['classeId']),
 				IssetValueNull($_POST['studentId']),
 				IssetValueNull($_POST['teacherId']),
-				IssetValueNull($_POST['value'])
+				IssetValueNull($_POST['value']),
+				IssetValueNull($_POST['date'])
 			);
 	
 			echo json_encode(AddMark($database, $mark));
@@ -258,7 +264,8 @@ if(CheckGetParameters(["cmd"]))
 			$_POST['classeId'],
 			$_POST['studentId'],
 			$_POST['teacherId'],
-			$_POST['value']
+			$_POST['value'],
+			$_POST['date']
 		);
 		$mark->SetMarkId($_POST['markId']);
 		$mark->SetCreationTime($_POST['creationTime']);

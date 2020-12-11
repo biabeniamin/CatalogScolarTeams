@@ -11,6 +11,7 @@ export interface Mark
 	studentId : number;
 	teacherId : number;
 	value : number;
+	date : string;
 	creationTime : string;
 }
 
@@ -20,6 +21,7 @@ export interface MarkJSON
 	studentId : number;
 	teacherId : number;
 	value : number;
+	date : string;
 	creationTime : string;
 }
 
@@ -29,6 +31,7 @@ export function encodeMark(mark: Mark): MarkJSON {
 		studentId:	mark.studentId,
 		teacherId:	mark.teacherId,
 		value:	mark.value,
+		date:	mark.date,
 		creationTime:	mark.creationTime,
 	}
 }

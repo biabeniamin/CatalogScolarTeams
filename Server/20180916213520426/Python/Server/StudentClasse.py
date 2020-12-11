@@ -91,6 +91,18 @@ def getStudentClasses(session):
 
 
 #get dedicated request funtions
+def getStudentClassesByClasseId(session, classeId):
+	result = session.query(StudentClasse).filter(StudentClasse.classeId == classeId).all()
+	result = completeStudents(session, result)
+	result = completeClasses(session, result)
+	return result
+
+def getStudentClassesByStudentId(session, studentId):
+	result = session.query(StudentClasse).filter(StudentClasse.studentId == studentId).all()
+	result = completeStudents(session, result)
+	result = completeClasses(session, result)
+	return result
+
 def getStudentClassesByStudentClasseId(session, studentClasseId):
 	result = session.query(StudentClasse).filter(StudentClasse.studentClasseId == studentClasseId).all()
 	result = completeStudents(session, result)

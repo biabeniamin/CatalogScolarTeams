@@ -3,6 +3,8 @@ import { AbsenteService } from '../AbsenteService'
 import {HttpClient} from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TeacherService } from '../TeacherService'
+import { StudentService } from '../StudentService'
+import { ClasseService } from '../ClasseService'
 
 @Component({
 selector: 'app-absente',
@@ -14,7 +16,9 @@ export class AbsenteComponent implements OnInit
 	
 	constructor(private http:HttpClient, 
 		private absenteService : AbsenteService, 
-		private teacherService : TeacherService
+		private teacherService : TeacherService, 
+		private studentService : StudentService, 
+		private classeService : ClasseService
 	)
 	{
 	
@@ -30,6 +34,8 @@ export class AbsenteComponent implements OnInit
 		event.preventDefault();
 		const target = event.target;
 		let absente = AbsenteService.GetDefaultAbsente();
+		absente.classeId = target.querySelector('#ClasseIdDropDown').value;
+		absente.studentId = target.querySelector('#StudentIdDropDown').value;
 		absente.teacherId = target.querySelector('#TeacherIdDropDown').value;
 		absente.date = target.querySelector('#Date').value;
 		console.log(absente);
@@ -55,6 +61,18 @@ export class AbsenteComponent implements OnInit
 	}
 	
 	teacherChanged(event)
+	{
+		console.log(event);
+	
+	}
+	
+	studentChanged(event)
+	{
+		console.log(event);
+	
+	}
+	
+	classeChanged(event)
 	{
 		console.log(event);
 	

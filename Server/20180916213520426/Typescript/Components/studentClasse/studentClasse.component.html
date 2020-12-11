@@ -127,6 +127,28 @@
 			</tr>
 		</tbody>
 
+		<form (submit)="getStudentClassesByClasseId($event)">
+			<h3>Get StudentClasses by ClasseId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "ClasseId" id="ClasseId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by ClasseId">
+			</div>
+		</form>
+		
+		<form (submit)="getStudentClassesByStudentId($event)">
+			<h3>Get StudentClasses by StudentId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "StudentId" id="StudentId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by StudentId">
+			</div>
+		</form>
+		
 		<form (submit)="getStudentClassesByStudentClasseId($event)">
 			<h3>Get StudentClasses by StudentClasseId</h3>
 			<div class="input-container">

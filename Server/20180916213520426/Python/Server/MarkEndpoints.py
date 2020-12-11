@@ -11,7 +11,7 @@ class MarkEndpoints(Resource):
 	#API endpoints
 	#get endpoint
 	def get(self):
-		requestedArgs = getArguments(['cmd', 'markId', 'classeId', 'studentId', 'teacherId', 'value', 'creationTime'])
+		requestedArgs = getArguments(['cmd', 'markId', 'classeId', 'studentId', 'teacherId', 'value', 'date', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		if args['cmd'] == 'getMarksByClasseIdStudentId':
 			return Mark.getMarksByClasseIdStudentId(self.session, args['classeId'], args['studentId'])
@@ -22,7 +22,7 @@ class MarkEndpoints(Resource):
 	
 	#post endpoint
 	def post(self):
-		requestedArgs = getArguments(['classeId', 'studentId', 'teacherId', 'value'])
+		requestedArgs = getArguments(['classeId', 'studentId', 'teacherId', 'value', 'date'])
 		args  = requestedArgs.parse_args()
 		mark  = dict_as_obj(args, Mark.Mark())
 		return Mark.addMark(self.session, mark)
@@ -37,7 +37,7 @@ class MarkEndpoints(Resource):
 	
 	#patch endpoint
 	def patch(self):
-		requestedArgs = getArguments(['markId', 'classeId', 'studentId', 'teacherId', 'value', 'creationTime'])
+		requestedArgs = getArguments(['markId', 'classeId', 'studentId', 'teacherId', 'value', 'date', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		mark  = Mark.getMarksByMarkId(self.session, args['markId'])[0]
 		mark  = dict_as_obj(args, mark)

@@ -38,6 +38,7 @@ export class MarkComponent implements OnInit
 		mark.studentId = target.querySelector('#StudentIdDropDown').value;
 		mark.teacherId = target.querySelector('#TeacherIdDropDown').value;
 		mark.value = target.querySelector('#Value').value;
+		mark.date = target.querySelector('#Date').value;
 		console.log(mark);
 		this.markService.AddMark(mark);
 	}

@@ -28,6 +28,11 @@
 		android:layout_height="wrap_content"
 		android:text="Name"/>
 	<TextView
+		android:id="@+id/dateTextBox"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Name"/>
+	<TextView
 		android:id="@+id/creationTimeTextBox"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

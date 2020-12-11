@@ -15,6 +15,7 @@ namespace DatabaseFunctionsGenerator
 		private int _studentId;
 		private int _teacherId;
 		private int _value;
+		private DateTime _date;
 		private DateTime _creationTime;
 		private Teacher _teacher;
 		private Student _student;
@@ -85,6 +86,19 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
+		[JsonProperty(PropertyName = "date")]
+		public DateTime Date
+		{
+			get
+			{
+				return _date;
+			}
+			set
+			{
+				_date = value;
+			}
+		}
+		
 		[JsonProperty(PropertyName = "creationTime")]
 		public DateTime CreationTime
 		{
@@ -138,31 +152,34 @@ namespace DatabaseFunctionsGenerator
 		}
 		
 		
-		public Mark(int markId, int classeId, int studentId, int teacherId, int value, DateTime creationTime)
+		public Mark(int markId, int classeId, int studentId, int teacherId, int value, DateTime date, DateTime creationTime)
 		{
 			_markId = markId;
 			_classeId = classeId;
 			_studentId = studentId;
 			_teacherId = teacherId;
 			_value = value;
+			_date = date;
 			_creationTime = creationTime;
 		}
 		
-		public Mark(int classeId, int studentId, int teacherId, int value)
+		public Mark(int classeId, int studentId, int teacherId, int value, DateTime date)
 		{
 			_classeId = classeId;
 			_studentId = studentId;
 			_teacherId = teacherId;
 			_value = value;
+			_date = date;
 		}
 		
-		public Mark(int classeId, int studentId, int teacherId, int value, Teacher teacher, Student student, Classe classe)
-			:this(classeId, studentId, teacherId, value)
+		public Mark(int classeId, int studentId, int teacherId, int value, DateTime date, Teacher teacher, Student student, Classe classe)
+			:this(classeId, studentId, teacherId, value, date)
 		{
 			_classeId = classeId;
 			_studentId = studentId;
 			_teacherId = teacherId;
 			_value = value;
+			_date = date;
 		}
 		
 		public Mark()
@@ -170,7 +187,8 @@ namespace DatabaseFunctionsGenerator
 				0, //ClasseId
 				0, //StudentId
 				0, //TeacherId
-				0 //Value
+				0, //Value
+				new DateTime(1970, 1, 1, 0, 0, 0) //Date
 			)
 		{
 			_markId = 0;

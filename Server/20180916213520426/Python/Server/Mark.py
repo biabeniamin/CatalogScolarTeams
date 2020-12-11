@@ -19,6 +19,7 @@ class Mark(Base):
 	#Fields
 	markId = Column('MarkId', Integer, primary_key=True)
 	value = Column('Value', Integer)
+	date = Column('Date', DateTime)
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
 	classeId = Column('ClasseId', Integer, ForeignKey("Classes.ClasseId"))
@@ -182,6 +183,7 @@ def getmarkRequestArguments():
 	parser.add_argument('studentId')
 	parser.add_argument('teacherId')
 	parser.add_argument('value')
+	parser.add_argument('date')
 	return parser
 
 

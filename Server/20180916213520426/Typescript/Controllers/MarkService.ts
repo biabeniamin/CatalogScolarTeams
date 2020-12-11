@@ -34,6 +34,7 @@ export class MarkService
 		studentId : 0,
 		teacherId : 0,
 		value : 0,
+		date : '2000-01-01 00:00:00',
 		creationTime : '2000-01-01 00:00:00'
 		};
 	}

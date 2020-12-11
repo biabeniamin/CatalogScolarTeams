@@ -6,6 +6,10 @@ import { WebSockets, Message, Request } from './WebSockets';
 import { Absente, encodeAbsente } from '../app/Models/Absente'
 import { Teacher } from '../app/Models/Teacher'
 import { TeacherService } from './TeacherService'
+import { Student } from '../app/Models/Student'
+import { StudentService } from './StudentService'
+import { Classe } from '../app/Models/Classe'
+import { ClasseService } from './ClasseService'
 
 @Injectable({
     providedIn : 'root'
@@ -26,6 +30,8 @@ export class AbsenteService
 	{
 		return {
 		absenteId : 0,
+		classeId : 0,
+		studentId : 0,
 		teacherId : 0,
 		date : '2000-01-01 00:00:00',
 		creationTime : '2000-01-01 00:00:00'

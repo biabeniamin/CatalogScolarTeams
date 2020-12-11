@@ -103,6 +103,10 @@ deletes a Student by id and returns the Student with id == 0 if succeeded
 ------------StudentClasses----------
 http://192.168.0.100:5000/StudentClasses.php?cmd=getStudentClasses - GET request -return all StudentClasses
 
+http://192.168.0.100:5000/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=value - GET request -return StudentClasses filtered by ClasseId
+
+http://192.168.0.100:5000/StudentClasses.php?cmd=getStudentClassesByStudentId&studentId=value - GET request -return StudentClasses filtered by StudentId
+
 http://192.168.0.100:5000/StudentClasses.php?cmd=getStudentClassesByStudentClasseId&studentClasseId=value - GET request -return StudentClasses filtered by StudentClasseId
 
 
@@ -138,6 +142,7 @@ classeId : INT
 studentId : INT
 teacherId : INT
 value : INT
+date : DATETIME
 add a new Mark with specified data and returns the Mark with id != 0 if succeeded
 
 
@@ -147,6 +152,7 @@ classeId : INT
 studentId : INT
 teacherId : INT
 value : INT
+date : DATETIME
 update a Mark by id and returns the Mark with id != 0 if succeeded
 
 
@@ -162,6 +168,8 @@ http://192.168.0.100:5000/Absente.php?cmd=getAbsenteByAbsenteId&absenteId=value 
 
 
 http://192.168.0.100:5000/Absente.php?cmd=addAbsente- POST request with following parameters
+classeId : INT
+studentId : INT
 teacherId : INT
 date : DATETIME
 add a new Absente with specified data and returns the Absente with id != 0 if succeeded
@@ -169,6 +177,8 @@ add a new Absente with specified data and returns the Absente with id != 0 if su
 
 http://192.168.0.100:5000/Absente.php?cmd=updateAbsente- PUT request with following parameters
 absenteId : INT
+classeId : INT
+studentId : INT
 teacherId : INT
 date : DATETIME
 update a Absente by id and returns the Absente with id != 0 if succeeded

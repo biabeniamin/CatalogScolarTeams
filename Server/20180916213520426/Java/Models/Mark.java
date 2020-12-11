@@ -19,6 +19,7 @@ public class Mark
 	private Integer  studentId;
 	private Integer  teacherId;
 	private Integer  value;
+	private Date date;
 	private Date creationTime;
 	private Teacher teacher;
 	private Student student;
@@ -74,6 +75,16 @@ public class Mark
 		this.value = value;
 	}
 	
+	public Date getDate()
+	{
+		return this.date;
+	}
+	
+	public void setDate(Date date)
+	{
+		this.date = date;
+	}
+	
 	public Date getCreationTime()
 	{
 		return this.creationTime;
@@ -115,21 +126,23 @@ public class Mark
 	}
 	
 	
-	public Mark(Integer  classeId, Integer  studentId, Integer  teacherId, Integer  value)
+	public Mark(Integer  classeId, Integer  studentId, Integer  teacherId, Integer  value, Date date)
 	{
 		this.classeId = classeId;
 		this.studentId = studentId;
 		this.teacherId = teacherId;
 		this.value = value;
+		this.date = date;
 	}
 	
-	public Mark(Integer  classeId, Integer  studentId, Integer  teacherId, Integer  value, Teacher teacher, Student student, Classe classe)
+	public Mark(Integer  classeId, Integer  studentId, Integer  teacherId, Integer  value, Date date, Teacher teacher, Student student, Classe classe)
 	{
 		this(
 			0, //ClasseId
 			0, //StudentId
 			0, //TeacherId
-			0 //Value
+			0, //Value
+			new Date(0) //Date
 		);
 		this.teacher = teacher;
 		this.student = student;
@@ -143,7 +156,8 @@ public class Mark
 			0, //ClasseId
 			0, //StudentId
 			0, //TeacherId
-			0 //Value
+			0, //Value
+			new Date(0) //Date
 		);
 		this.markId = 0;
 		this.creationTime = new Date(0);

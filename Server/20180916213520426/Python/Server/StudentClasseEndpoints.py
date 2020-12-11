@@ -13,6 +13,10 @@ class StudentClasseEndpoints(Resource):
 	def get(self):
 		requestedArgs = getArguments(['cmd', 'studentClasseId', 'studentId', 'classeId', 'creationTime'])
 		args  = requestedArgs.parse_args()
+		if args['cmd'] == 'getStudentClassesByClasseId':
+			return StudentClasse.getStudentClassesByClasseId(self.session, args['classeId'])
+		if args['cmd'] == 'getStudentClassesByStudentId':
+			return StudentClasse.getStudentClassesByStudentId(self.session, args['studentId'])
 		if args['cmd'] == 'getStudentClassesByStudentClasseId':
 			return StudentClasse.getStudentClassesByStudentClasseId(self.session, args['studentClasseId'])
 		return StudentClasse.getStudentClasses(self.session)

@@ -25,6 +25,8 @@ public class AbsenteAdapter extends BaseAdapter
 	{
 		Absente absente;
 		TextView absenteIdTextBox;
+		TextView classeIdTextBox;
+		TextView studentIdTextBox;
 		TextView teacherIdTextBox;
 		TextView dateTextBox;
 		TextView creationTimeTextBox;
@@ -37,11 +39,15 @@ public class AbsenteAdapter extends BaseAdapter
 		}
 		
 		absenteIdTextBox = (TextView) convertView.findViewById(R.id.absenteIdTextBox);
+		classeIdTextBox = (TextView) convertView.findViewById(R.id.classeIdTextBox);
+		studentIdTextBox = (TextView) convertView.findViewById(R.id.studentIdTextBox);
 		teacherIdTextBox = (TextView) convertView.findViewById(R.id.teacherIdTextBox);
 		dateTextBox = (TextView) convertView.findViewById(R.id.dateTextBox);
 		creationTimeTextBox = (TextView) convertView.findViewById(R.id.creationTimeTextBox);
 		
 		absenteIdTextBox.setText(absente.getAbsenteId().toString());
+		classeIdTextBox.setText(absente.getClasseId().toString());
+		studentIdTextBox.setText(absente.getStudentId().toString());
 		teacherIdTextBox.setText(absente.getTeacherId().toString());
 		dateTextBox.setText(absente.getDate().toString());
 		creationTimeTextBox.setText(absente.getCreationTime().toString());

@@ -11,7 +11,7 @@ class AbsenteEndpoints(Resource):
 	#API endpoints
 	#get endpoint
 	def get(self):
-		requestedArgs = getArguments(['cmd', 'absenteId', 'teacherId', 'date', 'creationTime'])
+		requestedArgs = getArguments(['cmd', 'absenteId', 'classeId', 'studentId', 'teacherId', 'date', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		if args['cmd'] == 'getAbsenteByAbsenteId':
 			return Absente.getAbsenteByAbsenteId(self.session, args['absenteId'])
@@ -20,7 +20,7 @@ class AbsenteEndpoints(Resource):
 	
 	#post endpoint
 	def post(self):
-		requestedArgs = getArguments(['teacherId', 'date'])
+		requestedArgs = getArguments(['classeId', 'studentId', 'teacherId', 'date'])
 		args  = requestedArgs.parse_args()
 		absente  = dict_as_obj(args, Absente.Absente())
 		return Absente.addAbsente(self.session, absente)
@@ -35,7 +35,7 @@ class AbsenteEndpoints(Resource):
 	
 	#patch endpoint
 	def patch(self):
-		requestedArgs = getArguments(['absenteId', 'teacherId', 'date', 'creationTime'])
+		requestedArgs = getArguments(['absenteId', 'classeId', 'studentId', 'teacherId', 'date', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		absente  = Absente.getAbsenteByAbsenteId(self.session, args['absenteId'])[0]
 		absente  = dict_as_obj(args, absente)

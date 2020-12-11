@@ -10,6 +10,7 @@ class Mark
 	var $studentId;
 	var $teacherId;
 	var $value;
+	var $date;
 	var $creationTime;
 	var $teacher;
 	var $student;
@@ -60,6 +61,15 @@ class Mark
 		$this->value = $value;
 	}
 	
+	function GetDate()
+	{
+		return $this->date;
+	}
+	function SetDate($value)
+	{
+		$this->date = $value;
+	}
+	
 	function GetCreationTime()
 	{
 		return $this->creationTime;
@@ -97,7 +107,7 @@ class Mark
 	}
 	
 
-	function Mark($ClasseId, $StudentId, $TeacherId, $Value)
+	function Mark($ClasseId, $StudentId, $TeacherId, $Value, $Date)
 	{
 		$this->markId = 0;
 	
@@ -105,6 +115,7 @@ class Mark
 		$this->studentId = $StudentId;
 		$this->teacherId = $TeacherId;
 		$this->value = $Value;
+		$this->date = $Date;
 	}
 
 }

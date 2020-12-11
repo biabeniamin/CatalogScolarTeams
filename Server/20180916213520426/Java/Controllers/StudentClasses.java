@@ -64,6 +64,52 @@ public class StudentClasses
 	
 	}
 	
+	public static  getStudentClassesByClasseId(Integer  classeId)
+	{
+		 studentClasses;
+		StudentClasseService service;
+		Call<> call;
+		
+		studentClasses = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(StudentClasseService.class);
+		try
+		{
+			call = service.getStudentClassesByClasseId(classeId);
+			studentClasses = getStudentClasses(call);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+		return studentClasses;
+	
+	}
+	
+	public static  getStudentClassesByStudentId(Integer  studentId)
+	{
+		 studentClasses;
+		StudentClasseService service;
+		Call<> call;
+		
+		studentClasses = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(StudentClasseService.class);
+		try
+		{
+			call = service.getStudentClassesByStudentId(studentId);
+			studentClasses = getStudentClasses(call);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+		return studentClasses;
+	
+	}
+	
 	public static  getStudentClassesByStudentClasseId(Integer  studentClasseId)
 	{
 		 studentClasses;
@@ -113,6 +159,50 @@ public class StudentClasses
 		try
 		{
 			call = service.getStudentClasses();
+			getStudentClasses(call, callback);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+	
+	}
+	
+	public static void getStudentClassesByClasseId(Integer  classeId, Callback<> callback)
+	{
+		 studentClasses;
+		StudentClasseService service;
+		Call<> call;
+		
+		studentClasses = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(StudentClasseService.class);
+		try
+		{
+		);
+			getStudentClasses(call, callback);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+	
+	}
+	
+	public static void getStudentClassesByStudentId(Integer  studentId, Callback<> callback)
+	{
+		 studentClasses;
+		StudentClasseService service;
+		Call<> call;
+		
+		studentClasses = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(StudentClasseService.class);
+		try
+		{
+		);
 			getStudentClasses(call, callback);
 		}
 		catch(Exception ee)

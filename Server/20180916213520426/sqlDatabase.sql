@@ -71,6 +71,7 @@ CREATE TABLE `Marks` (
 `StudentId` INT  NOT NULL,
 `TeacherId` INT  NOT NULL,
 `Value` INT,
+`Date` DATETIME,
 `CreationTime` DATETIME  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -79,6 +80,8 @@ ALTER TABLE `Marks`  MODIFY `MarkId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT
 
 CREATE TABLE `Absente` (
 `AbsenteId` INT  NOT NULL,
+`ClasseId` INT  NOT NULL,
+`StudentId` INT  NOT NULL,
 `TeacherId` INT  NOT NULL,
 `Date` DATETIME,
 `CreationTime` DATETIME  NOT NULL
