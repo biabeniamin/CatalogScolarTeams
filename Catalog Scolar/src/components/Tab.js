@@ -88,13 +88,13 @@ class Tab extends React.Component {
 
   classChanged(e){
     console.log(e);
-    axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByClasseIdUserId&classeId=${this.state.selectedRoomClass}&userId=1`)
+    axios.get(`http://localhost/catalog/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=${e.value}`)
       .then(res => {
-        let selectClassOptions = res.data.map(d => ({
-          "value" : d.classeId,
-          "label" : d.name
+        let selectStudentOptions = res.data.map(d => ({
+          "value" : d.student.studentId,
+          "label" : d.student.firstName
         }))
-        this.setState({ classes: res.data , selectClassOptions: selectClassOptions});
+        this.setState({ classes: res.data , selectStudentOptions: selectStudentOptions});
         console.log(res.data);
       })
       .catch(function (error) {
@@ -114,6 +114,7 @@ class Tab extends React.Component {
         <div>
         <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
         <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
+        <Select options={this.state.selectStudentOptions} onChange={this.classChanged.bind(this)}/>
       </div>
         <table className="table table-striped table-dark">
           <thead className="thead-dark">
