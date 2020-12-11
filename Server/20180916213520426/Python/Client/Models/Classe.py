@@ -5,7 +5,7 @@ from dataclasses import dataclass
 @dataclass
 class Classe:
 	classeId : int
-	userId : int
+	teacherId : int
 	classRoomId : int
 	name : str
 	creationTime : str

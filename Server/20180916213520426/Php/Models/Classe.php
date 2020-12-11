@@ -1,16 +1,16 @@
 <?php
 //generated automatically
 require_once 'ClassRoom.php';
-require_once 'User.php';
+require_once 'Teacher.php';
 class Classe
 {
 	var $classeId;
-	var $userId;
+	var $teacherId;
 	var $classRoomId;
 	var $name;
 	var $creationTime;
 	var $classRoom;
-	var $user;
+	var $teacher;
 
 	function GetClasseId()
 	{
@@ -21,13 +21,13 @@ class Classe
 		$this->classeId = $value;
 	}
 	
-	function GetUserId()
+	function GetTeacherId()
 	{
-		return $this->userId;
+		return $this->teacherId;
 	}
-	function SetUserId($value)
+	function SetTeacherId($value)
 	{
-		$this->userId = $value;
+		$this->teacherId = $value;
 	}
 	
 	function GetClassRoomId()
@@ -66,21 +66,21 @@ class Classe
 		$this->classRoom = $value;
 	}
 	
-	function GetUser()
+	function GetTeacher()
 	{
-		return $this->user;
+		return $this->teacher;
 	}
-	function SetUser($value)
+	function SetTeacher($value)
 	{
-		$this->user = $value;
+		$this->teacher = $value;
 	}
 	
 
-	function Classe($UserId, $ClassRoomId, $Name)
+	function Classe($TeacherId, $ClassRoomId, $Name)
 	{
 		$this->classeId = 0;
 	
-		$this->userId = $UserId;
+		$this->teacherId = $TeacherId;
 		$this->classRoomId = $ClassRoomId;
 		$this->name = $Name;
 	}

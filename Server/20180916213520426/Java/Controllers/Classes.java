@@ -64,6 +64,29 @@ public class Classes
 	
 	}
 	
+	public static  getClassesByClassRoomId(Integer  classRoomId)
+	{
+		 classes;
+		ClasseService service;
+		Call<> call;
+		
+		classes = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(ClasseService.class);
+		try
+		{
+			call = service.getClassesByClassRoomId(classRoomId);
+			classes = getClasses(call);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+		return classes;
+	
+	}
+	
 	public static  getClassesByClasseId(Integer  classeId)
 	{
 		 classes;
@@ -113,6 +136,28 @@ public class Classes
 		try
 		{
 			call = service.getClasses();
+			getClasses(call, callback);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+	
+	}
+	
+	public static void getClassesByClassRoomId(Integer  classRoomId, Callback<> callback)
+	{
+		 classes;
+		ClasseService service;
+		Call<> call;
+		
+		classes = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(ClasseService.class);
+		try
+		{
+		);
 			getClasses(call, callback);
 		}
 		catch(Exception ee)

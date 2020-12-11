@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MarkService } from '../MarkService'
 import {HttpClient} from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-import { UserService } from '../UserService'
+import { TeacherService } from '../TeacherService'
+import { StudentService } from '../StudentService'
+import { ClasseService } from '../ClasseService'
 
 @Component({
 selector: 'app-mark',
@@ -14,7 +16,9 @@ export class MarkComponent implements OnInit
 	
 	constructor(private http:HttpClient, 
 		private markService : MarkService, 
-		private userService : UserService
+		private teacherService : TeacherService, 
+		private studentService : StudentService, 
+		private classeService : ClasseService
 	)
 	{
 	
@@ -30,12 +34,26 @@ export class MarkComponent implements OnInit
 		event.preventDefault();
 		const target = event.target;
 		let mark = MarkService.GetDefaultMark();
-		mark.userId = target.querySelector('#UserIdDropDown').value;
+		mark.classeId = target.querySelector('#ClasseIdDropDown').value;
+		mark.studentId = target.querySelector('#StudentIdDropDown').value;
+		mark.teacherId = target.querySelector('#TeacherIdDropDown').value;
 		mark.value = target.querySelector('#Value').value;
 		console.log(mark);
 		this.markService.AddMark(mark);
 	}
 	
+	getMarksByClasseIdStudentId(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let classeId = target.querySelector('#ClasseId').value;
+		console.log(classeId);
+		let studentId = target.querySelector('#StudentId').value;
+		console.log(studentId);
+		this.markService.GetMarksByClasseIdStudentId(classeId, studentId).subscribe(data =>{
+			this.markService.marks.next(data);
+		});
+	}
 	getMarksByMarkId(event)
 	{
 		event.preventDefault();
@@ -54,7 +72,19 @@ export class MarkComponent implements OnInit
 		this.markService.ConnectToWebSockets();
 	}
 	
-	userChanged(event)
+	teacherChanged(event)
+	{
+		console.log(event);
+	
+	}
+	
+	studentChanged(event)
+	{
+		console.log(event);
+	
+	}
+	
+	classeChanged(event)
 	{
 		console.log(event);
 	

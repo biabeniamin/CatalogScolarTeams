@@ -9,7 +9,9 @@ from ValidationError import ValidationError, validate_integer
 from flask_restful import reqparse
 import datetime
 from math import floor
-from User import User, getUsers, getUsersByUserId
+from Teacher import Teacher, getTeachers, getTeachersByTeacherId
+from Student import Student, getStudents, getStudentsByStudentId
+from Classe import Classe, getClasses, getClassesByClasseId
 class Mark(Base):
 	@declared_attr
 	def __tablename__(cls):
@@ -19,14 +21,26 @@ class Mark(Base):
 	value = Column('Value', Integer)
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
-	userId = Column('UserId', Integer, ForeignKey("Users.UserId"))
-	users = relationship(User,backref = backref('marks'))
-	user = null
+	classeId = Column('ClasseId', Integer, ForeignKey("Classes.ClasseId"))
+	classes = relationship(Classe,backref = backref('marks'))
+	classe = null
+	studentId = Column('StudentId', Integer, ForeignKey("Students.StudentId"))
+	students = relationship(Student,backref = backref('marks'))
+	student = null
+	teacherId = Column('TeacherId', Integer, ForeignKey("Teachers.TeacherId"))
+	teachers = relationship(Teacher,backref = backref('marks'))
+	teacher = null
 	
 	
 	#Validation
-	@validates('userId')
-	def validate_userId(self, key, value):
+	@validates('classeId')
+	def validate_classeId(self, key, value):
+		return validate_integer(key, value, True)
+	@validates('studentId')
+	def validate_studentId(self, key, value):
+		return validate_integer(key, value, True)
+	@validates('teacherId')
+	def validate_teacherId(self, key, value):
 		return validate_integer(key, value, True)
 	@validates('value')
 	def validate_value(self, key, value):
@@ -34,22 +48,66 @@ class Mark(Base):
 	
 
 #Functions
-#complete users funtion
-def completeUsers(session, marks):
-	users = getUsers(session)
+#complete classes funtion
+def completeClasses(session, marks):
+	classes = getClasses(session)
 	for row in marks:
 		start = 0
-		end = len(users)
+		end = len(classes)
 		while True:
 			mid = floor((start + end) / 2)
-			if(row.userId > users[mid].userId):
+			if(row.classeId > classes[mid].classeId):
 				start = mid + 1
-			elif(row.userId < users[mid].userId):
+			elif(row.classeId < classes[mid].classeId):
 				end = mid - 1
-			elif(row.userId == users[mid].userId):
+			elif(row.classeId == classes[mid].classeId):
 				start = mid + 1
 				end = mid - 1
-				row.user = users[mid]
+				row.classe = classes[mid]
+			
+			if(start > end):
+				break
+	
+	return marks
+
+#complete students funtion
+def completeStudents(session, marks):
+	students = getStudents(session)
+	for row in marks:
+		start = 0
+		end = len(students)
+		while True:
+			mid = floor((start + end) / 2)
+			if(row.studentId > students[mid].studentId):
+				start = mid + 1
+			elif(row.studentId < students[mid].studentId):
+				end = mid - 1
+			elif(row.studentId == students[mid].studentId):
+				start = mid + 1
+				end = mid - 1
+				row.student = students[mid]
+			
+			if(start > end):
+				break
+	
+	return marks
+
+#complete teachers funtion
+def completeTeachers(session, marks):
+	teachers = getTeachers(session)
+	for row in marks:
+		start = 0
+		end = len(teachers)
+		while True:
+			mid = floor((start + end) / 2)
+			if(row.teacherId > teachers[mid].teacherId):
+				start = mid + 1
+			elif(row.teacherId < teachers[mid].teacherId):
+				end = mid - 1
+			elif(row.teacherId == teachers[mid].teacherId):
+				start = mid + 1
+				end = mid - 1
+				row.teacher = teachers[mid]
 			
 			if(start > end):
 				break
@@ -60,14 +118,25 @@ def completeUsers(session, marks):
 #get funtion
 def getMarks(session):
 	result = session.query(Mark).all()
-	result = completeUsers(session, result)
+	result = completeClasses(session, result)
+	result = completeStudents(session, result)
+	result = completeTeachers(session, result)
 	return result
 
 
 #get dedicated request funtions
+def getMarksByClasseIdStudentId(session, classeId, studentId):
+	result = session.query(Mark).filter(Mark.classeId == classeId, Mark.studentId == studentId).all()
+	result = completeClasses(session, result)
+	result = completeStudents(session, result)
+	result = completeTeachers(session, result)
+	return result
+
 def getMarksByMarkId(session, markId):
 	result = session.query(Mark).filter(Mark.markId == markId).all()
-	result = completeUsers(session, result)
+	result = completeClasses(session, result)
+	result = completeStudents(session, result)
+	result = completeTeachers(session, result)
 	return result
 
 
@@ -78,7 +147,9 @@ def addMark(session, mark):
 	session.commit()
 	#this must stay because sqlalchemy query the database because of this line
 	print('Value inserted with markId=', mark.markId)
-	mark.user = getUsersByUserId(session, mark.userId)[0]
+	mark.teacher = getTeachersByTeacherId(session, mark.teacherId)[0]
+	mark.student = getStudentsByStudentId(session, mark.studentId)[0]
+	mark.classe = getClassesByClasseId(session, mark.classeId)[0]
 	return mark
 
 
@@ -88,7 +159,9 @@ def updateMark(session, mark):
 	result = mark
 	session.commit()
 	result = session.query(Mark).filter(Mark.markId == mark.markId).first()
-	result.user = getUsersByUserId(session, result.userId)[0]
+	result.teacher = getTeachersByTeacherId(session, result.teacherId)[0]
+	result.student = getStudentsByStudentId(session, result.studentId)[0]
+	result.classe = getClassesByClasseId(session, result.classeId)[0]
 	return result
 
 
@@ -105,7 +178,9 @@ def deleteMark(session, markId):
 #request parser funtion
 def getmarkRequestArguments():
 	parser = reqparse.RequestParser()
-	parser.add_argument('userId')
+	parser.add_argument('classeId')
+	parser.add_argument('studentId')
+	parser.add_argument('teacherId')
 	parser.add_argument('value')
 	return parser
 

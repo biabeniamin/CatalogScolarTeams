@@ -25,7 +25,9 @@ public class MarkAdapter extends BaseAdapter
 	{
 		Mark mark;
 		TextView markIdTextBox;
-		TextView userIdTextBox;
+		TextView classeIdTextBox;
+		TextView studentIdTextBox;
+		TextView teacherIdTextBox;
 		TextView valueTextBox;
 		TextView creationTimeTextBox;
 		
@@ -37,12 +39,16 @@ public class MarkAdapter extends BaseAdapter
 		}
 		
 		markIdTextBox = (TextView) convertView.findViewById(R.id.markIdTextBox);
-		userIdTextBox = (TextView) convertView.findViewById(R.id.userIdTextBox);
+		classeIdTextBox = (TextView) convertView.findViewById(R.id.classeIdTextBox);
+		studentIdTextBox = (TextView) convertView.findViewById(R.id.studentIdTextBox);
+		teacherIdTextBox = (TextView) convertView.findViewById(R.id.teacherIdTextBox);
 		valueTextBox = (TextView) convertView.findViewById(R.id.valueTextBox);
 		creationTimeTextBox = (TextView) convertView.findViewById(R.id.creationTimeTextBox);
 		
 		markIdTextBox.setText(mark.getMarkId().toString());
-		userIdTextBox.setText(mark.getUserId().toString());
+		classeIdTextBox.setText(mark.getClasseId().toString());
+		studentIdTextBox.setText(mark.getStudentId().toString());
+		teacherIdTextBox.setText(mark.getTeacherId().toString());
 		valueTextBox.setText(mark.getValue().toString());
 		creationTimeTextBox.setText(mark.getCreationTime().toString());
 		

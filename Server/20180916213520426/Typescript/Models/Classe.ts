@@ -2,11 +2,11 @@
 import { log } from 'util';
 import { Injectable } from '@angular/core'
 import { ClassRoom } from './/ClassRoom'
-import { User } from './/User'
+import { Teacher } from './/Teacher'
 export interface Classe
 {
 	classeId : number;
-	userId : number;
+	teacherId : number;
 	classRoomId : number;
 	name : string;
 	creationTime : string;
@@ -14,7 +14,7 @@ export interface Classe
 
 export interface ClasseJSON
 {
-	userId : number;
+	teacherId : number;
 	classRoomId : number;
 	name : string;
 	creationTime : string;
@@ -22,7 +22,7 @@ export interface ClasseJSON
 
 export function encodeClasse(classe: Classe): ClasseJSON {
 	return {
-		userId:	classe.userId,
+		teacherId:	classe.teacherId,
 		classRoomId:	classe.classRoomId,
 		name:	classe.name,
 		creationTime:	classe.creationTime,

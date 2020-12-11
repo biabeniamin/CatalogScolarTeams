@@ -1,13 +1,13 @@
 <?php
 //generated automatically
-require_once 'User.php';
+require_once 'Teacher.php';
 class Absente
 {
 	var $absenteId;
-	var $userId;
+	var $teacherId;
 	var $date;
 	var $creationTime;
-	var $user;
+	var $teacher;
 
 	function GetAbsenteId()
 	{
@@ -18,13 +18,13 @@ class Absente
 		$this->absenteId = $value;
 	}
 	
-	function GetUserId()
+	function GetTeacherId()
 	{
-		return $this->userId;
+		return $this->teacherId;
 	}
-	function SetUserId($value)
+	function SetTeacherId($value)
 	{
-		$this->userId = $value;
+		$this->teacherId = $value;
 	}
 	
 	function GetDate()
@@ -45,21 +45,21 @@ class Absente
 		$this->creationTime = $value;
 	}
 	
-	function GetUser()
+	function GetTeacher()
 	{
-		return $this->user;
+		return $this->teacher;
 	}
-	function SetUser($value)
+	function SetTeacher($value)
 	{
-		$this->user = $value;
+		$this->teacher = $value;
 	}
 	
 
-	function Absente($UserId, $Date)
+	function Absente($TeacherId, $Date)
 	{
 		$this->absenteId = 0;
 	
-		$this->userId = $UserId;
+		$this->teacherId = $TeacherId;
 		$this->date = $Date;
 	}
 

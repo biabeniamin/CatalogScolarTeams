@@ -22,7 +22,7 @@ namespace DatabaseFunctionsGenerator
 			{
 				list.Add(new Absente(
 					(int)reader["AbsenteId"],
-					(int)reader["UserId"],
+					(int)reader["TeacherId"],
 					(DateTime)reader["Date"],
 					(DateTime)reader["CreationTime"]
 				));
@@ -35,9 +35,9 @@ namespace DatabaseFunctionsGenerator
 		public void Post([FromBody]Absente data)
 		{
 			DatabaseOperations db = new DatabaseOperations();
-			MySqlCommand command = new MySqlCommand("INSERT INTO Absente(UserId,  Date,  CreationTime) VALUES(@UserId,  @Date,  @CreationTime)");
+			MySqlCommand command = new MySqlCommand("INSERT INTO Absente(TeacherId,  Date,  CreationTime) VALUES(@TeacherId,  @Date,  @CreationTime)");
 			
-			command.Parameters.AddWithValue("@UserId", data.UserId);
+			command.Parameters.AddWithValue("@TeacherId", data.TeacherId);
 			command.Parameters.AddWithValue("@Date", data.Date);
 			command.Parameters.AddWithValue("@CreationTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 			

@@ -4,8 +4,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WebSockets, Message, Request } from './WebSockets';
 import { Mark, encodeMark } from '../app/Models/Mark'
-import { User } from '../app/Models/User'
-import { UserService } from './UserService'
+import { Teacher } from '../app/Models/Teacher'
+import { TeacherService } from './TeacherService'
+import { Student } from '../app/Models/Student'
+import { StudentService } from './StudentService'
+import { Classe } from '../app/Models/Classe'
+import { ClasseService } from './ClasseService'
 
 @Injectable({
     providedIn : 'root'
@@ -26,12 +30,18 @@ export class MarkService
 	{
 		return {
 		markId : 0,
-		userId : 0,
+		classeId : 0,
+		studentId : 0,
+		teacherId : 0,
 		value : 0,
 		creationTime : '2000-01-01 00:00:00'
 		};
 	}
 	
+	GetMarksByClasseIdStudentId(classeId, studentId)
+	{
+		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByClasseIdStudentId&classeId=${classeId}&studentId=${studentId}`);
+	}
 	GetMarksByMarkId(markId)
 	{
 		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByMarkId&markId=${markId}`);

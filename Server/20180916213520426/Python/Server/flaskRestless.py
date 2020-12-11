@@ -8,7 +8,8 @@ from SqlAlchemy import Base, engine
 from ValidationError import ValidationError
 from ClassRooms import ClassRooms
 from Classes import Classes
-from Users import Users
+from Teachers import Teachers
+from Students import Students
 from Marks import Marks
 from Absente import Absente
 from Notifications import Notifications
@@ -29,7 +30,9 @@ manager.create_api(ClassRooms,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
 manager.create_api(Classes,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
-manager.create_api(Users,
+manager.create_api(Teachers,
+	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
+manager.create_api(Students,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
 manager.create_api(Marks,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)

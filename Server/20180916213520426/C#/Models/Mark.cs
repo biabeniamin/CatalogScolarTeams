@@ -11,10 +11,14 @@ namespace DatabaseFunctionsGenerator
 	public class Mark
 	{
 		private int _markId;
-		private int _userId;
+		private int _classeId;
+		private int _studentId;
+		private int _teacherId;
 		private int _value;
 		private DateTime _creationTime;
-		private User _user;
+		private Teacher _teacher;
+		private Student _student;
+		private Classe _classe;
 		
 		[JsonProperty(PropertyName = "markId")]
 		public int MarkId
@@ -29,16 +33,42 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "userId")]
-		public int UserId
+		[JsonProperty(PropertyName = "classeId")]
+		public int ClasseId
 		{
 			get
 			{
-				return _userId;
+				return _classeId;
 			}
 			set
 			{
-				_userId = value;
+				_classeId = value;
+			}
+		}
+		
+		[JsonProperty(PropertyName = "studentId")]
+		public int StudentId
+		{
+			get
+			{
+				return _studentId;
+			}
+			set
+			{
+				_studentId = value;
+			}
+		}
+		
+		[JsonProperty(PropertyName = "teacherId")]
+		public int TeacherId
+		{
+			get
+			{
+				return _teacherId;
+			}
+			set
+			{
+				_teacherId = value;
 			}
 		}
 		
@@ -68,44 +98,78 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "user")]
-		public User User
+		[JsonProperty(PropertyName = "teacher")]
+		public Teacher Teacher
 		{
 			get
 			{
-				return _user;
+				return _teacher;
 			}
 			set
 			{
-				_user = value;
+				_teacher = value;
+			}
+		}
+		
+		[JsonProperty(PropertyName = "student")]
+		public Student Student
+		{
+			get
+			{
+				return _student;
+			}
+			set
+			{
+				_student = value;
+			}
+		}
+		
+		[JsonProperty(PropertyName = "classe")]
+		public Classe Classe
+		{
+			get
+			{
+				return _classe;
+			}
+			set
+			{
+				_classe = value;
 			}
 		}
 		
 		
-		public Mark(int markId, int userId, int value, DateTime creationTime)
+		public Mark(int markId, int classeId, int studentId, int teacherId, int value, DateTime creationTime)
 		{
 			_markId = markId;
-			_userId = userId;
+			_classeId = classeId;
+			_studentId = studentId;
+			_teacherId = teacherId;
 			_value = value;
 			_creationTime = creationTime;
 		}
 		
-		public Mark(int userId, int value)
+		public Mark(int classeId, int studentId, int teacherId, int value)
 		{
-			_userId = userId;
+			_classeId = classeId;
+			_studentId = studentId;
+			_teacherId = teacherId;
 			_value = value;
 		}
 		
-		public Mark(int userId, int value, User user)
-			:this(userId, value)
+		public Mark(int classeId, int studentId, int teacherId, int value, Teacher teacher, Student student, Classe classe)
+			:this(classeId, studentId, teacherId, value)
 		{
-			_userId = userId;
+			_classeId = classeId;
+			_studentId = studentId;
+			_teacherId = teacherId;
 			_value = value;
 		}
 		
 		public Mark()
 			 :this(
-				0, //UserId
+				0, //ClasseId
+				0, //StudentId
+				0, //TeacherId
 				0 //Value
 			)
 		{

@@ -8,7 +8,7 @@ Base = declarative_base()
 username="root"
 server="localhost"
 port=3306
-database="msoa"
+database="catalog"
 engine = create_engine('mysql+mysqlconnector://%s@%s:%d/%s'%(username, server, port, database), echo=True)
 
 def object_as_dict(obj):

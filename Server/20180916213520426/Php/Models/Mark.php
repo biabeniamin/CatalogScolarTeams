@@ -1,15 +1,18 @@
 <?php
 //generated automatically
-require_once 'User.php';
+require_once 'Teacher.php';
+require_once 'Student.php';
 require_once 'Classe.php';
 class Mark
 {
 	var $markId;
 	var $classeId;
-	var $userId;
+	var $studentId;
+	var $teacherId;
 	var $value;
 	var $creationTime;
-	var $user;
+	var $teacher;
+	var $student;
 	var $classe;
 
 	function GetMarkId()
@@ -30,13 +33,22 @@ class Mark
 		$this->classeId = $value;
 	}
 	
-	function GetUserId()
+	function GetStudentId()
 	{
-		return $this->userId;
+		return $this->studentId;
 	}
-	function SetUserId($value)
+	function SetStudentId($value)
 	{
-		$this->userId = $value;
+		$this->studentId = $value;
+	}
+	
+	function GetTeacherId()
+	{
+		return $this->teacherId;
+	}
+	function SetTeacherId($value)
+	{
+		$this->teacherId = $value;
 	}
 	
 	function GetValue()
@@ -57,13 +69,22 @@ class Mark
 		$this->creationTime = $value;
 	}
 	
-	function GetUser()
+	function GetTeacher()
 	{
-		return $this->user;
+		return $this->teacher;
 	}
-	function SetUser($value)
+	function SetTeacher($value)
 	{
-		$this->user = $value;
+		$this->teacher = $value;
+	}
+	
+	function GetStudent()
+	{
+		return $this->student;
+	}
+	function SetStudent($value)
+	{
+		$this->student = $value;
 	}
 	
 	function GetClasse()
@@ -76,12 +97,13 @@ class Mark
 	}
 	
 
-	function Mark($ClasseId, $UserId, $Value)
+	function Mark($ClasseId, $StudentId, $TeacherId, $Value)
 	{
 		$this->markId = 0;
 	
 		$this->classeId = $ClasseId;
-		$this->userId = $UserId;
+		$this->studentId = $StudentId;
+		$this->teacherId = $TeacherId;
 		$this->value = $Value;
 	}
 

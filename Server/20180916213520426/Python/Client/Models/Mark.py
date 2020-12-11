@@ -5,7 +5,9 @@ from dataclasses import dataclass
 @dataclass
 class Mark:
 	markId : int
-	userId : int
+	classeId : int
+	studentId : int
+	teacherId : int
 	value : int
 	creationTime : str
 	

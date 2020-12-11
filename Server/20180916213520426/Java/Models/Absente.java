@@ -15,10 +15,10 @@ import java.util.Date;
 public class Absente
 {
 	private Integer  absenteId;
-	private Integer  userId;
+	private Integer  teacherId;
 	private Date date;
 	private Date creationTime;
-	private User user;
+	private Teacher teacher;
 	
 	public Integer  getAbsenteId()
 	{
@@ -30,14 +30,14 @@ public class Absente
 		this.absenteId = absenteId;
 	}
 	
-	public Integer  getUserId()
+	public Integer  getTeacherId()
 	{
-		return this.userId;
+		return this.teacherId;
 	}
 	
-	public void setUserId(Integer  userId)
+	public void setTeacherId(Integer  teacherId)
 	{
-		this.userId = userId;
+		this.teacherId = teacherId;
 	}
 	
 	public Date getDate()
@@ -60,37 +60,37 @@ public class Absente
 		this.creationTime = creationTime;
 	}
 	
-	public User getUser()
+	public Teacher getTeacher()
 	{
-		return this.user;
+		return this.teacher;
 	}
 	
-	public void setUser(User user)
+	public void setTeacher(Teacher teacher)
 	{
-		this.user = user;
+		this.teacher = teacher;
 	}
 	
 	
-	public Absente(Integer  userId, Date date)
+	public Absente(Integer  teacherId, Date date)
 	{
-		this.userId = userId;
+		this.teacherId = teacherId;
 		this.date = date;
 	}
 	
-	public Absente(Integer  userId, Date date, User user)
+	public Absente(Integer  teacherId, Date date, Teacher teacher)
 	{
 		this(
-			0, //UserId
+			0, //TeacherId
 			new Date(0) //Date
 		);
-		this.user = user;
+		this.teacher = teacher;
 	
 	}
 	
 	public Absente()
 	{
 		this(
-			0, //UserId
+			0, //TeacherId
 			new Date(0) //Date
 		);
 		this.absenteId = 0;

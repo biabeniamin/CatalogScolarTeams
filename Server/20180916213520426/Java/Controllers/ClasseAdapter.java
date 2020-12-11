@@ -25,7 +25,7 @@ public class ClasseAdapter extends BaseAdapter
 	{
 		Classe classe;
 		TextView classeIdTextBox;
-		TextView userIdTextBox;
+		TextView teacherIdTextBox;
 		TextView classRoomIdTextBox;
 		TextView nameTextBox;
 		TextView creationTimeTextBox;
@@ -38,13 +38,13 @@ public class ClasseAdapter extends BaseAdapter
 		}
 		
 		classeIdTextBox = (TextView) convertView.findViewById(R.id.classeIdTextBox);
-		userIdTextBox = (TextView) convertView.findViewById(R.id.userIdTextBox);
+		teacherIdTextBox = (TextView) convertView.findViewById(R.id.teacherIdTextBox);
 		classRoomIdTextBox = (TextView) convertView.findViewById(R.id.classRoomIdTextBox);
 		nameTextBox = (TextView) convertView.findViewById(R.id.nameTextBox);
 		creationTimeTextBox = (TextView) convertView.findViewById(R.id.creationTimeTextBox);
 		
 		classeIdTextBox.setText(classe.getClasseId().toString());
-		userIdTextBox.setText(classe.getUserId().toString());
+		teacherIdTextBox.setText(classe.getTeacherId().toString());
 		classRoomIdTextBox.setText(classe.getClassRoomId().toString());
 		nameTextBox.setText(classe.getName());
 		creationTimeTextBox.setText(classe.getCreationTime().toString());

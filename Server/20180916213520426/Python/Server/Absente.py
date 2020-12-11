@@ -9,7 +9,7 @@ from ValidationError import ValidationError, validate_integer
 from flask_restful import reqparse
 import datetime
 from math import floor
-from User import User, getUsers, getUsersByUserId
+from Teacher import Teacher, getTeachers, getTeachersByTeacherId
 class Absente(Base):
 	@declared_attr
 	def __tablename__(cls):
@@ -19,34 +19,34 @@ class Absente(Base):
 	date = Column('Date', DateTime)
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
-	userId = Column('UserId', Integer, ForeignKey("Users.UserId"))
-	users = relationship(User,backref = backref('absente'))
-	user = null
+	teacherId = Column('TeacherId', Integer, ForeignKey("Teachers.TeacherId"))
+	teachers = relationship(Teacher,backref = backref('absente'))
+	teacher = null
 	
 	
 	#Validation
-	@validates('userId')
-	def validate_userId(self, key, value):
+	@validates('teacherId')
+	def validate_teacherId(self, key, value):
 		return validate_integer(key, value, True)
 	
 
 #Functions
-#complete users funtion
-def completeUsers(session, absente):
-	users = getUsers(session)
+#complete teachers funtion
+def completeTeachers(session, absente):
+	teachers = getTeachers(session)
 	for row in absente:
 		start = 0
-		end = len(users)
+		end = len(teachers)
 		while True:
 			mid = floor((start + end) / 2)
-			if(row.userId > users[mid].userId):
+			if(row.teacherId > teachers[mid].teacherId):
 				start = mid + 1
-			elif(row.userId < users[mid].userId):
+			elif(row.teacherId < teachers[mid].teacherId):
 				end = mid - 1
-			elif(row.userId == users[mid].userId):
+			elif(row.teacherId == teachers[mid].teacherId):
 				start = mid + 1
 				end = mid - 1
-				row.user = users[mid]
+				row.teacher = teachers[mid]
 			
 			if(start > end):
 				break
@@ -57,14 +57,14 @@ def completeUsers(session, absente):
 #get funtion
 def getAbsente(session):
 	result = session.query(Absente).all()
-	result = completeUsers(session, result)
+	result = completeTeachers(session, result)
 	return result
 
 
 #get dedicated request funtions
 def getAbsenteByAbsenteId(session, absenteId):
 	result = session.query(Absente).filter(Absente.absenteId == absenteId).all()
-	result = completeUsers(session, result)
+	result = completeTeachers(session, result)
 	return result
 
 
@@ -75,7 +75,7 @@ def addAbsente(session, absente):
 	session.commit()
 	#this must stay because sqlalchemy query the database because of this line
 	print('Value inserted with absenteId=', absente.absenteId)
-	absente.user = getUsersByUserId(session, absente.userId)[0]
+	absente.teacher = getTeachersByTeacherId(session, absente.teacherId)[0]
 	return absente
 
 
@@ -85,7 +85,7 @@ def updateAbsente(session, absente):
 	result = absente
 	session.commit()
 	result = session.query(Absente).filter(Absente.absenteId == absente.absenteId).first()
-	result.user = getUsersByUserId(session, result.userId)[0]
+	result.teacher = getTeachersByTeacherId(session, result.teacherId)[0]
 	return result
 
 
@@ -102,7 +102,7 @@ def deleteAbsente(session, absenteId):
 #request parser funtion
 def getabsenteRequestArguments():
 	parser = reqparse.RequestParser()
-	parser.add_argument('userId')
+	parser.add_argument('teacherId')
 	parser.add_argument('date')
 	return parser
 

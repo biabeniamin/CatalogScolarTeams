@@ -24,13 +24,12 @@
 				</option>
 			</select>
 			
-			<select id=UserIdDropDown (change)="userChanged($event.target.value)">
-				<option [value]="user.userId" *ngFor= "let user of userService.users | async" >
-				{{user.userId}}
-				{{user.firstName}}
-				{{user.lastName}}
-				{{user.email}}
-				{{user.type}}
+			<select id=TeacherIdDropDown (change)="teacherChanged($event.target.value)">
+				<option [value]="teacher.teacherId" *ngFor= "let teacher of teacherService.teachers | async" >
+				{{teacher.teacherId}}
+				{{teacher.firstName}}
+				{{teacher.lastName}}
+				{{teacher.email}}
 				</option>
 			</select>
 			
@@ -45,7 +44,7 @@
 					ClasseId
 				</th>
 				<th>
-					UserId
+					TeacherId
 				</th>
 				<th>
 					ClassRoomId
@@ -66,22 +65,19 @@
 					classRoom.CreationTime
 				</th>
 				<th>
-					user.UserId
+					teacher.TeacherId
 				</th>
 				<th>
-					user.FirstName
+					teacher.FirstName
 				</th>
 				<th>
-					user.LastName
+					teacher.LastName
 				</th>
 				<th>
-					user.Email
+					teacher.Email
 				</th>
 				<th>
-					user.Type
-				</th>
-				<th>
-					user.CreationTime
+					teacher.CreationTime
 				</th>
 			</tr>
 			<tr *ngFor="let classe of classeService.classes | async; let i = index">
@@ -89,7 +85,7 @@
 					{{classe.classeId}}
 				</td>
 				<td>
-					{{classe.userId}}
+					{{classe.teacherId}}
 				</td>
 				<td>
 					{{classe.classRoomId}}
@@ -109,27 +105,35 @@
 				<td *ngIf="classe.classRoom">
 					{{classe.classRoom.creationTime}}
 				</td>
-				<td *ngIf="classe.user">
-					{{classe.user.userId}}
+				<td *ngIf="classe.teacher">
+					{{classe.teacher.teacherId}}
 				</td>
-				<td *ngIf="classe.user">
-					{{classe.user.firstName}}
+				<td *ngIf="classe.teacher">
+					{{classe.teacher.firstName}}
 				</td>
-				<td *ngIf="classe.user">
-					{{classe.user.lastName}}
+				<td *ngIf="classe.teacher">
+					{{classe.teacher.lastName}}
 				</td>
-				<td *ngIf="classe.user">
-					{{classe.user.email}}
+				<td *ngIf="classe.teacher">
+					{{classe.teacher.email}}
 				</td>
-				<td *ngIf="classe.user">
-					{{classe.user.type}}
-				</td>
-				<td *ngIf="classe.user">
-					{{classe.user.creationTime}}
+				<td *ngIf="classe.teacher">
+					{{classe.teacher.creationTime}}
 				</td>
 			</tr>
 		</tbody>
 
+		<form (submit)="getClassesByClassRoomId($event)">
+			<h3>Get Classes by ClassRoomId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "ClassRoomId" id="ClassRoomId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by ClassRoomId">
+			</div>
+		</form>
+		
 		<form (submit)="getClassesByClasseId($event)">
 			<h3>Get Classes by ClasseId</h3>
 			<div class="input-container">

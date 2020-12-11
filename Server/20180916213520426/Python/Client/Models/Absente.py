@@ -5,7 +5,7 @@ from dataclasses import dataclass
 @dataclass
 class Absente:
 	absenteId : int
-	userId : int
+	teacherId : int
 	date : str
 	creationTime : str
 	

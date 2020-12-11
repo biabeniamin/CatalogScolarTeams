@@ -6,8 +6,8 @@ import { WebSockets, Message, Request } from './WebSockets';
 import { Classe, encodeClasse } from '../app/Models/Classe'
 import { ClassRoom } from '../app/Models/ClassRoom'
 import { ClassRoomService } from './ClassRoomService'
-import { User } from '../app/Models/User'
-import { UserService } from './UserService'
+import { Teacher } from '../app/Models/Teacher'
+import { TeacherService } from './TeacherService'
 
 @Injectable({
     providedIn : 'root'
@@ -28,13 +28,17 @@ export class ClasseService
 	{
 		return {
 		classeId : 0,
-		userId : 0,
+		teacherId : 0,
 		classRoomId : 0,
 		name : 'Test',
 		creationTime : '2000-01-01 00:00:00'
 		};
 	}
 	
+	GetClassesByClassRoomId(classRoomId)
+	{
+		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=getClassesByClassRoomId&classRoomId=${classRoomId}`);
+	}
 	GetClassesByClasseId(classeId)
 	{
 		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=getClassesByClasseId&classeId=${classeId}`);

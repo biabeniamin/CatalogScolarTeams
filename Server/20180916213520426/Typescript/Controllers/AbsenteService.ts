@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WebSockets, Message, Request } from './WebSockets';
 import { Absente, encodeAbsente } from '../app/Models/Absente'
-import { User } from '../app/Models/User'
-import { UserService } from './UserService'
+import { Teacher } from '../app/Models/Teacher'
+import { TeacherService } from './TeacherService'
 
 @Injectable({
     providedIn : 'root'
@@ -26,7 +26,7 @@ export class AbsenteService
 	{
 		return {
 		absenteId : 0,
-		userId : 0,
+		teacherId : 0,
 		date : '2000-01-01 00:00:00',
 		creationTime : '2000-01-01 00:00:00'
 		};

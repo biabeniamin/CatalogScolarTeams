@@ -23,12 +23,14 @@ deletes a ClassRoom by id and returns the ClassRoom with id == 0 if succeeded
 ------------Classes----------
 http://192.168.0.100:5000/Classes.php?cmd=getClasses - GET request -return all Classes
 
+http://192.168.0.100:5000/Classes.php?cmd=getClassesByClassRoomId&classRoomId=value - GET request -return Classes filtered by ClassRoomId
+
 http://192.168.0.100:5000/Classes.php?cmd=getClassesByClasseId&classeId=value - GET request -return Classes filtered by ClasseId
 
 
 
 http://192.168.0.100:5000/Classes.php?cmd=addClasse- POST request with following parameters
-userId : INT
+teacherId : INT
 classRoomId : INT
 name : VARCHAR(50)
 add a new Classe with specified data and returns the Classe with id != 0 if succeeded
@@ -36,7 +38,7 @@ add a new Classe with specified data and returns the Classe with id != 0 if succ
 
 http://192.168.0.100:5000/Classes.php?cmd=updateClasse- PUT request with following parameters
 classeId : INT
-userId : INT
+teacherId : INT
 classRoomId : INT
 name : VARCHAR(50)
 update a Classe by id and returns the Classe with id != 0 if succeeded
@@ -46,50 +48,80 @@ http://192.168.0.100:5000/Classes.php?cmd=updateClasse&classeId=0 - DELETE reque
 deletes a Classe by id and returns the Classe with id == 0 if succeeded
 
 
-------------Users----------
-http://192.168.0.100:5000/Users.php?cmd=getUsers - GET request -return all Users
+------------Teachers----------
+http://192.168.0.100:5000/Teachers.php?cmd=getTeachers - GET request -return all Teachers
 
-http://192.168.0.100:5000/Users.php?cmd=getUsersByUserId&userId=value - GET request -return Users filtered by UserId
+http://192.168.0.100:5000/Teachers.php?cmd=getTeachersByTeacherId&teacherId=value - GET request -return Teachers filtered by TeacherId
 
 
 
-http://192.168.0.100:5000/Users.php?cmd=addUser- POST request with following parameters
+http://192.168.0.100:5000/Teachers.php?cmd=addTeacher- POST request with following parameters
 firstName : VARCHAR(30)
 lastName : VARCHAR(30)
 email : VARCHAR(30)
-type : INT
-add a new User with specified data and returns the User with id != 0 if succeeded
+add a new Teacher with specified data and returns the Teacher with id != 0 if succeeded
 
 
-http://192.168.0.100:5000/Users.php?cmd=updateUser- PUT request with following parameters
-userId : INT
+http://192.168.0.100:5000/Teachers.php?cmd=updateTeacher- PUT request with following parameters
+teacherId : INT
 firstName : VARCHAR(30)
 lastName : VARCHAR(30)
 email : VARCHAR(30)
-type : INT
-update a User by id and returns the User with id != 0 if succeeded
+update a Teacher by id and returns the Teacher with id != 0 if succeeded
 
 
-http://192.168.0.100:5000/Users.php?cmd=updateUser&userId=0 - DELETE request
-deletes a User by id and returns the User with id == 0 if succeeded
+http://192.168.0.100:5000/Teachers.php?cmd=updateTeacher&teacherId=0 - DELETE request
+deletes a Teacher by id and returns the Teacher with id == 0 if succeeded
+
+
+------------Students----------
+http://192.168.0.100:5000/Students.php?cmd=getStudents - GET request -return all Students
+
+http://192.168.0.100:5000/Students.php?cmd=getStudentsByStudentId&studentId=value - GET request -return Students filtered by StudentId
+
+
+
+http://192.168.0.100:5000/Students.php?cmd=addStudent- POST request with following parameters
+firstName : VARCHAR(30)
+lastName : VARCHAR(30)
+email : VARCHAR(30)
+add a new Student with specified data and returns the Student with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Students.php?cmd=updateStudent- PUT request with following parameters
+studentId : INT
+firstName : VARCHAR(30)
+lastName : VARCHAR(30)
+email : VARCHAR(30)
+update a Student by id and returns the Student with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Students.php?cmd=updateStudent&studentId=0 - DELETE request
+deletes a Student by id and returns the Student with id == 0 if succeeded
 
 
 ------------Marks----------
 http://192.168.0.100:5000/Marks.php?cmd=getMarks - GET request -return all Marks
+
+http://192.168.0.100:5000/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=value&studentId=value - GET request -return Marks filtered by ClasseId, StudentId
 
 http://192.168.0.100:5000/Marks.php?cmd=getMarksByMarkId&markId=value - GET request -return Marks filtered by MarkId
 
 
 
 http://192.168.0.100:5000/Marks.php?cmd=addMark- POST request with following parameters
-userId : INT
+classeId : INT
+studentId : INT
+teacherId : INT
 value : INT
 add a new Mark with specified data and returns the Mark with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/Marks.php?cmd=updateMark- PUT request with following parameters
 markId : INT
-userId : INT
+classeId : INT
+studentId : INT
+teacherId : INT
 value : INT
 update a Mark by id and returns the Mark with id != 0 if succeeded
 
@@ -106,14 +138,14 @@ http://192.168.0.100:5000/Absente.php?cmd=getAbsenteByAbsenteId&absenteId=value 
 
 
 http://192.168.0.100:5000/Absente.php?cmd=addAbsente- POST request with following parameters
-userId : INT
+teacherId : INT
 date : DATETIME
 add a new Absente with specified data and returns the Absente with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/Absente.php?cmd=updateAbsente- PUT request with following parameters
 absenteId : INT
-userId : INT
+teacherId : INT
 date : DATETIME
 update a Absente by id and returns the Absente with id != 0 if succeeded
 

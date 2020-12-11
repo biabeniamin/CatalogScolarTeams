@@ -3,7 +3,7 @@ import { ClasseService } from '../ClasseService'
 import {HttpClient} from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ClassRoomService } from '../ClassRoomService'
-import { UserService } from '../UserService'
+import { TeacherService } from '../TeacherService'
 
 @Component({
 selector: 'app-classe',
@@ -16,7 +16,7 @@ export class ClasseComponent implements OnInit
 	constructor(private http:HttpClient, 
 		private classeService : ClasseService, 
 		private classRoomService : ClassRoomService, 
-		private userService : UserService
+		private teacherService : TeacherService
 	)
 	{
 	
@@ -32,13 +32,23 @@ export class ClasseComponent implements OnInit
 		event.preventDefault();
 		const target = event.target;
 		let classe = ClasseService.GetDefaultClasse();
-		classe.userId = target.querySelector('#UserIdDropDown').value;
+		classe.teacherId = target.querySelector('#TeacherIdDropDown').value;
 		classe.classRoomId = target.querySelector('#ClassRoomIdDropDown').value;
 		classe.name = target.querySelector('#Name').value;
 		console.log(classe);
 		this.classeService.AddClasse(classe);
 	}
 	
+	getClassesByClassRoomId(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let classRoomId = target.querySelector('#ClassRoomId').value;
+		console.log(classRoomId);
+		this.classeService.GetClassesByClassRoomId(classRoomId).subscribe(data =>{
+			this.classeService.classes.next(data);
+		});
+	}
 	getClassesByClasseId(event)
 	{
 		event.preventDefault();
@@ -63,7 +73,7 @@ export class ClasseComponent implements OnInit
 	
 	}
 	
-	userChanged(event)
+	teacherChanged(event)
 	{
 		console.log(event);
 	

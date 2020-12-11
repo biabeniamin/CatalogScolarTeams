@@ -17,13 +17,30 @@
 			<input type="text" placeholder= "Value" id="Value" />
 			<div class="bar"></div>
 			</div>
-			<select id=UserIdDropDown (change)="userChanged($event.target.value)">
-				<option [value]="user.userId" *ngFor= "let user of userService.users | async" >
-				{{user.userId}}
-				{{user.firstName}}
-				{{user.lastName}}
-				{{user.email}}
-				{{user.type}}
+			<select id=TeacherIdDropDown (change)="teacherChanged($event.target.value)">
+				<option [value]="teacher.teacherId" *ngFor= "let teacher of teacherService.teachers | async" >
+				{{teacher.teacherId}}
+				{{teacher.firstName}}
+				{{teacher.lastName}}
+				{{teacher.email}}
+				</option>
+			</select>
+			
+			<select id=StudentIdDropDown (change)="studentChanged($event.target.value)">
+				<option [value]="student.studentId" *ngFor= "let student of studentService.students | async" >
+				{{student.studentId}}
+				{{student.firstName}}
+				{{student.lastName}}
+				{{student.email}}
+				</option>
+			</select>
+			
+			<select id=ClasseIdDropDown (change)="classeChanged($event.target.value)">
+				<option [value]="classe.classeId" *ngFor= "let classe of classeService.classes | async" >
+				{{classe.classeId}}
+				{{classe.teacherId}}
+				{{classe.classRoomId}}
+				{{classe.name}}
 				</option>
 			</select>
 			
@@ -38,7 +55,13 @@
 					MarkId
 				</th>
 				<th>
-					UserId
+					ClasseId
+				</th>
+				<th>
+					StudentId
+				</th>
+				<th>
+					TeacherId
 				</th>
 				<th>
 					Value
@@ -47,22 +70,49 @@
 					CreationTime
 				</th>
 				<th>
-					user.UserId
+					teacher.TeacherId
 				</th>
 				<th>
-					user.FirstName
+					teacher.FirstName
 				</th>
 				<th>
-					user.LastName
+					teacher.LastName
 				</th>
 				<th>
-					user.Email
+					teacher.Email
 				</th>
 				<th>
-					user.Type
+					teacher.CreationTime
 				</th>
 				<th>
-					user.CreationTime
+					student.StudentId
+				</th>
+				<th>
+					student.FirstName
+				</th>
+				<th>
+					student.LastName
+				</th>
+				<th>
+					student.Email
+				</th>
+				<th>
+					student.CreationTime
+				</th>
+				<th>
+					classe.ClasseId
+				</th>
+				<th>
+					classe.TeacherId
+				</th>
+				<th>
+					classe.ClassRoomId
+				</th>
+				<th>
+					classe.Name
+				</th>
+				<th>
+					classe.CreationTime
 				</th>
 			</tr>
 			<tr *ngFor="let mark of markService.marks | async; let i = index">
@@ -70,7 +120,13 @@
 					{{mark.markId}}
 				</td>
 				<td>
-					{{mark.userId}}
+					{{mark.classeId}}
+				</td>
+				<td>
+					{{mark.studentId}}
+				</td>
+				<td>
+					{{mark.teacherId}}
 				</td>
 				<td>
 					{{mark.value}}
@@ -78,27 +134,69 @@
 				<td>
 					{{mark.creationTime}}
 				</td>
-				<td *ngIf="mark.user">
-					{{mark.user.userId}}
+				<td *ngIf="mark.teacher">
+					{{mark.teacher.teacherId}}
 				</td>
-				<td *ngIf="mark.user">
-					{{mark.user.firstName}}
+				<td *ngIf="mark.teacher">
+					{{mark.teacher.firstName}}
 				</td>
-				<td *ngIf="mark.user">
-					{{mark.user.lastName}}
+				<td *ngIf="mark.teacher">
+					{{mark.teacher.lastName}}
 				</td>
-				<td *ngIf="mark.user">
-					{{mark.user.email}}
+				<td *ngIf="mark.teacher">
+					{{mark.teacher.email}}
 				</td>
-				<td *ngIf="mark.user">
-					{{mark.user.type}}
+				<td *ngIf="mark.teacher">
+					{{mark.teacher.creationTime}}
 				</td>
-				<td *ngIf="mark.user">
-					{{mark.user.creationTime}}
+				<td *ngIf="mark.student">
+					{{mark.student.studentId}}
+				</td>
+				<td *ngIf="mark.student">
+					{{mark.student.firstName}}
+				</td>
+				<td *ngIf="mark.student">
+					{{mark.student.lastName}}
+				</td>
+				<td *ngIf="mark.student">
+					{{mark.student.email}}
+				</td>
+				<td *ngIf="mark.student">
+					{{mark.student.creationTime}}
+				</td>
+				<td *ngIf="mark.classe">
+					{{mark.classe.classeId}}
+				</td>
+				<td *ngIf="mark.classe">
+					{{mark.classe.teacherId}}
+				</td>
+				<td *ngIf="mark.classe">
+					{{mark.classe.classRoomId}}
+				</td>
+				<td *ngIf="mark.classe">
+					{{mark.classe.name}}
+				</td>
+				<td *ngIf="mark.classe">
+					{{mark.classe.creationTime}}
 				</td>
 			</tr>
 		</tbody>
 
+		<form (submit)="getMarksByClasseIdStudentId($event)">
+			<h3>Get Marks by ClasseId, StudentId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "ClasseId" id="ClasseId" />
+			<div class="bar"></div>
+			</div>
+			<div class="input-container">
+			<input type="text" placeholder= "StudentId" id="StudentId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by ClasseId StudentId">
+			</div>
+		</form>
+		
 		<form (submit)="getMarksByMarkId($event)">
 			<h3>Get Marks by MarkId</h3>
 			<div class="input-container">

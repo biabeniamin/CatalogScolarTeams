@@ -1,25 +1,25 @@
 //generated automatically
 import { log } from 'util';
 import { Injectable } from '@angular/core'
-import { User } from './/User'
+import { Teacher } from './/Teacher'
 export interface Absente
 {
 	absenteId : number;
-	userId : number;
+	teacherId : number;
 	date : string;
 	creationTime : string;
 }
 
 export interface AbsenteJSON
 {
-	userId : number;
+	teacherId : number;
 	date : string;
 	creationTime : string;
 }
 
 export function encodeAbsente(absente: Absente): AbsenteJSON {
 	return {
-		userId:	absente.userId,
+		teacherId:	absente.teacherId,
 		date:	absente.date,
 		creationTime:	absente.creationTime,
 	}

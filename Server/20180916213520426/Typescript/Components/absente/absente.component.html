@@ -17,13 +17,12 @@
 			<input type="text" placeholder= "Date" id="Date" />
 			<div class="bar"></div>
 			</div>
-			<select id=UserIdDropDown (change)="userChanged($event.target.value)">
-				<option [value]="user.userId" *ngFor= "let user of userService.users | async" >
-				{{user.userId}}
-				{{user.firstName}}
-				{{user.lastName}}
-				{{user.email}}
-				{{user.type}}
+			<select id=TeacherIdDropDown (change)="teacherChanged($event.target.value)">
+				<option [value]="teacher.teacherId" *ngFor= "let teacher of teacherService.teachers | async" >
+				{{teacher.teacherId}}
+				{{teacher.firstName}}
+				{{teacher.lastName}}
+				{{teacher.email}}
 				</option>
 			</select>
 			
@@ -38,7 +37,7 @@
 					AbsenteId
 				</th>
 				<th>
-					UserId
+					TeacherId
 				</th>
 				<th>
 					Date
@@ -47,22 +46,19 @@
 					CreationTime
 				</th>
 				<th>
-					user.UserId
+					teacher.TeacherId
 				</th>
 				<th>
-					user.FirstName
+					teacher.FirstName
 				</th>
 				<th>
-					user.LastName
+					teacher.LastName
 				</th>
 				<th>
-					user.Email
+					teacher.Email
 				</th>
 				<th>
-					user.Type
-				</th>
-				<th>
-					user.CreationTime
+					teacher.CreationTime
 				</th>
 			</tr>
 			<tr *ngFor="let absente of absenteService.absente | async; let i = index">
@@ -70,7 +66,7 @@
 					{{absente.absenteId}}
 				</td>
 				<td>
-					{{absente.userId}}
+					{{absente.teacherId}}
 				</td>
 				<td>
 					{{absente.date}}
@@ -78,23 +74,20 @@
 				<td>
 					{{absente.creationTime}}
 				</td>
-				<td *ngIf="absente.user">
-					{{absente.user.userId}}
+				<td *ngIf="absente.teacher">
+					{{absente.teacher.teacherId}}
 				</td>
-				<td *ngIf="absente.user">
-					{{absente.user.firstName}}
+				<td *ngIf="absente.teacher">
+					{{absente.teacher.firstName}}
 				</td>
-				<td *ngIf="absente.user">
-					{{absente.user.lastName}}
+				<td *ngIf="absente.teacher">
+					{{absente.teacher.lastName}}
 				</td>
-				<td *ngIf="absente.user">
-					{{absente.user.email}}
+				<td *ngIf="absente.teacher">
+					{{absente.teacher.email}}
 				</td>
-				<td *ngIf="absente.user">
-					{{absente.user.type}}
-				</td>
-				<td *ngIf="absente.user">
-					{{absente.user.creationTime}}
+				<td *ngIf="absente.teacher">
+					{{absente.teacher.creationTime}}
 				</td>
 			</tr>
 		</tbody>

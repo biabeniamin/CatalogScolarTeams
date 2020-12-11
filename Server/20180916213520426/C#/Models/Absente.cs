@@ -11,10 +11,10 @@ namespace DatabaseFunctionsGenerator
 	public class Absente
 	{
 		private int _absenteId;
-		private int _userId;
+		private int _teacherId;
 		private DateTime _date;
 		private DateTime _creationTime;
-		private User _user;
+		private Teacher _teacher;
 		
 		[JsonProperty(PropertyName = "absenteId")]
 		public int AbsenteId
@@ -29,16 +29,16 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "userId")]
-		public int UserId
+		[JsonProperty(PropertyName = "teacherId")]
+		public int TeacherId
 		{
 			get
 			{
-				return _userId;
+				return _teacherId;
 			}
 			set
 			{
-				_userId = value;
+				_teacherId = value;
 			}
 		}
 		
@@ -68,44 +68,44 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "user")]
-		public User User
+		[JsonProperty(PropertyName = "teacher")]
+		public Teacher Teacher
 		{
 			get
 			{
-				return _user;
+				return _teacher;
 			}
 			set
 			{
-				_user = value;
+				_teacher = value;
 			}
 		}
 		
 		
-		public Absente(int absenteId, int userId, DateTime date, DateTime creationTime)
+		public Absente(int absenteId, int teacherId, DateTime date, DateTime creationTime)
 		{
 			_absenteId = absenteId;
-			_userId = userId;
+			_teacherId = teacherId;
 			_date = date;
 			_creationTime = creationTime;
 		}
 		
-		public Absente(int userId, DateTime date)
+		public Absente(int teacherId, DateTime date)
 		{
-			_userId = userId;
+			_teacherId = teacherId;
 			_date = date;
 		}
 		
-		public Absente(int userId, DateTime date, User user)
-			:this(userId, date)
+		public Absente(int teacherId, DateTime date, Teacher teacher)
+			:this(teacherId, date)
 		{
-			_userId = userId;
+			_teacherId = teacherId;
 			_date = date;
 		}
 		
 		public Absente()
 			 :this(
-				0, //UserId
+				0, //TeacherId
 				new DateTime(1970, 1, 1, 0, 0, 0) //Date
 			)
 		{

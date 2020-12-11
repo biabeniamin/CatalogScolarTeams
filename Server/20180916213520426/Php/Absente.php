@@ -6,7 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Absente.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
-require_once 'Users.php';
+require_once 'Teachers.php';
 function ConvertListToAbsente($data)
 {
 	$absente = [];
@@ -14,7 +14,7 @@ function ConvertListToAbsente($data)
 	foreach($data as $row)
 	{
 		$absente = new Absente(
-		$row["UserId"], 
+		$row["TeacherId"], 
 		$row["Date"] 
 		);
 	
@@ -31,7 +31,7 @@ function GetAbsente($database)
 {
 	$data = $database->ReadData("SELECT * FROM Absente");
 	$absente = ConvertListToAbsente($data);
-	$absente = CompleteUsers($database, $absente);
+	$absente = CompleteTeachers($database, $absente);
 	return $absente;
 }
 
@@ -43,7 +43,7 @@ function GetAbsenteByAbsenteId($database, $absenteId)
 	{
 		return [GetEmptyAbsente()];
 	}
-	CompleteUsers($database, $absente);
+	CompleteTeachers($database, $absente);
 	return $absente;
 }
 
@@ -81,8 +81,8 @@ function CompleteAbsente($database, $absente)
 
 function AddAbsente($database, $absente)
 {
-	$query = "INSERT INTO Absente(UserId, Date, CreationTime) VALUES(";
-	$query = $query . mysqli_real_escape_string($database->connection ,$absente->GetUserId()).", ";
+	$query = "INSERT INTO Absente(TeacherId, Date, CreationTime) VALUES(";
+	$query = $query . mysqli_real_escape_string($database->connection ,$absente->GetTeacherId()).", ";
 	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$absente->GetDate()) . "', ";
 	$query = $query . "NOW()"."";
 	
@@ -91,7 +91,7 @@ function AddAbsente($database, $absente)
 	$id = $database->GetLastInsertedId();
 	$absente->SetAbsenteId($id);
 	$absente->SetCreationTime(date('Y-m-d H:i:s'));
-	$absente->SetUser(GetUsersByUserId($database, $absente->GetUserId())[0]);
+	$absente->SetTeacher(GetTeachersByTeacherId($database, $absente->GetTeacherId())[0]);
 	return $absente;
 	
 }
@@ -116,7 +116,7 @@ function DeleteAbsente($database, $absenteId)
 function UpdateAbsente($database, $absente)
 {
 	$query = "UPDATE Absente SET ";
-	$query = $query . "UserId=" . $absente->GetUserId().", ";
+	$query = $query . "TeacherId=" . $absente->GetTeacherId().", ";
 	$query = $query . "Date='" . $absente->GetDate() . "'";
 	$query = $query . " WHERE AbsenteId=" . $absente->GetAbsenteId();
 	
@@ -132,7 +132,7 @@ function UpdateAbsente($database, $absente)
 function TestAddAbsente($database)
 {
 	$absente = new Absente(
-		0,//UserId
+		0,//TeacherId
 		'2000-01-01 00:00:00'//Date
 	);
 	
@@ -142,7 +142,7 @@ function TestAddAbsente($database)
 function GetEmptyAbsente()
 {
 	$absente = new Absente(
-		0,//UserId
+		0,//TeacherId
 		'2000-01-01 00:00:00'//Date
 	);
 	
@@ -184,12 +184,12 @@ if(CheckGetParameters(["cmd"]))
 	if("addAbsente" == $_GET["cmd"])
 	{
 		if(CheckPostParameters([
-			'userId'
+			'teacherId'
 		]))
 		{
 			$database = new DatabaseOperations();
 			$absente = new Absente(
-				IssetValueNull($_POST['userId']),
+				IssetValueNull($_POST['teacherId']),
 				IssetValueNull($_POST['date'])
 			);
 	
@@ -205,7 +205,7 @@ if(CheckGetParameters(["cmd"]))
 	{
 		$database = new DatabaseOperations();
 		$absente = new Absente(
-			$_POST['userId'],
+			$_POST['teacherId'],
 			$_POST['date']
 		);
 		$absente->SetAbsenteId($_POST['absenteId']);
@@ -236,7 +236,7 @@ function GetLastAbsente($database)
 {
 	$data = $database->ReadData("SELECT * FROM Absente ORDER BY CreationTime DESC LIMIT 1");
 	$absente = ConvertListToAbsente($data);
-	$absente = CompleteUsers($database, $absente);
+	$absente = CompleteTeachers($database, $absente);
 	return $absente;
 }
 

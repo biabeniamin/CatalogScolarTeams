@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbsenteService } from '../AbsenteService'
 import {HttpClient} from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-import { UserService } from '../UserService'
+import { TeacherService } from '../TeacherService'
 
 @Component({
 selector: 'app-absente',
@@ -14,7 +14,7 @@ export class AbsenteComponent implements OnInit
 	
 	constructor(private http:HttpClient, 
 		private absenteService : AbsenteService, 
-		private userService : UserService
+		private teacherService : TeacherService
 	)
 	{
 	
@@ -30,7 +30,7 @@ export class AbsenteComponent implements OnInit
 		event.preventDefault();
 		const target = event.target;
 		let absente = AbsenteService.GetDefaultAbsente();
-		absente.userId = target.querySelector('#UserIdDropDown').value;
+		absente.teacherId = target.querySelector('#TeacherIdDropDown').value;
 		absente.date = target.querySelector('#Date').value;
 		console.log(absente);
 		this.absenteService.AddAbsente(absente);
@@ -54,7 +54,7 @@ export class AbsenteComponent implements OnInit
 		this.absenteService.ConnectToWebSockets();
 	}
 	
-	userChanged(event)
+	teacherChanged(event)
 	{
 		console.log(event);
 	

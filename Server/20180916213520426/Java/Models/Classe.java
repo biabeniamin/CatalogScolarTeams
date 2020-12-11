@@ -15,12 +15,12 @@ import java.util.Date;
 public class Classe
 {
 	private Integer  classeId;
-	private Integer  userId;
+	private Integer  teacherId;
 	private Integer  classRoomId;
 	private String name;
 	private Date creationTime;
 	private ClassRoom classRoom;
-	private User user;
+	private Teacher teacher;
 	
 	public Integer  getClasseId()
 	{
@@ -32,14 +32,14 @@ public class Classe
 		this.classeId = classeId;
 	}
 	
-	public Integer  getUserId()
+	public Integer  getTeacherId()
 	{
-		return this.userId;
+		return this.teacherId;
 	}
 	
-	public void setUserId(Integer  userId)
+	public void setTeacherId(Integer  teacherId)
 	{
-		this.userId = userId;
+		this.teacherId = teacherId;
 	}
 	
 	public Integer  getClassRoomId()
@@ -82,40 +82,40 @@ public class Classe
 		this.classRoom = classRoom;
 	}
 	
-	public User getUser()
+	public Teacher getTeacher()
 	{
-		return this.user;
+		return this.teacher;
 	}
 	
-	public void setUser(User user)
+	public void setTeacher(Teacher teacher)
 	{
-		this.user = user;
+		this.teacher = teacher;
 	}
 	
 	
-	public Classe(Integer  userId, Integer  classRoomId, String name)
+	public Classe(Integer  teacherId, Integer  classRoomId, String name)
 	{
-		this.userId = userId;
+		this.teacherId = teacherId;
 		this.classRoomId = classRoomId;
 		this.name = name;
 	}
 	
-	public Classe(Integer  userId, Integer  classRoomId, String name, ClassRoom classRoom, User user)
+	public Classe(Integer  teacherId, Integer  classRoomId, String name, ClassRoom classRoom, Teacher teacher)
 	{
 		this(
-			0, //UserId
+			0, //TeacherId
 			0, //ClassRoomId
 			"Test" //Name
 		);
 		this.classRoom = classRoom;
-		this.user = user;
+		this.teacher = teacher;
 	
 	}
 	
 	public Classe()
 	{
 		this(
-			0, //UserId
+			0, //TeacherId
 			0, //ClassRoomId
 			"Test" //Name
 		);

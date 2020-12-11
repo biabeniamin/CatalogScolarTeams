@@ -10,7 +10,7 @@ from flask_restful import reqparse
 import datetime
 from math import floor
 from ClassRoom import ClassRoom, getClassRooms, getClassRoomsByClassRoomId
-from User import User, getUsers, getUsersByUserId
+from Teacher import Teacher, getTeachers, getTeachersByTeacherId
 class Classe(Base):
 	@declared_attr
 	def __tablename__(cls):
@@ -20,17 +20,17 @@ class Classe(Base):
 	name = Column('Name', String(50))
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
-	userId = Column('UserId', Integer, ForeignKey("Users.UserId"))
-	users = relationship(User,backref = backref('classes'))
-	user = null
+	teacherId = Column('TeacherId', Integer, ForeignKey("Teachers.TeacherId"))
+	teachers = relationship(Teacher,backref = backref('classes'))
+	teacher = null
 	classRoomId = Column('ClassRoomId', Integer, ForeignKey("ClassRooms.ClassRoomId"))
 	classRooms = relationship(ClassRoom,backref = backref('classes'))
 	classRoom = null
 	
 	
 	#Validation
-	@validates('userId')
-	def validate_userId(self, key, value):
+	@validates('teacherId')
+	def validate_teacherId(self, key, value):
 		return validate_integer(key, value, True)
 	@validates('classRoomId')
 	def validate_classRoomId(self, key, value):
@@ -38,22 +38,22 @@ class Classe(Base):
 	
 
 #Functions
-#complete users funtion
-def completeUsers(session, classes):
-	users = getUsers(session)
+#complete teachers funtion
+def completeTeachers(session, classes):
+	teachers = getTeachers(session)
 	for row in classes:
 		start = 0
-		end = len(users)
+		end = len(teachers)
 		while True:
 			mid = floor((start + end) / 2)
-			if(row.userId > users[mid].userId):
+			if(row.teacherId > teachers[mid].teacherId):
 				start = mid + 1
-			elif(row.userId < users[mid].userId):
+			elif(row.teacherId < teachers[mid].teacherId):
 				end = mid - 1
-			elif(row.userId == users[mid].userId):
+			elif(row.teacherId == teachers[mid].teacherId):
 				start = mid + 1
 				end = mid - 1
-				row.user = users[mid]
+				row.teacher = teachers[mid]
 			
 			if(start > end):
 				break
@@ -86,15 +86,21 @@ def completeClassRooms(session, classes):
 #get funtion
 def getClasses(session):
 	result = session.query(Classe).all()
-	result = completeUsers(session, result)
+	result = completeTeachers(session, result)
 	result = completeClassRooms(session, result)
 	return result
 
 
 #get dedicated request funtions
+def getClassesByClassRoomId(session, classRoomId):
+	result = session.query(Classe).filter(Classe.classRoomId == classRoomId).all()
+	result = completeTeachers(session, result)
+	result = completeClassRooms(session, result)
+	return result
+
 def getClassesByClasseId(session, classeId):
 	result = session.query(Classe).filter(Classe.classeId == classeId).all()
-	result = completeUsers(session, result)
+	result = completeTeachers(session, result)
 	result = completeClassRooms(session, result)
 	return result
 
@@ -107,7 +113,7 @@ def addClasse(session, classe):
 	#this must stay because sqlalchemy query the database because of this line
 	print('Value inserted with classeId=', classe.classeId)
 	classe.classRoom = getClassRoomsByClassRoomId(session, classe.classRoomId)[0]
-	classe.user = getUsersByUserId(session, classe.userId)[0]
+	classe.teacher = getTeachersByTeacherId(session, classe.teacherId)[0]
 	return classe
 
 
@@ -118,7 +124,7 @@ def updateClasse(session, classe):
 	session.commit()
 	result = session.query(Classe).filter(Classe.classeId == classe.classeId).first()
 	result.classRoom = getClassRoomsByClassRoomId(session, result.classRoomId)[0]
-	result.user = getUsersByUserId(session, result.userId)[0]
+	result.teacher = getTeachersByTeacherId(session, result.teacherId)[0]
 	return result
 
 
@@ -135,7 +141,7 @@ def deleteClasse(session, classeId):
 #request parser funtion
 def getclasseRequestArguments():
 	parser = reqparse.RequestParser()
-	parser.add_argument('userId')
+	parser.add_argument('teacherId')
 	parser.add_argument('classRoomId')
 	parser.add_argument('name')
 	return parser

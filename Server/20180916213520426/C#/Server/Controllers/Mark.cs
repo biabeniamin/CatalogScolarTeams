@@ -22,7 +22,9 @@ namespace DatabaseFunctionsGenerator
 			{
 				list.Add(new Mark(
 					(int)reader["MarkId"],
-					(int)reader["UserId"],
+					(int)reader["ClasseId"],
+					(int)reader["StudentId"],
+					(int)reader["TeacherId"],
 					(int)reader["Value"],
 					(DateTime)reader["CreationTime"]
 				));
@@ -35,9 +37,11 @@ namespace DatabaseFunctionsGenerator
 		public void Post([FromBody]Mark data)
 		{
 			DatabaseOperations db = new DatabaseOperations();
-			MySqlCommand command = new MySqlCommand("INSERT INTO Marks(UserId,  Value,  CreationTime) VALUES(@UserId,  @Value,  @CreationTime)");
+			MySqlCommand command = new MySqlCommand("INSERT INTO Marks(ClasseId,  StudentId,  TeacherId,  Value,  CreationTime) VALUES(@ClasseId,  @StudentId,  @TeacherId,  @Value,  @CreationTime)");
 			
-			command.Parameters.AddWithValue("@UserId", data.UserId);
+			command.Parameters.AddWithValue("@ClasseId", data.ClasseId);
+			command.Parameters.AddWithValue("@StudentId", data.StudentId);
+			command.Parameters.AddWithValue("@TeacherId", data.TeacherId);
 			command.Parameters.AddWithValue("@Value", data.Value);
 			command.Parameters.AddWithValue("@CreationTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 			

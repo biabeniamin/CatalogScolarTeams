@@ -11,8 +11,10 @@ class ClasseEndpoints(Resource):
 	#API endpoints
 	#get endpoint
 	def get(self):
-		requestedArgs = getArguments(['cmd', 'classeId', 'userId', 'classRoomId', 'name', 'creationTime'])
+		requestedArgs = getArguments(['cmd', 'classeId', 'teacherId', 'classRoomId', 'name', 'creationTime'])
 		args  = requestedArgs.parse_args()
+		if args['cmd'] == 'getClassesByClassRoomId':
+			return Classe.getClassesByClassRoomId(self.session, args['classRoomId'])
 		if args['cmd'] == 'getClassesByClasseId':
 			return Classe.getClassesByClasseId(self.session, args['classeId'])
 		return Classe.getClasses(self.session)
@@ -20,7 +22,7 @@ class ClasseEndpoints(Resource):
 	
 	#post endpoint
 	def post(self):
-		requestedArgs = getArguments(['userId', 'classRoomId', 'name'])
+		requestedArgs = getArguments(['teacherId', 'classRoomId', 'name'])
 		args  = requestedArgs.parse_args()
 		classe  = dict_as_obj(args, Classe.Classe())
 		return Classe.addClasse(self.session, classe)
@@ -35,7 +37,7 @@ class ClasseEndpoints(Resource):
 	
 	#patch endpoint
 	def patch(self):
-		requestedArgs = getArguments(['classeId', 'userId', 'classRoomId', 'name', 'creationTime'])
+		requestedArgs = getArguments(['classeId', 'teacherId', 'classRoomId', 'name', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		classe  = Classe.getClassesByClasseId(self.session, args['classeId'])[0]
 		classe  = dict_as_obj(args, classe)

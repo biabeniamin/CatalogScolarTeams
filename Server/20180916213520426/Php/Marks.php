@@ -6,7 +6,8 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Mark.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
-require_once 'Users.php';
+require_once 'Teachers.php';
+require_once 'Students.php';
 require_once 'Classes.php';
 function ConvertListToMarks($data)
 {
@@ -16,7 +17,8 @@ function ConvertListToMarks($data)
 	{
 		$mark = new Mark(
 		$row["ClasseId"], 
-		$row["UserId"], 
+		$row["StudentId"], 
+		$row["TeacherId"], 
 		$row["Value"] 
 		);
 	
@@ -33,20 +35,22 @@ function GetMarks($database)
 {
 	$data = $database->ReadData("SELECT * FROM Marks");
 	$marks = ConvertListToMarks($data);
-	$marks = CompleteUsers($database, $marks);
+	$marks = CompleteTeachers($database, $marks);
+	$marks = CompleteStudents($database, $marks);
 	$marks = CompleteClasses($database, $marks);
 	return $marks;
 }
 
-function GetMarksByClasseIdUserId($database, $classeId, $userId)
+function GetMarksByClasseIdStudentId($database, $classeId, $studentId)
 {
-	$data = $database->ReadData("SELECT * FROM Marks WHERE ClasseId = $classeId and UserId = $userId");
+	$data = $database->ReadData("SELECT * FROM Marks WHERE ClasseId = $classeId and StudentId = $studentId");
 	$marks = ConvertListToMarks($data);
 	if(0== count($marks))
 	{
 		return [GetEmptyMark()];
 	}
-	CompleteUsers($database, $marks);
+	CompleteTeachers($database, $marks);
+	CompleteStudents($database, $marks);
 	CompleteClasses($database, $marks);
 	return $marks;
 }
@@ -58,7 +62,8 @@ function GetMarksByMarkId($database, $markId)
 	{
 		return [GetEmptyMark()];
 	}
-	CompleteUsers($database, $marks);
+	CompleteTeachers($database, $marks);
+	CompleteStudents($database, $marks);
 	CompleteClasses($database, $marks);
 	return $marks;
 }
@@ -97,9 +102,10 @@ function CompleteMarks($database, $marks)
 
 function AddMark($database, $mark)
 {
-	$query = "INSERT INTO Marks(ClasseId, UserId, Value, CreationTime) VALUES(";
+	$query = "INSERT INTO Marks(ClasseId, StudentId, TeacherId, Value, CreationTime) VALUES(";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetClasseId()).", ";
-	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetUserId()).", ";
+	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetStudentId()).", ";
+	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetTeacherId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$mark->GetValue()).", ";
 	$query = $query . "NOW()"."";
 	
@@ -108,7 +114,8 @@ function AddMark($database, $mark)
 	$id = $database->GetLastInsertedId();
 	$mark->SetMarkId($id);
 	$mark->SetCreationTime(date('Y-m-d H:i:s'));
-	$mark->SetUser(GetUsersByUserId($database, $mark->GetUserId())[0]);
+	$mark->SetTeacher(GetTeachersByTeacherId($database, $mark->GetTeacherId())[0]);
+	$mark->SetStudent(GetStudentsByStudentId($database, $mark->GetStudentId())[0]);
 	$mark->SetClasse(GetClassesByClasseId($database, $mark->GetClasseId())[0]);
 	return $mark;
 	
@@ -135,7 +142,8 @@ function UpdateMark($database, $mark)
 {
 	$query = "UPDATE Marks SET ";
 	$query = $query . "ClasseId=" . $mark->GetClasseId().", ";
-	$query = $query . "UserId=" . $mark->GetUserId().", ";
+	$query = $query . "StudentId=" . $mark->GetStudentId().", ";
+	$query = $query . "TeacherId=" . $mark->GetTeacherId().", ";
 	$query = $query . "Value=" . $mark->GetValue()."";
 	$query = $query . " WHERE MarkId=" . $mark->GetMarkId();
 	
@@ -152,7 +160,8 @@ function TestAddMark($database)
 {
 	$mark = new Mark(
 		0,//ClasseId
-		0,//UserId
+		0,//StudentId
+		0,//TeacherId
 		0//Value
 	);
 	
@@ -163,7 +172,8 @@ function GetEmptyMark()
 {
 	$mark = new Mark(
 		0,//ClasseId
-		0,//UserId
+		0,//StudentId
+		0,//TeacherId
 		0//Value
 	);
 	
@@ -184,17 +194,17 @@ if(CheckGetParameters(["cmd"]))
 			echo json_encode(GetLastMark($database));
 	}
 
-	else if("getMarksByClasseIdUserId" == $_GET["cmd"])
+	else if("getMarksByClasseIdStudentId" == $_GET["cmd"])
 	{
 		if(CheckGetParameters([
 			'classeId',
-			'userId'
+			'studentId'
 			]))
 		{
 			$database = new DatabaseOperations();
-			echo json_encode(GetMarksByClasseIdUserId($database, 
+			echo json_encode(GetMarksByClasseIdStudentId($database, 
 				$_GET["classeId"],
-				$_GET["userId"]
+				$_GET["studentId"]
 			));
 		}
 	
@@ -221,13 +231,15 @@ if(CheckGetParameters(["cmd"]))
 	{
 		if(CheckPostParameters([
 			'classeId',
-			'userId'
+			'studentId',
+			'teacherId'
 		]))
 		{
 			$database = new DatabaseOperations();
 			$mark = new Mark(
 				IssetValueNull($_POST['classeId']),
-				IssetValueNull($_POST['userId']),
+				IssetValueNull($_POST['studentId']),
+				IssetValueNull($_POST['teacherId']),
 				IssetValueNull($_POST['value'])
 			);
 	
@@ -244,7 +256,8 @@ if(CheckGetParameters(["cmd"]))
 		$database = new DatabaseOperations();
 		$mark = new Mark(
 			$_POST['classeId'],
-			$_POST['userId'],
+			$_POST['studentId'],
+			$_POST['teacherId'],
 			$_POST['value']
 		);
 		$mark->SetMarkId($_POST['markId']);
@@ -275,7 +288,8 @@ function GetLastMark($database)
 {
 	$data = $database->ReadData("SELECT * FROM Marks ORDER BY CreationTime DESC LIMIT 1");
 	$marks = ConvertListToMarks($data);
-	$marks = CompleteUsers($database, $marks);
+	$marks = CompleteTeachers($database, $marks);
+	$marks = CompleteStudents($database, $marks);
 	$marks = CompleteClasses($database, $marks);
 	return $marks;
 }

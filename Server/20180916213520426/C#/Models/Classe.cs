@@ -11,12 +11,12 @@ namespace DatabaseFunctionsGenerator
 	public class Classe
 	{
 		private int _classeId;
-		private int _userId;
+		private int _teacherId;
 		private int _classRoomId;
 		private string _name;
 		private DateTime _creationTime;
 		private ClassRoom _classRoom;
-		private User _user;
+		private Teacher _teacher;
 		
 		[JsonProperty(PropertyName = "classeId")]
 		public int ClasseId
@@ -31,16 +31,16 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "userId")]
-		public int UserId
+		[JsonProperty(PropertyName = "teacherId")]
+		public int TeacherId
 		{
 			get
 			{
-				return _userId;
+				return _teacherId;
 			}
 			set
 			{
-				_userId = value;
+				_teacherId = value;
 			}
 		}
 		
@@ -96,47 +96,47 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "user")]
-		public User User
+		[JsonProperty(PropertyName = "teacher")]
+		public Teacher Teacher
 		{
 			get
 			{
-				return _user;
+				return _teacher;
 			}
 			set
 			{
-				_user = value;
+				_teacher = value;
 			}
 		}
 		
 		
-		public Classe(int classeId, int userId, int classRoomId, string name, DateTime creationTime)
+		public Classe(int classeId, int teacherId, int classRoomId, string name, DateTime creationTime)
 		{
 			_classeId = classeId;
-			_userId = userId;
+			_teacherId = teacherId;
 			_classRoomId = classRoomId;
 			_name = name;
 			_creationTime = creationTime;
 		}
 		
-		public Classe(int userId, int classRoomId, string name)
+		public Classe(int teacherId, int classRoomId, string name)
 		{
-			_userId = userId;
+			_teacherId = teacherId;
 			_classRoomId = classRoomId;
 			_name = name;
 		}
 		
-		public Classe(int userId, int classRoomId, string name, ClassRoom classRoom, User user)
-			:this(userId, classRoomId, name)
+		public Classe(int teacherId, int classRoomId, string name, ClassRoom classRoom, Teacher teacher)
+			:this(teacherId, classRoomId, name)
 		{
-			_userId = userId;
+			_teacherId = teacherId;
 			_classRoomId = classRoomId;
 			_name = name;
 		}
 		
 		public Classe()
 			 :this(
-				0, //UserId
+				0, //TeacherId
 				0, //ClassRoomId
 				"Test" //Name
 			)

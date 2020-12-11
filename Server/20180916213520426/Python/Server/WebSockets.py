@@ -5,7 +5,8 @@ import json
 from SqlAlchemyMain import session
 import ClassRoomWebSockets
 import ClasseWebSockets
-import UserWebSockets
+import TeacherWebSockets
+import StudentWebSockets
 import MarkWebSockets
 import AbsenteWebSockets
 import NotificationWebSockets
@@ -28,8 +29,10 @@ async def requestReceived(websocket, path):
 				await ClassRoomWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Classes':
 				await ClasseWebSockets.requestReceived(websocket, session, request)
-			elif request['table'] == 'Users':
-				await UserWebSockets.requestReceived(websocket, session, request)
+			elif request['table'] == 'Teachers':
+				await TeacherWebSockets.requestReceived(websocket, session, request)
+			elif request['table'] == 'Students':
+				await StudentWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Marks':
 				await MarkWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Absente':

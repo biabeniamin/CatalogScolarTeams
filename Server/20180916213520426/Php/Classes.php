@@ -7,7 +7,7 @@ require_once 'Models/Classe.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
 require_once 'ClassRooms.php';
-require_once 'Users.php';
+require_once 'Teachers.php';
 function ConvertListToClasses($data)
 {
 	$classes = [];
@@ -15,7 +15,7 @@ function ConvertListToClasses($data)
 	foreach($data as $row)
 	{
 		$classe = new Classe(
-		$row["UserId"], 
+		$row["TeacherId"], 
 		$row["ClassRoomId"], 
 		$row["Name"] 
 		);
@@ -34,7 +34,7 @@ function GetClasses($database)
 	$data = $database->ReadData("SELECT * FROM Classes");
 	$classes = ConvertListToClasses($data);
 	$classes = CompleteClassRooms($database, $classes);
-	$classes = CompleteUsers($database, $classes);
+	$classes = CompleteTeachers($database, $classes);
 	return $classes;
 }
 
@@ -47,7 +47,7 @@ function GetClassesByClassRoomId($database, $classRoomId)
 		return [GetEmptyClasse()];
 	}
 	CompleteClassRooms($database, $classes);
-	CompleteUsers($database, $classes);
+	CompleteTeachers($database, $classes);
 	return $classes;
 }
 function GetClassesByClasseId($database, $classeId)
@@ -59,7 +59,7 @@ function GetClassesByClasseId($database, $classeId)
 		return [GetEmptyClasse()];
 	}
 	CompleteClassRooms($database, $classes);
-	CompleteUsers($database, $classes);
+	CompleteTeachers($database, $classes);
 	return $classes;
 }
 
@@ -97,8 +97,8 @@ function CompleteClasses($database, $classes)
 
 function AddClasse($database, $classe)
 {
-	$query = "INSERT INTO Classes(UserId, ClassRoomId, Name, CreationTime) VALUES(";
-	$query = $query . mysqli_real_escape_string($database->connection ,$classe->GetUserId()).", ";
+	$query = "INSERT INTO Classes(TeacherId, ClassRoomId, Name, CreationTime) VALUES(";
+	$query = $query . mysqli_real_escape_string($database->connection ,$classe->GetTeacherId()).", ";
 	$query = $query . mysqli_real_escape_string($database->connection ,$classe->GetClassRoomId()).", ";
 	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$classe->GetName()) . "', ";
 	$query = $query . "NOW()"."";
@@ -109,7 +109,7 @@ function AddClasse($database, $classe)
 	$classe->SetClasseId($id);
 	$classe->SetCreationTime(date('Y-m-d H:i:s'));
 	$classe->SetClassRoom(GetClassRoomsByClassRoomId($database, $classe->GetClassRoomId())[0]);
-	$classe->SetUser(GetUsersByUserId($database, $classe->GetUserId())[0]);
+	$classe->SetTeacher(GetTeachersByTeacherId($database, $classe->GetTeacherId())[0]);
 	return $classe;
 	
 }
@@ -134,7 +134,7 @@ function DeleteClasse($database, $classeId)
 function UpdateClasse($database, $classe)
 {
 	$query = "UPDATE Classes SET ";
-	$query = $query . "UserId=" . $classe->GetUserId().", ";
+	$query = $query . "TeacherId=" . $classe->GetTeacherId().", ";
 	$query = $query . "ClassRoomId=" . $classe->GetClassRoomId().", ";
 	$query = $query . "Name='" . $classe->GetName() . "'";
 	$query = $query . " WHERE ClasseId=" . $classe->GetClasseId();
@@ -151,7 +151,7 @@ function UpdateClasse($database, $classe)
 function TestAddClasse($database)
 {
 	$classe = new Classe(
-		0,//UserId
+		0,//TeacherId
 		0,//ClassRoomId
 		'Test'//Name
 	);
@@ -162,7 +162,7 @@ function TestAddClasse($database)
 function GetEmptyClasse()
 {
 	$classe = new Classe(
-		0,//UserId
+		0,//TeacherId
 		0,//ClassRoomId
 		''//Name
 	);
@@ -218,13 +218,13 @@ if(CheckGetParameters(["cmd"]))
 	if("addClasse" == $_GET["cmd"])
 	{
 		if(CheckPostParameters([
-			'userId',
+			'teacherId',
 			'classRoomId'
 		]))
 		{
 			$database = new DatabaseOperations();
 			$classe = new Classe(
-				IssetValueNull($_POST['userId']),
+				IssetValueNull($_POST['teacherId']),
 				IssetValueNull($_POST['classRoomId']),
 				IssetValueNull($_POST['name'])
 			);
@@ -241,7 +241,7 @@ if(CheckGetParameters(["cmd"]))
 	{
 		$database = new DatabaseOperations();
 		$classe = new Classe(
-			$_POST['userId'],
+			$_POST['teacherId'],
 			$_POST['classRoomId'],
 			$_POST['name']
 		);
@@ -274,7 +274,7 @@ function GetLastClasse($database)
 	$data = $database->ReadData("SELECT * FROM Classes ORDER BY CreationTime DESC LIMIT 1");
 	$classes = ConvertListToClasses($data);
 	$classes = CompleteClassRooms($database, $classes);
-	$classes = CompleteUsers($database, $classes);
+	$classes = CompleteTeachers($database, $classes);
 	return $classes;
 }
 

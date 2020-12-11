@@ -15,10 +15,14 @@ import java.util.Date;
 public class Mark
 {
 	private Integer  markId;
-	private Integer  userId;
+	private Integer  classeId;
+	private Integer  studentId;
+	private Integer  teacherId;
 	private Integer  value;
 	private Date creationTime;
-	private User user;
+	private Teacher teacher;
+	private Student student;
+	private Classe classe;
 	
 	public Integer  getMarkId()
 	{
@@ -30,14 +34,34 @@ public class Mark
 		this.markId = markId;
 	}
 	
-	public Integer  getUserId()
+	public Integer  getClasseId()
 	{
-		return this.userId;
+		return this.classeId;
 	}
 	
-	public void setUserId(Integer  userId)
+	public void setClasseId(Integer  classeId)
 	{
-		this.userId = userId;
+		this.classeId = classeId;
+	}
+	
+	public Integer  getStudentId()
+	{
+		return this.studentId;
+	}
+	
+	public void setStudentId(Integer  studentId)
+	{
+		this.studentId = studentId;
+	}
+	
+	public Integer  getTeacherId()
+	{
+		return this.teacherId;
+	}
+	
+	public void setTeacherId(Integer  teacherId)
+	{
+		this.teacherId = teacherId;
 	}
 	
 	public Integer  getValue()
@@ -60,37 +84,65 @@ public class Mark
 		this.creationTime = creationTime;
 	}
 	
-	public User getUser()
+	public Teacher getTeacher()
 	{
-		return this.user;
+		return this.teacher;
 	}
 	
-	public void setUser(User user)
+	public void setTeacher(Teacher teacher)
 	{
-		this.user = user;
+		this.teacher = teacher;
+	}
+	
+	public Student getStudent()
+	{
+		return this.student;
+	}
+	
+	public void setStudent(Student student)
+	{
+		this.student = student;
+	}
+	
+	public Classe getClasse()
+	{
+		return this.classe;
+	}
+	
+	public void setClasse(Classe classe)
+	{
+		this.classe = classe;
 	}
 	
 	
-	public Mark(Integer  userId, Integer  value)
+	public Mark(Integer  classeId, Integer  studentId, Integer  teacherId, Integer  value)
 	{
-		this.userId = userId;
+		this.classeId = classeId;
+		this.studentId = studentId;
+		this.teacherId = teacherId;
 		this.value = value;
 	}
 	
-	public Mark(Integer  userId, Integer  value, User user)
+	public Mark(Integer  classeId, Integer  studentId, Integer  teacherId, Integer  value, Teacher teacher, Student student, Classe classe)
 	{
 		this(
-			0, //UserId
+			0, //ClasseId
+			0, //StudentId
+			0, //TeacherId
 			0 //Value
 		);
-		this.user = user;
+		this.teacher = teacher;
+		this.student = student;
+		this.classe = classe;
 	
 	}
 	
 	public Mark()
 	{
 		this(
-			0, //UserId
+			0, //ClasseId
+			0, //StudentId
+			0, //TeacherId
 			0 //Value
 		);
 		this.markId = 0;
