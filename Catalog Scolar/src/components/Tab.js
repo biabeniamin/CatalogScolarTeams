@@ -49,7 +49,7 @@ class Tab extends React.Component {
       });
     });
 
-    axios.get('http://localhost/catalog/ClassRooms.php?cmd=getClassRooms')
+    axios.get('https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms')
       .then(res => {
         let selectOptions = res.data.map(d => ({
           "value" : d.classRoomId,
@@ -78,6 +78,22 @@ class Tab extends React.Component {
           "value" : d.classeId,
           "label" : d.name
         }))
+        this.setState({ classes: res.data , selectClassOptions: selectClassOptions, selectedRoomClass: e.value});
+        console.log(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  classChanged(e){
+    console.log(e);
+    axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByClasseIdUserId&classeId=${this.state.selectedRoomClass}&userId=1`)
+      .then(res => {
+        let selectClassOptions = res.data.map(d => ({
+          "value" : d.classeId,
+          "label" : d.name
+        }))
         this.setState({ classes: res.data , selectClassOptions: selectClassOptions});
         console.log(res.data);
       })
@@ -97,7 +113,7 @@ class Tab extends React.Component {
         {this.state.classes[0].name}
         <div>
         <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
-        <Select options={this.state.selectClassOptions} onChange={this.roomClassChanged.bind(this)}/>
+        <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
       </div>
         <table className="table table-striped table-dark">
           <thead className="thead-dark">
