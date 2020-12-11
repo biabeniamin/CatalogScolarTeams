@@ -7,6 +7,7 @@ import ClassRoomWebSockets
 import ClasseWebSockets
 import TeacherWebSockets
 import StudentWebSockets
+import StudentClasseWebSockets
 import MarkWebSockets
 import AbsenteWebSockets
 import NotificationWebSockets
@@ -33,6 +34,8 @@ async def requestReceived(websocket, path):
 				await TeacherWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Students':
 				await StudentWebSockets.requestReceived(websocket, session, request)
+			elif request['table'] == 'StudentClasses':
+				await StudentClasseWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Marks':
 				await MarkWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Absente':

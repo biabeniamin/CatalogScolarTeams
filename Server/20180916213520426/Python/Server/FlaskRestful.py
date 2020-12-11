@@ -8,6 +8,7 @@ from ClassRoomEndpoints import ClassRoomEndpoints
 from ClasseEndpoints import ClasseEndpoints
 from TeacherEndpoints import TeacherEndpoints
 from StudentEndpoints import StudentEndpoints
+from StudentClasseEndpoints import StudentClasseEndpoints
 from MarkEndpoints import MarkEndpoints
 from AbsenteEndpoints import AbsenteEndpoints
 from NotificationEndpoints import NotificationEndpoints
@@ -21,6 +22,7 @@ api.add_resource(ClassRoomEndpoints, '/ClassRooms', resource_class_kwargs ={ 'se
 api.add_resource(ClasseEndpoints, '/Classes', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(TeacherEndpoints, '/Teachers', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(StudentEndpoints, '/Students', resource_class_kwargs ={ 'session' : session}) 
+api.add_resource(StudentClasseEndpoints, '/StudentClasses', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(MarkEndpoints, '/Marks', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(AbsenteEndpoints, '/Absente', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(NotificationEndpoints, '/Notifications', resource_class_kwargs ={ 'session' : session}) 

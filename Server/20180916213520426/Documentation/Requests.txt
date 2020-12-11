@@ -100,6 +100,30 @@ http://192.168.0.100:5000/Students.php?cmd=updateStudent&studentId=0 - DELETE re
 deletes a Student by id and returns the Student with id == 0 if succeeded
 
 
+------------StudentClasses----------
+http://192.168.0.100:5000/StudentClasses.php?cmd=getStudentClasses - GET request -return all StudentClasses
+
+http://192.168.0.100:5000/StudentClasses.php?cmd=getStudentClassesByStudentClasseId&studentClasseId=value - GET request -return StudentClasses filtered by StudentClasseId
+
+
+
+http://192.168.0.100:5000/StudentClasses.php?cmd=addStudentClasse- POST request with following parameters
+studentId : INT
+classeId : INT
+add a new StudentClasse with specified data and returns the StudentClasse with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/StudentClasses.php?cmd=updateStudentClasse- PUT request with following parameters
+studentClasseId : INT
+studentId : INT
+classeId : INT
+update a StudentClasse by id and returns the StudentClasse with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/StudentClasses.php?cmd=updateStudentClasse&studentClasseId=0 - DELETE request
+deletes a StudentClasse by id and returns the StudentClasse with id == 0 if succeeded
+
+
 ------------Marks----------
 http://192.168.0.100:5000/Marks.php?cmd=getMarks - GET request -return all Marks
 

@@ -10,6 +10,7 @@ from ClassRooms import ClassRooms
 from Classes import Classes
 from Teachers import Teachers
 from Students import Students
+from StudentClasses import StudentClasses
 from Marks import Marks
 from Absente import Absente
 from Notifications import Notifications
@@ -33,6 +34,8 @@ manager.create_api(Classes,
 manager.create_api(Teachers,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
 manager.create_api(Students,
+	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
+manager.create_api(StudentClasses,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
 manager.create_api(Marks,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)

@@ -1,0 +1,143 @@
+<div class="container">
+	<div class="card rerun">
+		<form (submit)="studentClasseService.GetStudentClasses()">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update">
+			</div>
+		</form>
+
+		<form (submit)="updateLive($event)">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update Live">
+			</div>
+		</form>
+
+		<form (submit)="addStudentClasse($event)">
+			<select id=ClasseIdDropDown (change)="classeChanged($event.target.value)">
+				<option [value]="classe.classeId" *ngFor= "let classe of classeService.classes | async" >
+				{{classe.classeId}}
+				{{classe.teacherId}}
+				{{classe.classRoomId}}
+				{{classe.name}}
+				</option>
+			</select>
+			
+			<select id=StudentIdDropDown (change)="studentChanged($event.target.value)">
+				<option [value]="student.studentId" *ngFor= "let student of studentService.students | async" >
+				{{student.studentId}}
+				{{student.firstName}}
+				{{student.lastName}}
+				{{student.email}}
+				</option>
+			</select>
+			
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Add">
+			</div>
+		</form>
+
+		<tbody>
+			<tr>
+				<th>
+					StudentClasseId
+				</th>
+				<th>
+					StudentId
+				</th>
+				<th>
+					ClasseId
+				</th>
+				<th>
+					CreationTime
+				</th>
+				<th>
+					classe.ClasseId
+				</th>
+				<th>
+					classe.TeacherId
+				</th>
+				<th>
+					classe.ClassRoomId
+				</th>
+				<th>
+					classe.Name
+				</th>
+				<th>
+					classe.CreationTime
+				</th>
+				<th>
+					student.StudentId
+				</th>
+				<th>
+					student.FirstName
+				</th>
+				<th>
+					student.LastName
+				</th>
+				<th>
+					student.Email
+				</th>
+				<th>
+					student.CreationTime
+				</th>
+			</tr>
+			<tr *ngFor="let studentClasse of studentClasseService.studentClasses | async; let i = index">
+				<td>
+					{{studentClasse.studentClasseId}}
+				</td>
+				<td>
+					{{studentClasse.studentId}}
+				</td>
+				<td>
+					{{studentClasse.classeId}}
+				</td>
+				<td>
+					{{studentClasse.creationTime}}
+				</td>
+				<td *ngIf="studentClasse.classe">
+					{{studentClasse.classe.classeId}}
+				</td>
+				<td *ngIf="studentClasse.classe">
+					{{studentClasse.classe.teacherId}}
+				</td>
+				<td *ngIf="studentClasse.classe">
+					{{studentClasse.classe.classRoomId}}
+				</td>
+				<td *ngIf="studentClasse.classe">
+					{{studentClasse.classe.name}}
+				</td>
+				<td *ngIf="studentClasse.classe">
+					{{studentClasse.classe.creationTime}}
+				</td>
+				<td *ngIf="studentClasse.student">
+					{{studentClasse.student.studentId}}
+				</td>
+				<td *ngIf="studentClasse.student">
+					{{studentClasse.student.firstName}}
+				</td>
+				<td *ngIf="studentClasse.student">
+					{{studentClasse.student.lastName}}
+				</td>
+				<td *ngIf="studentClasse.student">
+					{{studentClasse.student.email}}
+				</td>
+				<td *ngIf="studentClasse.student">
+					{{studentClasse.student.creationTime}}
+				</td>
+			</tr>
+		</tbody>
+
+		<form (submit)="getStudentClassesByStudentClasseId($event)">
+			<h3>Get StudentClasses by StudentClasseId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "StudentClasseId" id="StudentClasseId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by StudentClasseId">
+			</div>
+		</form>
+		
+
+	</div>
+</div>

@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS`ClassRooms`;
 DROP TABLE IF EXISTS`Classes`;
 DROP TABLE IF EXISTS`Teachers`;
 DROP TABLE IF EXISTS`Students`;
+DROP TABLE IF EXISTS`StudentClasses`;
 DROP TABLE IF EXISTS`Marks`;
 DROP TABLE IF EXISTS`Absente`;
 DROP TABLE IF EXISTS`Notifications`;
@@ -53,6 +54,16 @@ CREATE TABLE `Students` (
 
 ALTER TABLE `Students` ADD PRIMARY KEY(`StudentId`); 
 ALTER TABLE `Students`  MODIFY `StudentId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1; 
+
+CREATE TABLE `StudentClasses` (
+`StudentClasseId` INT  NOT NULL,
+`StudentId` INT  NOT NULL,
+`ClasseId` INT  NOT NULL,
+`CreationTime` DATETIME  NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `StudentClasses` ADD PRIMARY KEY(`StudentClasseId`); 
+ALTER TABLE `StudentClasses`  MODIFY `StudentClasseId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1; 
 
 CREATE TABLE `Marks` (
 `MarkId` INT  NOT NULL,
