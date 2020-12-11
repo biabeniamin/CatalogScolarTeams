@@ -37,6 +37,30 @@ function GetStudentClasses($database)
 	return $studentClasses;
 }
 
+function GetStudentClassesByClasseId($database, $classeId)
+{
+	$data = $database->ReadData("SELECT * FROM StudentClasses WHERE ClasseId = $classeId");
+	$studentClasses = ConvertListToStudentClasses($data);
+	if(0== count($studentClasses))
+	{
+		return [GetEmptyStudentClasse()];
+	}
+	CompleteClasses($database, $studentClasses);
+	CompleteStudents($database, $studentClasses);
+	return $studentClasses;
+}
+function GetStudentClassesByStudentId($database, $studentId)
+{
+	$data = $database->ReadData("SELECT * FROM StudentClasses WHERE StudentId = $studentId");
+	$studentClasses = ConvertListToStudentClasses($data);
+	if(0== count($studentClasses))
+	{
+		return [GetEmptyStudentClasse()];
+	}
+	CompleteClasses($database, $studentClasses);
+	CompleteStudents($database, $studentClasses);
+	return $studentClasses;
+}
 function GetStudentClassesByStudentClasseId($database, $studentClasseId)
 {
 	$data = $database->ReadData("SELECT * FROM StudentClasses WHERE StudentClasseId = $studentClasseId");
@@ -167,6 +191,32 @@ if(CheckGetParameters(["cmd"]))
 			echo json_encode(GetLastStudentClasse($database));
 	}
 
+	else if("getStudentClassesByClasseId" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'classeId'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetStudentClassesByClasseId($database, 
+				$_GET["classeId"]
+			));
+		}
+	
+	}
+	else if("getStudentClassesByStudentId" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'studentId'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetStudentClassesByStudentId($database, 
+				$_GET["studentId"]
+			));
+		}
+	
+	}
 	else if("getStudentClassesByStudentClasseId" == $_GET["cmd"])
 	{
 		if(CheckGetParameters([
