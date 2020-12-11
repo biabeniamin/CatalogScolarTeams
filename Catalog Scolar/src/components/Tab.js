@@ -6,6 +6,9 @@ import './App.css';
 import * as microsoftTeams from "@microsoft/teams-js";
 import axios from 'axios';
 import Select from 'react-select'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 class DataTable extends Component {
   render() {
@@ -16,6 +19,9 @@ class DataTable extends Component {
               </td>
               <td>
                   {this.props.obj.value}
+              </td>
+              <td>
+                  {this.props.obj.class}
               </td>
               <td>
                   {this.props.obj.creationTime}
@@ -35,7 +41,8 @@ class Tab extends React.Component {
     super(props)
     this.state = {
       context: {},
-      marks: [{ value: '' }]
+      marks: [{ value: '' }],
+      value: "asd",
     }
   }
 
@@ -114,6 +121,26 @@ class Tab extends React.Component {
       });
   }
 
+  handleChange(event) {
+    console.log(event);
+    this.setState({value: event.target.value});
+  }
+
+  markChanged(event) {
+    console.log(event);
+    //this.setState({value: event.target.value});
+  }
+
+  markDateChanged(event) {
+    console.log(event);
+    this.setState({markDate: event});
+  }
+
+  handleSubmit(event) {
+    alert('An essay was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
+
   render() {
 
     let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
@@ -139,6 +166,26 @@ class Tab extends React.Component {
             {this.dataTable()}
           </tbody>
         </table>
+
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <label>
+            Nota:
+          </label>
+          <Select options={[{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
+          { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]} onChange={this.markChanged.bind(this)} />
+          <label>
+            Name:
+          </label>
+          <input type="text" onChange={this.handleChange.bind(this)} />
+          
+          <input type="submit" value="Submit" />
+        </form>
+        <DatePicker   
+            onChange={this.markDateChanged.bind(this)}
+            selected={this.state.markDate}
+            
+          />
+
       </div>
     );
   }
