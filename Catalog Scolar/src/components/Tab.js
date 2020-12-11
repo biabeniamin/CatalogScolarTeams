@@ -12,10 +12,10 @@ class DataTable extends Component {
       return (
           <tr>
               <td>
-                  {this.props.obj.classRoomId}
+                  {this.props.obj.markId}
               </td>
               <td>
-                  {this.props.obj.name}
+                  {this.props.obj.value}
               </td>
               <td>
                   {this.props.obj.creationTime}
@@ -35,7 +35,7 @@ class Tab extends React.Component {
     super(props)
     this.state = {
       context: {},
-      classes: [{ name: '' }]
+      marks: [{ value: '' }]
     }
   }
 
@@ -65,7 +65,7 @@ class Tab extends React.Component {
   }
 
   dataTable() {
-    return this.state.classes.map((data, i) => {
+    return this.state.marks.map((data, i) => {
         return <DataTable obj={data} key={i} />;
     });
   }
@@ -94,8 +94,20 @@ class Tab extends React.Component {
           "value" : d.student.studentId,
           "label" : d.student.firstName
         }))
-        this.setState({ classes: res.data , selectStudentOptions: selectStudentOptions});
+        this.setState({ classes: res.data , selectStudentOptions: selectStudentOptions, selectedClass: e.value});
         console.log(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  studentChanged(e){
+    console.log(e);
+    axios.get(`http://localhost/catalog/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass}&studentId=${e.value}`)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ classes: res.data , marks: res.data});
       })
       .catch(function (error) {
         console.log(error);
@@ -110,11 +122,10 @@ class Tab extends React.Component {
       <div>
         <h3>Hello World!</h3>
         <h1>Congratulations {userName}!</h1> <h3>This is the tab you made :-)</h3>
-        {this.state.classes[0].name}
         <div>
         <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
         <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
-        <Select options={this.state.selectStudentOptions} onChange={this.classChanged.bind(this)}/>
+        <Select options={this.state.selectStudentOptions} onChange={this.studentChanged.bind(this)}/>
       </div>
         <table className="table table-striped table-dark">
           <thead className="thead-dark">
