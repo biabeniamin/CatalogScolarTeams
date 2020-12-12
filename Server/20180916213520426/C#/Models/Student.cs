@@ -11,8 +11,7 @@ namespace DatabaseFunctionsGenerator
 	public class Student
 	{
 		private int _studentId;
-		private string _firstName;
-		private string _lastName;
+		private string _name;
 		private string _email;
 		private DateTime _creationTime;
 		
@@ -29,29 +28,16 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
-		[JsonProperty(PropertyName = "firstName")]
-		public string FirstName
+		[JsonProperty(PropertyName = "name")]
+		public string Name
 		{
 			get
 			{
-				return _firstName;
+				return _name;
 			}
 			set
 			{
-				_firstName = value;
-			}
-		}
-		
-		[JsonProperty(PropertyName = "lastName")]
-		public string LastName
-		{
-			get
-			{
-				return _lastName;
-			}
-			set
-			{
-				_lastName = value;
+				_name = value;
 			}
 		}
 		
@@ -82,26 +68,23 @@ namespace DatabaseFunctionsGenerator
 		}
 		
 		
-		public Student(int studentId, string firstName, string lastName, string email, DateTime creationTime)
+		public Student(int studentId, string name, string email, DateTime creationTime)
 		{
 			_studentId = studentId;
-			_firstName = firstName;
-			_lastName = lastName;
+			_name = name;
 			_email = email;
 			_creationTime = creationTime;
 		}
 		
-		public Student(string firstName, string lastName, string email)
+		public Student(string name, string email)
 		{
-			_firstName = firstName;
-			_lastName = lastName;
+			_name = name;
 			_email = email;
 		}
 		
 		public Student()
 			 :this(
-				"Test", //FirstName
-				"Test", //LastName
+				"Test", //Name
 				"Test" //Email
 			)
 		{

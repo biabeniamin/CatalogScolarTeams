@@ -24,8 +24,7 @@ export class StudentService
 	{
 		return {
 		studentId : 0,
-		firstName : 'Test',
-		lastName : 'Test',
+		name : 'Test',
 		email : 'Test',
 		creationTime : '2000-01-01 00:00:00'
 		};

@@ -13,8 +13,7 @@ function ConvertListToStudents($data)
 	foreach($data as $row)
 	{
 		$student = new Student(
-		$row["FirstName"], 
-		$row["LastName"], 
+		$row["Name"], 
 		$row["Email"] 
 		);
 	
@@ -79,9 +78,8 @@ function CompleteStudents($database, $students)
 
 function AddStudent($database, $student)
 {
-	$query = "INSERT INTO Students(FirstName, LastName, Email, CreationTime) VALUES(";
-	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$student->GetFirstName()) . "', ";
-	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$student->GetLastName()) . "', ";
+	$query = "INSERT INTO Students(Name, Email, CreationTime) VALUES(";
+	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$student->GetName()) . "', ";
 	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$student->GetEmail()) . "', ";
 	$query = $query . "NOW()"."";
 	
@@ -114,8 +112,7 @@ function DeleteStudent($database, $studentId)
 function UpdateStudent($database, $student)
 {
 	$query = "UPDATE Students SET ";
-	$query = $query . "FirstName='" . $student->GetFirstName() . "', ";
-	$query = $query . "LastName='" . $student->GetLastName() . "', ";
+	$query = $query . "Name='" . $student->GetName() . "', ";
 	$query = $query . "Email='" . $student->GetEmail() . "'";
 	$query = $query . " WHERE StudentId=" . $student->GetStudentId();
 	
@@ -131,8 +128,7 @@ function UpdateStudent($database, $student)
 function TestAddStudent($database)
 {
 	$student = new Student(
-		'Test',//FirstName
-		'Test',//LastName
+		'Test',//Name
 		'Test'//Email
 	);
 	
@@ -142,8 +138,7 @@ function TestAddStudent($database)
 function GetEmptyStudent()
 {
 	$student = new Student(
-		'',//FirstName
-		'',//LastName
+		'',//Name
 		''//Email
 	);
 	
@@ -189,8 +184,7 @@ if(CheckGetParameters(["cmd"]))
 		{
 			$database = new DatabaseOperations();
 			$student = new Student(
-				IssetValueNull($_POST['firstName']),
-				IssetValueNull($_POST['lastName']),
+				IssetValueNull($_POST['name']),
 				IssetValueNull($_POST['email'])
 			);
 	
@@ -206,8 +200,7 @@ if(CheckGetParameters(["cmd"]))
 	{
 		$database = new DatabaseOperations();
 		$student = new Student(
-			$_POST['firstName'],
-			$_POST['lastName'],
+			$_POST['name'],
 			$_POST['email']
 		);
 		$student->SetStudentId($_POST['studentId']);

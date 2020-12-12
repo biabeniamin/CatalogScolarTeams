@@ -14,11 +14,7 @@
 
 		<form (submit)="addTeacher($event)">
 			<div class="input-container">
-			<input type="text" placeholder= "FirstName" id="FirstName" />
-			<div class="bar"></div>
-			</div>
-			<div class="input-container">
-			<input type="text" placeholder= "LastName" id="LastName" />
+			<input type="text" placeholder= "Name" id="Name" />
 			<div class="bar"></div>
 			</div>
 			<div class="input-container">
@@ -36,10 +32,7 @@
 					TeacherId
 				</th>
 				<th>
-					FirstName
-				</th>
-				<th>
-					LastName
+					Name
 				</th>
 				<th>
 					Email
@@ -53,10 +46,7 @@
 					{{teacher.teacherId}}
 				</td>
 				<td>
-					{{teacher.firstName}}
-				</td>
-				<td>
-					{{teacher.lastName}}
+					{{teacher.name}}
 				</td>
 				<td>
 					{{teacher.email}}

@@ -15,8 +15,7 @@ class Student(Base):
 		return 'Students'
 	#Fields
 	studentId = Column('StudentId', Integer, primary_key=True)
-	firstName = Column('FirstName', String(30))
-	lastName = Column('LastName', String(30))
+	name = Column('Name', String(50))
 	email = Column('Email', String(30))
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
@@ -71,8 +70,7 @@ def deleteStudent(session, studentId):
 #request parser funtion
 def getstudentRequestArguments():
 	parser = reqparse.RequestParser()
-	parser.add_argument('firstName')
-	parser.add_argument('lastName')
+	parser.add_argument('name')
 	parser.add_argument('email')
 	return parser
 

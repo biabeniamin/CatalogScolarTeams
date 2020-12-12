@@ -20,8 +20,7 @@
 			<select id=TeacherIdDropDown (change)="teacherChanged($event.target.value)">
 				<option [value]="teacher.teacherId" *ngFor= "let teacher of teacherService.teachers | async" >
 				{{teacher.teacherId}}
-				{{teacher.firstName}}
-				{{teacher.lastName}}
+				{{teacher.name}}
 				{{teacher.email}}
 				</option>
 			</select>
@@ -29,8 +28,7 @@
 			<select id=StudentIdDropDown (change)="studentChanged($event.target.value)">
 				<option [value]="student.studentId" *ngFor= "let student of studentService.students | async" >
 				{{student.studentId}}
-				{{student.firstName}}
-				{{student.lastName}}
+				{{student.name}}
 				{{student.email}}
 				</option>
 			</select>
@@ -73,10 +71,7 @@
 					teacher.TeacherId
 				</th>
 				<th>
-					teacher.FirstName
-				</th>
-				<th>
-					teacher.LastName
+					teacher.Name
 				</th>
 				<th>
 					teacher.Email
@@ -88,10 +83,7 @@
 					student.StudentId
 				</th>
 				<th>
-					student.FirstName
-				</th>
-				<th>
-					student.LastName
+					student.Name
 				</th>
 				<th>
 					student.Email
@@ -138,10 +130,7 @@
 					{{absente.teacher.teacherId}}
 				</td>
 				<td *ngIf="absente.teacher">
-					{{absente.teacher.firstName}}
-				</td>
-				<td *ngIf="absente.teacher">
-					{{absente.teacher.lastName}}
+					{{absente.teacher.name}}
 				</td>
 				<td *ngIf="absente.teacher">
 					{{absente.teacher.email}}
@@ -153,10 +142,7 @@
 					{{absente.student.studentId}}
 				</td>
 				<td *ngIf="absente.student">
-					{{absente.student.firstName}}
-				</td>
-				<td *ngIf="absente.student">
-					{{absente.student.lastName}}
+					{{absente.student.name}}
 				</td>
 				<td *ngIf="absente.student">
 					{{absente.student.email}}

@@ -21,7 +21,7 @@ async def requestReceived(websocket, session, request):
 	
 	elif request['operation'] == 'add':
 		#add endpoint
-		if checkArguments(request, ['firstName', 'lastName', 'email']) == False:
+		if checkArguments(request, ['name', 'email']) == False:
 			print('Not all parameters were provided for ADD in Teachers')
 			await websocket.send(convertToJson({'error' : 'Invalid request'}))
 			return

@@ -35,8 +35,7 @@ ALTER TABLE `Classes`  MODIFY `ClasseId` int NOT NULL AUTO_INCREMENT, AUTO_INCRE
 
 CREATE TABLE `Teachers` (
 `TeacherId` INT  NOT NULL,
-`FirstName` VARCHAR(30),
-`LastName` VARCHAR(30),
+`Name` VARCHAR(50),
 `Email` VARCHAR(30),
 `CreationTime` DATETIME  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -46,8 +45,7 @@ ALTER TABLE `Teachers`  MODIFY `TeacherId` int NOT NULL AUTO_INCREMENT, AUTO_INC
 
 CREATE TABLE `Students` (
 `StudentId` INT  NOT NULL,
-`FirstName` VARCHAR(30),
-`LastName` VARCHAR(30),
+`Name` VARCHAR(50),
 `Email` VARCHAR(30),
 `CreationTime` DATETIME  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

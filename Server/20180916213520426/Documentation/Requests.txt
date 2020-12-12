@@ -56,16 +56,14 @@ http://192.168.0.100:5000/Teachers.php?cmd=getTeachersByTeacherId&teacherId=valu
 
 
 http://192.168.0.100:5000/Teachers.php?cmd=addTeacher- POST request with following parameters
-firstName : VARCHAR(30)
-lastName : VARCHAR(30)
+name : VARCHAR(50)
 email : VARCHAR(30)
 add a new Teacher with specified data and returns the Teacher with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/Teachers.php?cmd=updateTeacher- PUT request with following parameters
 teacherId : INT
-firstName : VARCHAR(30)
-lastName : VARCHAR(30)
+name : VARCHAR(50)
 email : VARCHAR(30)
 update a Teacher by id and returns the Teacher with id != 0 if succeeded
 
@@ -82,16 +80,14 @@ http://192.168.0.100:5000/Students.php?cmd=getStudentsByStudentId&studentId=valu
 
 
 http://192.168.0.100:5000/Students.php?cmd=addStudent- POST request with following parameters
-firstName : VARCHAR(30)
-lastName : VARCHAR(30)
+name : VARCHAR(50)
 email : VARCHAR(30)
 add a new Student with specified data and returns the Student with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/Students.php?cmd=updateStudent- PUT request with following parameters
 studentId : INT
-firstName : VARCHAR(30)
-lastName : VARCHAR(30)
+name : VARCHAR(50)
 email : VARCHAR(30)
 update a Student by id and returns the Student with id != 0 if succeeded
 

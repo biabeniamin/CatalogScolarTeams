@@ -22,8 +22,7 @@ namespace DatabaseFunctionsGenerator
 			{
 				list.Add(new Student(
 					(int)reader["StudentId"],
-					(string)reader["FirstName"],
-					(string)reader["LastName"],
+					(string)reader["Name"],
 					(string)reader["Email"],
 					(DateTime)reader["CreationTime"]
 				));
@@ -36,10 +35,9 @@ namespace DatabaseFunctionsGenerator
 		public void Post([FromBody]Student data)
 		{
 			DatabaseOperations db = new DatabaseOperations();
-			MySqlCommand command = new MySqlCommand("INSERT INTO Students(FirstName,  LastName,  Email,  CreationTime) VALUES(@FirstName,  @LastName,  @Email,  @CreationTime)");
+			MySqlCommand command = new MySqlCommand("INSERT INTO Students(Name,  Email,  CreationTime) VALUES(@Name,  @Email,  @CreationTime)");
 			
-			command.Parameters.AddWithValue("@FirstName", data.FirstName);
-			command.Parameters.AddWithValue("@LastName", data.LastName);
+			command.Parameters.AddWithValue("@Name", data.Name);
 			command.Parameters.AddWithValue("@Email", data.Email);
 			command.Parameters.AddWithValue("@CreationTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 			

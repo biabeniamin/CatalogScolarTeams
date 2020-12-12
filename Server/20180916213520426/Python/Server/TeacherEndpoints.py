@@ -11,7 +11,7 @@ class TeacherEndpoints(Resource):
 	#API endpoints
 	#get endpoint
 	def get(self):
-		requestedArgs = getArguments(['cmd', 'teacherId', 'firstName', 'lastName', 'email', 'creationTime'])
+		requestedArgs = getArguments(['cmd', 'teacherId', 'name', 'email', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		if args['cmd'] == 'getTeachersByTeacherId':
 			return Teacher.getTeachersByTeacherId(self.session, args['teacherId'])
@@ -20,7 +20,7 @@ class TeacherEndpoints(Resource):
 	
 	#post endpoint
 	def post(self):
-		requestedArgs = getArguments(['firstName', 'lastName', 'email'])
+		requestedArgs = getArguments(['name', 'email'])
 		args  = requestedArgs.parse_args()
 		teacher  = dict_as_obj(args, Teacher.Teacher())
 		return Teacher.addTeacher(self.session, teacher)
@@ -35,7 +35,7 @@ class TeacherEndpoints(Resource):
 	
 	#patch endpoint
 	def patch(self):
-		requestedArgs = getArguments(['teacherId', 'firstName', 'lastName', 'email', 'creationTime'])
+		requestedArgs = getArguments(['teacherId', 'name', 'email', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		teacher  = Teacher.getTeachersByTeacherId(self.session, args['teacherId'])[0]
 		teacher  = dict_as_obj(args, teacher)

@@ -25,8 +25,7 @@ public class StudentAdapter extends BaseAdapter
 	{
 		Student student;
 		TextView studentIdTextBox;
-		TextView firstNameTextBox;
-		TextView lastNameTextBox;
+		TextView nameTextBox;
 		TextView emailTextBox;
 		TextView creationTimeTextBox;
 		
@@ -38,14 +37,12 @@ public class StudentAdapter extends BaseAdapter
 		}
 		
 		studentIdTextBox = (TextView) convertView.findViewById(R.id.studentIdTextBox);
-		firstNameTextBox = (TextView) convertView.findViewById(R.id.firstNameTextBox);
-		lastNameTextBox = (TextView) convertView.findViewById(R.id.lastNameTextBox);
+		nameTextBox = (TextView) convertView.findViewById(R.id.nameTextBox);
 		emailTextBox = (TextView) convertView.findViewById(R.id.emailTextBox);
 		creationTimeTextBox = (TextView) convertView.findViewById(R.id.creationTimeTextBox);
 		
 		studentIdTextBox.setText(student.getStudentId().toString());
-		firstNameTextBox.setText(student.getFirstName());
-		lastNameTextBox.setText(student.getLastName());
+		nameTextBox.setText(student.getName());
 		emailTextBox.setText(student.getEmail());
 		creationTimeTextBox.setText(student.getCreationTime().toString());
 		

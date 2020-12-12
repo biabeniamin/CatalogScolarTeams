@@ -11,7 +11,7 @@ class StudentEndpoints(Resource):
 	#API endpoints
 	#get endpoint
 	def get(self):
-		requestedArgs = getArguments(['cmd', 'studentId', 'firstName', 'lastName', 'email', 'creationTime'])
+		requestedArgs = getArguments(['cmd', 'studentId', 'name', 'email', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		if args['cmd'] == 'getStudentsByStudentId':
 			return Student.getStudentsByStudentId(self.session, args['studentId'])
@@ -20,7 +20,7 @@ class StudentEndpoints(Resource):
 	
 	#post endpoint
 	def post(self):
-		requestedArgs = getArguments(['firstName', 'lastName', 'email'])
+		requestedArgs = getArguments(['name', 'email'])
 		args  = requestedArgs.parse_args()
 		student  = dict_as_obj(args, Student.Student())
 		return Student.addStudent(self.session, student)
@@ -35,7 +35,7 @@ class StudentEndpoints(Resource):
 	
 	#patch endpoint
 	def patch(self):
-		requestedArgs = getArguments(['studentId', 'firstName', 'lastName', 'email', 'creationTime'])
+		requestedArgs = getArguments(['studentId', 'name', 'email', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		student  = Student.getStudentsByStudentId(self.session, args['studentId'])[0]
 		student  = dict_as_obj(args, student)

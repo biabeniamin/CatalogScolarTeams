@@ -3,8 +3,7 @@
 class Student
 {
 	var $studentId;
-	var $firstName;
-	var $lastName;
+	var $name;
 	var $email;
 	var $creationTime;
 
@@ -17,22 +16,13 @@ class Student
 		$this->studentId = $value;
 	}
 	
-	function GetFirstName()
+	function GetName()
 	{
-		return $this->firstName;
+		return $this->name;
 	}
-	function SetFirstName($value)
+	function SetName($value)
 	{
-		$this->firstName = $value;
-	}
-	
-	function GetLastName()
-	{
-		return $this->lastName;
-	}
-	function SetLastName($value)
-	{
-		$this->lastName = $value;
+		$this->name = $value;
 	}
 	
 	function GetEmail()
@@ -54,12 +44,11 @@ class Student
 	}
 	
 
-	function Student($FirstName, $LastName, $Email)
+	function Student($Name, $Email)
 	{
 		$this->studentId = 0;
 	
-		$this->firstName = $FirstName;
-		$this->lastName = $LastName;
+		$this->name = $Name;
 		$this->email = $Email;
 	}
 

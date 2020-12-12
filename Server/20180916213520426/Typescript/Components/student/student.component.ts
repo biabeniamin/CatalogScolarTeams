@@ -28,8 +28,7 @@ export class StudentComponent implements OnInit
 		event.preventDefault();
 		const target = event.target;
 		let student = StudentService.GetDefaultStudent();
-		student.firstName = target.querySelector('#FirstName').value;
-		student.lastName = target.querySelector('#LastName').value;
+		student.name = target.querySelector('#Name').value;
 		student.email = target.querySelector('#Email').value;
 		console.log(student);
 		this.studentService.AddStudent(student);

@@ -15,8 +15,7 @@ import java.util.Date;
 public class Student
 {
 	private Integer  studentId;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String email;
 	private Date creationTime;
 	
@@ -30,24 +29,14 @@ public class Student
 		this.studentId = studentId;
 	}
 	
-	public String getFirstName()
+	public String getName()
 	{
-		return this.firstName;
+		return this.name;
 	}
 	
-	public void setFirstName(String firstName)
+	public void setName(String name)
 	{
-		this.firstName = firstName;
-	}
-	
-	public String getLastName()
-	{
-		return this.lastName;
-	}
-	
-	public void setLastName(String lastName)
-	{
-		this.lastName = lastName;
+		this.name = name;
 	}
 	
 	public String getEmail()
@@ -71,18 +60,16 @@ public class Student
 	}
 	
 	
-	public Student(String firstName, String lastName, String email)
+	public Student(String name, String email)
 	{
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.email = email;
 	}
 	
 	public Student()
 	{
 		this(
-			"Test", //FirstName
-			"Test", //LastName
+			"Test", //Name
 			"Test" //Email
 		);
 		this.studentId = 0;

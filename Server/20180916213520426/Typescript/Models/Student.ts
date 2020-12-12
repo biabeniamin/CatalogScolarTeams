@@ -4,24 +4,21 @@ import { Injectable } from '@angular/core'
 export interface Student
 {
 	studentId : number;
-	firstName : string;
-	lastName : string;
+	name : string;
 	email : string;
 	creationTime : string;
 }
 
 export interface StudentJSON
 {
-	firstName : string;
-	lastName : string;
+	name : string;
 	email : string;
 	creationTime : string;
 }
 
 export function encodeStudent(student: Student): StudentJSON {
 	return {
-		firstName:	student.firstName,
-		lastName:	student.lastName,
+		name:	student.name,
 		email:	student.email,
 		creationTime:	student.creationTime,
 	}

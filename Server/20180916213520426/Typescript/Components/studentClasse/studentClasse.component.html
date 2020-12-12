@@ -25,8 +25,7 @@
 			<select id=StudentIdDropDown (change)="studentChanged($event.target.value)">
 				<option [value]="student.studentId" *ngFor= "let student of studentService.students | async" >
 				{{student.studentId}}
-				{{student.firstName}}
-				{{student.lastName}}
+				{{student.name}}
 				{{student.email}}
 				</option>
 			</select>
@@ -69,10 +68,7 @@
 					student.StudentId
 				</th>
 				<th>
-					student.FirstName
-				</th>
-				<th>
-					student.LastName
+					student.Name
 				</th>
 				<th>
 					student.Email
@@ -113,10 +109,7 @@
 					{{studentClasse.student.studentId}}
 				</td>
 				<td *ngIf="studentClasse.student">
-					{{studentClasse.student.firstName}}
-				</td>
-				<td *ngIf="studentClasse.student">
-					{{studentClasse.student.lastName}}
+					{{studentClasse.student.name}}
 				</td>
 				<td *ngIf="studentClasse.student">
 					{{studentClasse.student.email}}

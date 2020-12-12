@@ -5,8 +5,7 @@ from dataclasses import dataclass
 @dataclass
 class Teacher:
 	teacherId : int
-	firstName : str
-	lastName : str
+	name : str
 	email : str
 	creationTime : str
 	

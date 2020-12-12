@@ -28,8 +28,7 @@ export class TeacherComponent implements OnInit
 		event.preventDefault();
 		const target = event.target;
 		let teacher = TeacherService.GetDefaultTeacher();
-		teacher.firstName = target.querySelector('#FirstName').value;
-		teacher.lastName = target.querySelector('#LastName').value;
+		teacher.name = target.querySelector('#Name').value;
 		teacher.email = target.querySelector('#Email').value;
 		console.log(teacher);
 		this.teacherService.AddTeacher(teacher);
