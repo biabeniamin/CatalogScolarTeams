@@ -26,6 +26,9 @@ class DataTable extends Component {
               <td>
                   {this.props.obj.creationTime}
               </td>
+              <td>
+                <button onClick={this.eventHandler}>{this.props.obj.eventHandler}</button>
+              </td>
           </tr>
       );
   }
@@ -73,6 +76,7 @@ class Tab extends React.Component {
 
   dataTable() {
     return this.state.marks.map((data, i) => {
+        //data['eventHandler']=this.eventHandler.bin;
         return <DataTable obj={data} key={i} />;
     });
   }
@@ -81,12 +85,12 @@ class Tab extends React.Component {
     console.log(e);
     axios.get(`https://192.168.0.100/catalog/Classes.php?cmd=getClassesByClassRoomId&classRoomId=${e.value}`)
       .then(res => {
+        console.log(res.data);
         let selectClassOptions = res.data.map(d => ({
           "value" : d.classeId,
           "label" : d.name
         }))
         this.setState({ classes: res.data , selectClassOptions: selectClassOptions, selectedRoomClass: e.value});
-        console.log(res.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -99,7 +103,7 @@ class Tab extends React.Component {
       .then(res => {
         let selectStudentOptions = res.data.map(d => ({
           "value" : d.student.studentId,
-          "label" : d.student.firstName
+          "label" : d.student.name
         }))
         this.setState({ classes: res.data , selectStudentOptions: selectStudentOptions, selectedClass: e.value});
         console.log(res.data);
@@ -158,6 +162,11 @@ class Tab extends React.Component {
     });
 
     event.preventDefault();
+  }
+
+  eventHandler(event)
+  {
+    console.log(event)
   }
 
   render() {
