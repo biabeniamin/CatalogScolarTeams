@@ -75,7 +75,7 @@ class Tab extends React.Component {
   }
 
   dataTable() {
-    return this.state.marks.map((data, i) => {
+    return this.state.marks.filter(val => val.markId!==0).map((data, i) => {
         //data['eventHandler']=this.eventHandler.bin;
         return <DataTable obj={data} key={i} />;
     });
