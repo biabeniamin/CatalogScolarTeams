@@ -178,12 +178,12 @@ class Tab extends React.Component {
       
       <div>
 
-        <div className="bg-contact3">
+        <div className="bg-contact3" style={{ backgroundImage:`url(${backgrounImage})` }}>
           <div className="container-contact3">
             <div className="wrap-contact3">
               <form className="contact3-form validate-form">
                 <span className="contact3-form-title">
-                  Contact Us
+                  Catalog Scolar
 					</span>
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <input className="input3" type="text" name="name" placeholder="Your Name" />
