@@ -8,6 +8,7 @@ import axios from 'axios';
 import Select from 'react-select'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import backgrounImage from './../images/bg-01.jpg'
 
 
 class DataTable extends Component {
@@ -174,45 +175,41 @@ class Tab extends React.Component {
     let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
 
     return (
+      
       <div>
-        <h3>Hello World!</h3>
-        <h1>Congratulations {userName}!</h1> <h3>This is the tab you made :-)</h3>
-        <div>
-        <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
-        <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
-        <Select options={this.state.selectStudentOptions} onChange={this.studentChanged.bind(this)}/>
-      </div>
-        <table className="table table-striped table-dark">
-          <thead className="thead-dark">
-            <tr>
-              <td>ID</td>
-              <td>Name</td>
-              <td>CreationTime</td>
-            </tr>
-          </thead>
-          <tbody>
-            {this.dataTable()}
-          </tbody>
-        </table>
 
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <label>
-            Nota:
-          </label>
-          <Select options={[{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
-          { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]} onChange={this.markChanged.bind(this)} />
-          <label>
-            Name:
-          </label>
-          <DatePicker   
-            onChange={this.markDateChanged.bind(this)}
-            selected={this.state.markDisplayedDate}
-            dateFormat="dd/MM/yyyy"
-          />
-          <input type="submit" value="Submit" />
-        </form>
-        
+        <div className="bg-contact3">
+          <div className="container-contact3">
+            <div className="wrap-contact3">
+              <form className="contact3-form validate-form">
+                <span className="contact3-form-title">
+                  Contact Us
+					</span>
+                <div className="wrap-input3 validate-input" data-validate="Name is required">
+                  <input className="input3" type="text" name="name" placeholder="Your Name" />
+                  <span className="focus-input3"></span>
+                </div>
+                <div className="wrap-input3 input3-select">
+                  <div>
+                    <select className="selection-2" name="service">
+                      <option>Needed Services</option>
+                      <option>eCommerce Bussiness</option>
+                      <option>UI/UX Design</option>
+                      <option>Online Services</option>
+                    </select>
+                  </div>
+                  <span className="focus-input3"></span>
+                </div>
 
+                <div className="container-contact3-form-btn">
+                  <button className="contact3-form-btn">
+                    Submit
+						</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
