@@ -191,13 +191,13 @@ class Tab extends React.Component {
 
         <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Clasa:</label>
-                  <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
+                  <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
                   <span className="focus-input3"></span>
                 </div>
 
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Materie:</label>
-                  <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
+                  <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
                   <span className="focus-input3"></span>
                 </div>
 
