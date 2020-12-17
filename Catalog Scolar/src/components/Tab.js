@@ -52,27 +52,39 @@ class Tab extends React.Component {
 
       console.log(this.state.context);
 
-      axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken',{username:"test", password:"test"})
-      .then(res => {
-        this.setState({ token: res.data });
-        console.log(res.data);
-
-        axios.get(`https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
+      if (this.state.context['userLicenseType'] === "Teacher") {
+        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: "test", password: "test" })
           .then(res => {
-            let selectOptions = res.data.map(d => ({
-              "value": d.classRoomId,
-              "label": d.name
-            }))
-            this.setState({ classes: res.data, selectOptions: selectOptions });
+            this.setState({ token: res.data, tokenType: 0});
+            console.log(res.data);
+
+            axios.get(`https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
+              .then(res => {
+                let selectOptions = res.data.map(d => ({
+                  "value": d.classRoomId,
+                  "label": d.name
+                }))
+                this.setState({ classes: res.data, selectOptions: selectOptions });
+                console.log(res.data);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      else if (this.state.context['userLicenseType'] === "Student") {
+        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addStudentToken', { username: this.state.context['upn'], password: "test" })
+          .then(res => {
+            this.setState({ token: res.data, tokenType: 0});
             console.log(res.data);
           })
           .catch(function (error) {
             console.log(error);
           });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      }
     });
 
     
