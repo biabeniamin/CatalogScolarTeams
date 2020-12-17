@@ -76,7 +76,7 @@ class Tab extends React.Component {
           });
       }
       else if (this.state.context['userLicenseType'] === "Student") {
-        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addStudentToken', { username: this.state.context['upn'], password: "test" })
+        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addStudentToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
             this.setState({ token: res.data, tokenType: 0});
             console.log(res.data);
