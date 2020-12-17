@@ -5,6 +5,9 @@ import StudentClasse
 studentClassesSubscribers = set()
 async def requestReceived(websocket, session, request):
 	global studentClassesSubscribers
+	if websocket.authenticated == False:
+		await websocket.send(convertToJson({'operation' : 'tokenError', 'table' : 'TokenAuthentication'}))
+		return
 	#Websockets endpoints
 	if request['operation'] == 'get':
 		#get endpoint

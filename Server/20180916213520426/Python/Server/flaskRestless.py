@@ -14,6 +14,8 @@ from StudentClasses import StudentClasses
 from Marks import Marks
 from Absente import Absente
 from Notifications import Notifications
+from Tokens import Tokens
+from TokenUsers import TokenUsers
 
 def add_cors_headers(response):
 	response.headers['Access-Control-Allow-Origin'] = '*'
@@ -42,6 +44,10 @@ manager.create_api(Marks,
 manager.create_api(Absente,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
 manager.create_api(Notifications,
+	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
+manager.create_api(Tokens,
+	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
+manager.create_api(TokenUsers,
 	methods =['GET', 'PUT', 'POST', 'DELETE'], validation_exceptions=[ValidationError], results_per_page=-1)
 
 Base.metadata.bind = engine

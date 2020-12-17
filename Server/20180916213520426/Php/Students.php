@@ -6,6 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Student.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
+require_once 'Authentication.php';
 function ConvertListToStudents($data)
 {
 	$students = [];

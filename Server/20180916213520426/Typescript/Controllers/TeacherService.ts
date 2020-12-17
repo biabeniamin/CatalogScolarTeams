@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WebSockets, Message, Request } from './WebSockets';
 import { Teacher, encodeTeacher } from '../app/Models/Teacher'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -12,9 +13,10 @@ export class TeacherService
 {
 	public teachers : BehaviorSubject<Teacher[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetTeachers()
 	{
-		return this.http.get<Teacher[]>(ServerUrl.GetUrl()  + `Teachers?cmd=get`).subscribe(data =>
+		return this.http.get<Teacher[]>(ServerUrl.GetUrl()  + `Teachers?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.teachers.next(data);
 		});
@@ -32,11 +34,13 @@ export class TeacherService
 	
 	GetTeachersByTeacherId(teacherId)
 	{
-		return this.http.get<Teacher[]>(ServerUrl.GetUrl()  + `Teachers?cmd=getTeachersByTeacherId&teacherId=${teacherId}`);
+		return this.http.get<Teacher[]>(ServerUrl.GetUrl()  + `Teachers?cmd=getTeachersByTeacherId&teacherId=${teacherId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.teachers = new BehaviorSubject([TeacherService.GetDefaultTeacher()]);
 		this.GetTeachers();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -51,7 +55,7 @@ export class TeacherService
 			return
 		}
 		
-		return this.http.post<Teacher>(ServerUrl.GetUrl()  + `Teachers?cmd=post`, teacher).subscribe(teacher =>
+		return this.http.post<Teacher>(ServerUrl.GetUrl()  + `Teachers?cmd=post&token=${this.token}`, teacher).subscribe(teacher =>
 		{
 			console.log(teacher);
 			if(0 != teacher.teacherId)
@@ -71,7 +75,7 @@ export class TeacherService
 			return
 		}
 		
-		return this.http.patch<Teacher>(ServerUrl.GetUrl()  + `Teachers?cmd=updateTeacher`, teacher).subscribe(teacher =>
+		return this.http.patch<Teacher>(ServerUrl.GetUrl()  + `Teachers?cmd=updateTeacher&token=${this.token}`, teacher).subscribe(teacher =>
 		{
 			console.log(teacher);
 			return teacher;
@@ -86,7 +90,7 @@ export class TeacherService
 			return
 		}
 		
-		return this.http.delete<Teacher>(ServerUrl.GetUrl()  + `Teachers&cmd=delete&teacherId=` +  teacher.teacherId).subscribe(teacher =>
+		return this.http.delete<Teacher>(ServerUrl.GetUrl()  + `Teachers&cmd=delete&token=${this.token}&teacherId=` +  teacher.teacherId).subscribe(teacher =>
 		{
 			console.log(teacher);
 			return teacher;

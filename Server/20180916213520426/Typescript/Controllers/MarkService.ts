@@ -10,6 +10,7 @@ import { Student } from '../app/Models/Student'
 import { StudentService } from './StudentService'
 import { Classe } from '../app/Models/Classe'
 import { ClasseService } from './ClasseService'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -18,9 +19,10 @@ export class MarkService
 {
 	public marks : BehaviorSubject<Mark[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetMarks()
 	{
-		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=get`).subscribe(data =>
+		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.marks.next(data);
 		});
@@ -41,15 +43,17 @@ export class MarkService
 	
 	GetMarksByClasseIdStudentId(classeId, studentId)
 	{
-		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByClasseIdStudentId&classeId=${classeId}&studentId=${studentId}`);
+		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByClasseIdStudentId&classeId=${classeId}&studentId=${studentId}&token=${this.token}`);
 	}
 	GetMarksByMarkId(markId)
 	{
-		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByMarkId&markId=${markId}`);
+		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByMarkId&markId=${markId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.marks = new BehaviorSubject([MarkService.GetDefaultMark()]);
 		this.GetMarks();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -64,7 +68,7 @@ export class MarkService
 			return
 		}
 		
-		return this.http.post<Mark>(ServerUrl.GetUrl()  + `Marks?cmd=post`, mark).subscribe(mark =>
+		return this.http.post<Mark>(ServerUrl.GetUrl()  + `Marks?cmd=post&token=${this.token}`, mark).subscribe(mark =>
 		{
 			console.log(mark);
 			if(0 != mark.markId)
@@ -84,7 +88,7 @@ export class MarkService
 			return
 		}
 		
-		return this.http.patch<Mark>(ServerUrl.GetUrl()  + `Marks?cmd=updateMark`, mark).subscribe(mark =>
+		return this.http.patch<Mark>(ServerUrl.GetUrl()  + `Marks?cmd=updateMark&token=${this.token}`, mark).subscribe(mark =>
 		{
 			console.log(mark);
 			return mark;
@@ -99,7 +103,7 @@ export class MarkService
 			return
 		}
 		
-		return this.http.delete<Mark>(ServerUrl.GetUrl()  + `Marks&cmd=delete&markId=` +  mark.markId).subscribe(mark =>
+		return this.http.delete<Mark>(ServerUrl.GetUrl()  + `Marks&cmd=delete&token=${this.token}&markId=` +  mark.markId).subscribe(mark =>
 		{
 			console.log(mark);
 			return mark;

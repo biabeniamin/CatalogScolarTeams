@@ -8,6 +8,7 @@ import { ClassRoom } from '../app/Models/ClassRoom'
 import { ClassRoomService } from './ClassRoomService'
 import { Teacher } from '../app/Models/Teacher'
 import { TeacherService } from './TeacherService'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -16,9 +17,10 @@ export class ClasseService
 {
 	public classes : BehaviorSubject<Classe[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetClasses()
 	{
-		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=get`).subscribe(data =>
+		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.classes.next(data);
 		});
@@ -37,15 +39,17 @@ export class ClasseService
 	
 	GetClassesByClassRoomId(classRoomId)
 	{
-		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=getClassesByClassRoomId&classRoomId=${classRoomId}`);
+		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=getClassesByClassRoomId&classRoomId=${classRoomId}&token=${this.token}`);
 	}
 	GetClassesByClasseId(classeId)
 	{
-		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=getClassesByClasseId&classeId=${classeId}`);
+		return this.http.get<Classe[]>(ServerUrl.GetUrl()  + `Classes?cmd=getClassesByClasseId&classeId=${classeId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.classes = new BehaviorSubject([ClasseService.GetDefaultClasse()]);
 		this.GetClasses();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -60,7 +64,7 @@ export class ClasseService
 			return
 		}
 		
-		return this.http.post<Classe>(ServerUrl.GetUrl()  + `Classes?cmd=post`, classe).subscribe(classe =>
+		return this.http.post<Classe>(ServerUrl.GetUrl()  + `Classes?cmd=post&token=${this.token}`, classe).subscribe(classe =>
 		{
 			console.log(classe);
 			if(0 != classe.classeId)
@@ -80,7 +84,7 @@ export class ClasseService
 			return
 		}
 		
-		return this.http.patch<Classe>(ServerUrl.GetUrl()  + `Classes?cmd=updateClasse`, classe).subscribe(classe =>
+		return this.http.patch<Classe>(ServerUrl.GetUrl()  + `Classes?cmd=updateClasse&token=${this.token}`, classe).subscribe(classe =>
 		{
 			console.log(classe);
 			return classe;
@@ -95,7 +99,7 @@ export class ClasseService
 			return
 		}
 		
-		return this.http.delete<Classe>(ServerUrl.GetUrl()  + `Classes&cmd=delete&classeId=` +  classe.classeId).subscribe(classe =>
+		return this.http.delete<Classe>(ServerUrl.GetUrl()  + `Classes&cmd=delete&token=${this.token}&classeId=` +  classe.classeId).subscribe(classe =>
 		{
 			console.log(classe);
 			return classe;

@@ -1,0 +1,132 @@
+<div class="container">
+	<div class="card rerun">
+		<form (submit)="tokenService.GetTokens()">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update">
+			</div>
+		</form>
+
+		<form (submit)="updateLive($event)">
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Update Live">
+			</div>
+		</form>
+
+		<form (submit)="addToken($event)">
+			<div class="input-container">
+			<input type="text" placeholder= "Value" id="Value" />
+			<div class="bar"></div>
+			</div>
+			<div class="input-container">
+			<input type="text" placeholder= "Address" id="Address" />
+			<div class="bar"></div>
+			</div>
+			<div class="input-container">
+			<input type="text" placeholder= "LastUpdate" id="LastUpdate" />
+			<div class="bar"></div>
+			</div>
+			<select id=TokenUserIdDropDown (change)="tokenUserChanged($event.target.value)">
+				<option [value]="tokenUser.tokenUserId" *ngFor= "let tokenUser of tokenUserService.tokenUsers | async" >
+				{{tokenUser.tokenUserId}}
+				{{tokenUser.username}}
+				{{tokenUser.password}}
+				</option>
+			</select>
+			
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Add">
+			</div>
+		</form>
+
+		<tbody>
+			<tr>
+				<th>
+					TokenId
+				</th>
+				<th>
+					TokenUserId
+				</th>
+				<th>
+					Value
+				</th>
+				<th>
+					Address
+				</th>
+				<th>
+					LastUpdate
+				</th>
+				<th>
+					CreationTime
+				</th>
+				<th>
+					tokenUser.TokenUserId
+				</th>
+				<th>
+					tokenUser.Username
+				</th>
+				<th>
+					tokenUser.Password
+				</th>
+				<th>
+					tokenUser.CreationTime
+				</th>
+			</tr>
+			<tr *ngFor="let token of tokenService.tokens | async; let i = index">
+				<td>
+					{{token.tokenId}}
+				</td>
+				<td>
+					{{token.tokenUserId}}
+				</td>
+				<td>
+					{{token.value}}
+				</td>
+				<td>
+					{{token.address}}
+				</td>
+				<td>
+					{{token.lastUpdate}}
+				</td>
+				<td>
+					{{token.creationTime}}
+				</td>
+				<td *ngIf="token.tokenUser">
+					{{token.tokenUser.tokenUserId}}
+				</td>
+				<td *ngIf="token.tokenUser">
+					{{token.tokenUser.username}}
+				</td>
+				<td *ngIf="token.tokenUser">
+					{{token.tokenUser.password}}
+				</td>
+				<td *ngIf="token.tokenUser">
+					{{token.tokenUser.creationTime}}
+				</td>
+			</tr>
+		</tbody>
+
+		<form (submit)="getTokensByValue($event)">
+			<h3>Get Tokens by Value</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "Value" id="Value" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by Value">
+			</div>
+		</form>
+		
+		<form (submit)="getTokensByTokenId($event)">
+			<h3>Get Tokens by TokenId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "TokenId" id="TokenId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by TokenId">
+			</div>
+		</form>
+		
+
+	</div>
+</div>

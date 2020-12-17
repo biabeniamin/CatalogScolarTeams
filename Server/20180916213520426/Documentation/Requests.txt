@@ -208,3 +208,59 @@ http://192.168.0.100:5000/Notifications.php?cmd=updateNotification&notificationI
 deletes a Notification by id and returns the Notification with id == 0 if succeeded
 
 
+------------Tokens----------
+http://192.168.0.100:5000/Tokens.php?cmd=getTokens - GET request -return all Tokens
+
+http://192.168.0.100:5000/Tokens.php?cmd=getTokensByValue&value=value - GET request -return Tokens filtered by Value
+
+http://192.168.0.100:5000/Tokens.php?cmd=getTokensByTokenId&tokenId=value - GET request -return Tokens filtered by TokenId
+
+
+
+http://192.168.0.100:5000/Tokens.php?cmd=addToken- POST request with following parameters
+tokenUserId : INT
+value : VARCHAR(40)
+address : VARCHAR(15)
+lastUpdate : DATETIME
+add a new Token with specified data and returns the Token with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Tokens.php?cmd=updateToken- PUT request with following parameters
+tokenId : INT
+tokenUserId : INT
+value : VARCHAR(40)
+address : VARCHAR(15)
+lastUpdate : DATETIME
+update a Token by id and returns the Token with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/Tokens.php?cmd=updateToken&tokenId=0 - DELETE request
+deletes a Token by id and returns the Token with id == 0 if succeeded
+
+
+------------TokenUsers----------
+http://192.168.0.100:5000/TokenUsers.php?cmd=getTokenUsers - GET request -return all TokenUsers
+
+http://192.168.0.100:5000/TokenUsers.php?cmd=getTokenUsersByUsernamePassword&username=value&password=value - GET request -return TokenUsers filtered by Username, Password
+
+http://192.168.0.100:5000/TokenUsers.php?cmd=getTokenUsersByTokenUserId&tokenUserId=value - GET request -return TokenUsers filtered by TokenUserId
+
+
+
+http://192.168.0.100:5000/TokenUsers.php?cmd=addTokenUser- POST request with following parameters
+username : VARCHAR(40)
+password : VARCHAR(40)
+add a new TokenUser with specified data and returns the TokenUser with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/TokenUsers.php?cmd=updateTokenUser- PUT request with following parameters
+tokenUserId : INT
+username : VARCHAR(40)
+password : VARCHAR(40)
+update a TokenUser by id and returns the TokenUser with id != 0 if succeeded
+
+
+http://192.168.0.100:5000/TokenUsers.php?cmd=updateTokenUser&tokenUserId=0 - DELETE request
+deletes a TokenUser by id and returns the TokenUser with id == 0 if succeeded
+
+

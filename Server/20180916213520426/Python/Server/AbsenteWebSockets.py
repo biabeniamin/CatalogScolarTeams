@@ -5,6 +5,9 @@ import Absente
 absenteSubscribers = set()
 async def requestReceived(websocket, session, request):
 	global absenteSubscribers
+	if websocket.authenticated == False:
+		await websocket.send(convertToJson({'operation' : 'tokenError', 'table' : 'TokenAuthentication'}))
+		return
 	#Websockets endpoints
 	if request['operation'] == 'get':
 		#get endpoint

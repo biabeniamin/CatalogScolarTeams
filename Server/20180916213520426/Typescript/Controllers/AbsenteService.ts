@@ -10,6 +10,7 @@ import { Student } from '../app/Models/Student'
 import { StudentService } from './StudentService'
 import { Classe } from '../app/Models/Classe'
 import { ClasseService } from './ClasseService'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -18,9 +19,10 @@ export class AbsenteService
 {
 	public absente : BehaviorSubject<Absente[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetAbsente()
 	{
-		return this.http.get<Absente[]>(ServerUrl.GetUrl()  + `Absente?cmd=get`).subscribe(data =>
+		return this.http.get<Absente[]>(ServerUrl.GetUrl()  + `Absente?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.absente.next(data);
 		});
@@ -40,11 +42,13 @@ export class AbsenteService
 	
 	GetAbsenteByAbsenteId(absenteId)
 	{
-		return this.http.get<Absente[]>(ServerUrl.GetUrl()  + `Absente?cmd=getAbsenteByAbsenteId&absenteId=${absenteId}`);
+		return this.http.get<Absente[]>(ServerUrl.GetUrl()  + `Absente?cmd=getAbsenteByAbsenteId&absenteId=${absenteId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.absente = new BehaviorSubject([AbsenteService.GetDefaultAbsente()]);
 		this.GetAbsente();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -59,7 +63,7 @@ export class AbsenteService
 			return
 		}
 		
-		return this.http.post<Absente>(ServerUrl.GetUrl()  + `Absente?cmd=post`, absente).subscribe(absente =>
+		return this.http.post<Absente>(ServerUrl.GetUrl()  + `Absente?cmd=post&token=${this.token}`, absente).subscribe(absente =>
 		{
 			console.log(absente);
 			if(0 != absente.absenteId)
@@ -79,7 +83,7 @@ export class AbsenteService
 			return
 		}
 		
-		return this.http.patch<Absente>(ServerUrl.GetUrl()  + `Absente?cmd=updateAbsente`, absente).subscribe(absente =>
+		return this.http.patch<Absente>(ServerUrl.GetUrl()  + `Absente?cmd=updateAbsente&token=${this.token}`, absente).subscribe(absente =>
 		{
 			console.log(absente);
 			return absente;
@@ -94,7 +98,7 @@ export class AbsenteService
 			return
 		}
 		
-		return this.http.delete<Absente>(ServerUrl.GetUrl()  + `Absente&cmd=delete&absenteId=` +  absente.absenteId).subscribe(absente =>
+		return this.http.delete<Absente>(ServerUrl.GetUrl()  + `Absente&cmd=delete&token=${this.token}&absenteId=` +  absente.absenteId).subscribe(absente =>
 		{
 			console.log(absente);
 			return absente;

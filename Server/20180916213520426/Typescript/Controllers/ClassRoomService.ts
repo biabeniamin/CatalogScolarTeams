@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WebSockets, Message, Request } from './WebSockets';
 import { ClassRoom, encodeClassRoom } from '../app/Models/ClassRoom'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -12,9 +13,10 @@ export class ClassRoomService
 {
 	public classRooms : BehaviorSubject<ClassRoom[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetClassRooms()
 	{
-		return this.http.get<ClassRoom[]>(ServerUrl.GetUrl()  + `ClassRooms?cmd=get`).subscribe(data =>
+		return this.http.get<ClassRoom[]>(ServerUrl.GetUrl()  + `ClassRooms?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.classRooms.next(data);
 		});
@@ -31,11 +33,13 @@ export class ClassRoomService
 	
 	GetClassRoomsByClassRoomId(classRoomId)
 	{
-		return this.http.get<ClassRoom[]>(ServerUrl.GetUrl()  + `ClassRooms?cmd=getClassRoomsByClassRoomId&classRoomId=${classRoomId}`);
+		return this.http.get<ClassRoom[]>(ServerUrl.GetUrl()  + `ClassRooms?cmd=getClassRoomsByClassRoomId&classRoomId=${classRoomId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.classRooms = new BehaviorSubject([ClassRoomService.GetDefaultClassRoom()]);
 		this.GetClassRooms();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -50,7 +54,7 @@ export class ClassRoomService
 			return
 		}
 		
-		return this.http.post<ClassRoom>(ServerUrl.GetUrl()  + `ClassRooms?cmd=post`, classRoom).subscribe(classRoom =>
+		return this.http.post<ClassRoom>(ServerUrl.GetUrl()  + `ClassRooms?cmd=post&token=${this.token}`, classRoom).subscribe(classRoom =>
 		{
 			console.log(classRoom);
 			if(0 != classRoom.classRoomId)
@@ -70,7 +74,7 @@ export class ClassRoomService
 			return
 		}
 		
-		return this.http.patch<ClassRoom>(ServerUrl.GetUrl()  + `ClassRooms?cmd=updateClassRoom`, classRoom).subscribe(classRoom =>
+		return this.http.patch<ClassRoom>(ServerUrl.GetUrl()  + `ClassRooms?cmd=updateClassRoom&token=${this.token}`, classRoom).subscribe(classRoom =>
 		{
 			console.log(classRoom);
 			return classRoom;
@@ -85,7 +89,7 @@ export class ClassRoomService
 			return
 		}
 		
-		return this.http.delete<ClassRoom>(ServerUrl.GetUrl()  + `ClassRooms&cmd=delete&classRoomId=` +  classRoom.classRoomId).subscribe(classRoom =>
+		return this.http.delete<ClassRoom>(ServerUrl.GetUrl()  + `ClassRooms&cmd=delete&token=${this.token}&classRoomId=` +  classRoom.classRoomId).subscribe(classRoom =>
 		{
 			console.log(classRoom);
 			return classRoom;

@@ -4,6 +4,8 @@ from flask_restful import Api
 from SqlAlchemyMain import createDatabase, session
 from SqlAlchemy import convertToJson
 from flask_cors import CORS
+import Authentication
+from TokenAuthenticationEndpoints import TokenAuthenticationEndpoints
 from ClassRoomEndpoints import ClassRoomEndpoints
 from ClasseEndpoints import ClasseEndpoints
 from TeacherEndpoints import TeacherEndpoints
@@ -12,6 +14,8 @@ from StudentClasseEndpoints import StudentClasseEndpoints
 from MarkEndpoints import MarkEndpoints
 from AbsenteEndpoints import AbsenteEndpoints
 from NotificationEndpoints import NotificationEndpoints
+from TokenEndpoints import TokenEndpoints
+from TokenUserEndpoints import TokenUserEndpoints
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +30,9 @@ api.add_resource(StudentClasseEndpoints, '/StudentClasses', resource_class_kwarg
 api.add_resource(MarkEndpoints, '/Marks', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(AbsenteEndpoints, '/Absente', resource_class_kwargs ={ 'session' : session}) 
 api.add_resource(NotificationEndpoints, '/Notifications', resource_class_kwargs ={ 'session' : session}) 
+api.add_resource(TokenEndpoints, '/Tokens', resource_class_kwargs ={ 'session' : session}) 
+api.add_resource(TokenUserEndpoints, '/TokenUsers', resource_class_kwargs ={ 'session' : session}) 
+api.add_resource(TokenAuthenticationEndpoints, '/TokenAuthentication', resource_class_kwargs ={ 'session' : session})
 
 @api.representation('application/json')
 def output_json(data, code, headers=None):

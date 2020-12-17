@@ -4,6 +4,8 @@ from SqlAlchemy import dict_as_obj
 from FlaskRestfulHelpers import getArguments
 import ClassRoom
 class ClassRoomEndpoints(Resource):
+	from TokenAuthenticationEndpoints import authenticate
+	method_decorators = [authenticate]
 	def __init__(self, **kwargs):
 		self.session = kwargs['session']
 	

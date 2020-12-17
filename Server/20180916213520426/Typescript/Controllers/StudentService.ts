@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WebSockets, Message, Request } from './WebSockets';
 import { Student, encodeStudent } from '../app/Models/Student'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -12,9 +13,10 @@ export class StudentService
 {
 	public students : BehaviorSubject<Student[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetStudents()
 	{
-		return this.http.get<Student[]>(ServerUrl.GetUrl()  + `Students?cmd=get`).subscribe(data =>
+		return this.http.get<Student[]>(ServerUrl.GetUrl()  + `Students?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.students.next(data);
 		});
@@ -32,11 +34,13 @@ export class StudentService
 	
 	GetStudentsByStudentId(studentId)
 	{
-		return this.http.get<Student[]>(ServerUrl.GetUrl()  + `Students?cmd=getStudentsByStudentId&studentId=${studentId}`);
+		return this.http.get<Student[]>(ServerUrl.GetUrl()  + `Students?cmd=getStudentsByStudentId&studentId=${studentId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.students = new BehaviorSubject([StudentService.GetDefaultStudent()]);
 		this.GetStudents();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -51,7 +55,7 @@ export class StudentService
 			return
 		}
 		
-		return this.http.post<Student>(ServerUrl.GetUrl()  + `Students?cmd=post`, student).subscribe(student =>
+		return this.http.post<Student>(ServerUrl.GetUrl()  + `Students?cmd=post&token=${this.token}`, student).subscribe(student =>
 		{
 			console.log(student);
 			if(0 != student.studentId)
@@ -71,7 +75,7 @@ export class StudentService
 			return
 		}
 		
-		return this.http.patch<Student>(ServerUrl.GetUrl()  + `Students?cmd=updateStudent`, student).subscribe(student =>
+		return this.http.patch<Student>(ServerUrl.GetUrl()  + `Students?cmd=updateStudent&token=${this.token}`, student).subscribe(student =>
 		{
 			console.log(student);
 			return student;
@@ -86,7 +90,7 @@ export class StudentService
 			return
 		}
 		
-		return this.http.delete<Student>(ServerUrl.GetUrl()  + `Students&cmd=delete&studentId=` +  student.studentId).subscribe(student =>
+		return this.http.delete<Student>(ServerUrl.GetUrl()  + `Students&cmd=delete&token=${this.token}&studentId=` +  student.studentId).subscribe(student =>
 		{
 			console.log(student);
 			return student;

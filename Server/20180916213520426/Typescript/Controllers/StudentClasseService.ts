@@ -8,6 +8,7 @@ import { Classe } from '../app/Models/Classe'
 import { ClasseService } from './ClasseService'
 import { Student } from '../app/Models/Student'
 import { StudentService } from './StudentService'
+import { AuthenticationService } from './AuthenticationService';
 
 @Injectable({
     providedIn : 'root'
@@ -16,9 +17,10 @@ export class StudentClasseService
 {
 	public studentClasses : BehaviorSubject<StudentClasse[]>;
 	private webSocketsSubject : Subject<Message>;
+	private token : string;
 	GetStudentClasses()
 	{
-		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=get`).subscribe(data =>
+		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=get&token=${this.token}`).subscribe(data =>
 		{
 			this.studentClasses.next(data);
 		});
@@ -36,19 +38,21 @@ export class StudentClasseService
 	
 	GetStudentClassesByClasseId(classeId)
 	{
-		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByClasseId&classeId=${classeId}`);
+		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByClasseId&classeId=${classeId}&token=${this.token}`);
 	}
 	GetStudentClassesByStudentId(studentId)
 	{
-		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByStudentId&studentId=${studentId}`);
+		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByStudentId&studentId=${studentId}&token=${this.token}`);
 	}
 	GetStudentClassesByStudentClasseId(studentClasseId)
 	{
-		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByStudentClasseId&studentClasseId=${studentClasseId}`);
+		return this.http.get<StudentClasse[]>(ServerUrl.GetUrl()  + `StudentClasses?cmd=getStudentClassesByStudentClasseId&studentClasseId=${studentClasseId}&token=${this.token}`);
 	}
 	
-	constructor(private http:HttpClient, private webSockets : WebSockets)
+	constructor(private http:HttpClient, private webSockets : WebSockets, private auth : AuthenticationService)
 	{
+		this.auth.CheckToken();
+		this.token = this.auth.GetToken();
 		this.studentClasses = new BehaviorSubject([StudentClasseService.GetDefaultStudentClasse()]);
 		this.GetStudentClasses();
 		this.webSockets.SetOnConnectionEstablished(() => this.ConnectToWebSockets());
@@ -63,7 +67,7 @@ export class StudentClasseService
 			return
 		}
 		
-		return this.http.post<StudentClasse>(ServerUrl.GetUrl()  + `StudentClasses?cmd=post`, studentClasse).subscribe(studentClasse =>
+		return this.http.post<StudentClasse>(ServerUrl.GetUrl()  + `StudentClasses?cmd=post&token=${this.token}`, studentClasse).subscribe(studentClasse =>
 		{
 			console.log(studentClasse);
 			if(0 != studentClasse.studentClasseId)
@@ -83,7 +87,7 @@ export class StudentClasseService
 			return
 		}
 		
-		return this.http.patch<StudentClasse>(ServerUrl.GetUrl()  + `StudentClasses?cmd=updateStudentClasse`, studentClasse).subscribe(studentClasse =>
+		return this.http.patch<StudentClasse>(ServerUrl.GetUrl()  + `StudentClasses?cmd=updateStudentClasse&token=${this.token}`, studentClasse).subscribe(studentClasse =>
 		{
 			console.log(studentClasse);
 			return studentClasse;
@@ -98,7 +102,7 @@ export class StudentClasseService
 			return
 		}
 		
-		return this.http.delete<StudentClasse>(ServerUrl.GetUrl()  + `StudentClasses&cmd=delete&studentClasseId=` +  studentClasse.studentClasseId).subscribe(studentClasse =>
+		return this.http.delete<StudentClasse>(ServerUrl.GetUrl()  + `StudentClasses&cmd=delete&token=${this.token}&studentClasseId=` +  studentClasse.studentClasseId).subscribe(studentClasse =>
 		{
 			console.log(studentClasse);
 			return studentClasse;

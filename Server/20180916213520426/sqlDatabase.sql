@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS`StudentClasses`;
 DROP TABLE IF EXISTS`Marks`;
 DROP TABLE IF EXISTS`Absente`;
 DROP TABLE IF EXISTS`Notifications`;
+DROP TABLE IF EXISTS`Tokens`;
+DROP TABLE IF EXISTS`TokenUsers`;
 
 CREATE TABLE `ClassRooms` (
 `ClassRoomId` INT  NOT NULL,
@@ -97,4 +99,26 @@ CREATE TABLE `Notifications` (
 
 ALTER TABLE `Notifications` ADD PRIMARY KEY(`NotificationId`); 
 ALTER TABLE `Notifications`  MODIFY `NotificationId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1; 
+
+CREATE TABLE `Tokens` (
+`TokenId` INT  NOT NULL,
+`TokenUserId` INT  NOT NULL,
+`Value` VARCHAR(40),
+`Address` VARCHAR(15),
+`LastUpdate` DATETIME,
+`CreationTime` DATETIME  NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `Tokens` ADD PRIMARY KEY(`TokenId`); 
+ALTER TABLE `Tokens`  MODIFY `TokenId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1; 
+
+CREATE TABLE `TokenUsers` (
+`TokenUserId` INT  NOT NULL,
+`Username` VARCHAR(40)  NOT NULL,
+`Password` VARCHAR(40)  NOT NULL,
+`CreationTime` DATETIME  NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `TokenUsers` ADD PRIMARY KEY(`TokenUserId`); 
+ALTER TABLE `TokenUsers`  MODIFY `TokenUserId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1; 
 

@@ -6,6 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Classe.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
+require_once 'Authentication.php';
 require_once 'ClassRooms.php';
 require_once 'Teachers.php';
 function ConvertListToClasses($data)

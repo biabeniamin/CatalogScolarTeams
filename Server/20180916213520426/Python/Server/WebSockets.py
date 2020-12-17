@@ -3,6 +3,7 @@ import asyncio
 import websockets
 import json
 from SqlAlchemyMain import session
+import TokenAuthenticationWebSockets
 import ClassRoomWebSockets
 import ClasseWebSockets
 import TeacherWebSockets
@@ -11,6 +12,8 @@ import StudentClasseWebSockets
 import MarkWebSockets
 import AbsenteWebSockets
 import NotificationWebSockets
+import TokenWebSockets
+import TokenUserWebSockets
 
 users = set()
 def connectedSuccessfullyEvent():
@@ -42,6 +45,12 @@ async def requestReceived(websocket, path):
 				await AbsenteWebSockets.requestReceived(websocket, session, request)
 			elif request['table'] == 'Notifications':
 				await NotificationWebSockets.requestReceived(websocket, session, request)
+			elif request['table'] == 'Tokens':
+				await TokenWebSockets.requestReceived(websocket, session, request)
+			elif request['table'] == 'TokenUsers':
+				await TokenUserWebSockets.requestReceived(websocket, session, request)
+			if request['table'] == 'TokenAuthentication':
+				await TokenAuthenticationWebSockets.requestReceived(websocket, session, request)
 	
 	finally:
 		print('client disconnected')
