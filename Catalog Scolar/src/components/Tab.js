@@ -49,20 +49,33 @@ class Tab extends React.Component {
       this.setState({
         context: context
       });
-    });
 
-    axios.get('https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms')
+      console.log(this.state.context);
+
+      axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken',{username:"test", password:"test"})
       .then(res => {
-        let selectOptions = res.data.map(d => ({
-          "value" : d.classRoomId,
-          "label" : d.name
-        }))
-        this.setState({ classes: res.data , selectOptions: selectOptions});
+        this.setState({ token: res.data });
         console.log(res.data);
+
+        axios.get(`https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
+          .then(res => {
+            let selectOptions = res.data.map(d => ({
+              "value": d.classRoomId,
+              "label": d.name
+            }))
+            this.setState({ classes: res.data, selectOptions: selectOptions });
+            console.log(res.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(function (error) {
         console.log(error);
       });
+    });
+
+    
     // Next steps: Error handling using the error object
   }
 
@@ -80,7 +93,7 @@ class Tab extends React.Component {
 
   roomClassChanged(e){
     console.log(e);
-    axios.get(`https://192.168.0.100/catalog/Classes.php?cmd=getClassesByClassRoomId&classRoomId=${e.value}`)
+    axios.get(`https://192.168.0.100/catalog/Classes.php?cmd=getClassesByClassRoomId&classRoomId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
         let selectClassOptions = res.data.map(d => ({
@@ -96,7 +109,7 @@ class Tab extends React.Component {
 
   classChanged(e){
     console.log(e);
-    axios.get(`http://localhost/catalog/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=${e.value}`)
+    axios.get(`https://192.168.0.100/catalog/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         let selectStudentOptions = res.data.map(d => ({
           "value" : d.student.studentId,
@@ -113,7 +126,7 @@ class Tab extends React.Component {
   studentChanged(e){
     console.log(e);
     this.setState({ selectedStudent: e.value});
-    axios.get(`http://localhost/catalog/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass}&studentId=${e.value}`)
+    axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass}&studentId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
         this.setState({ classes: res.data , marks: res.data});
@@ -169,6 +182,7 @@ class Tab extends React.Component {
   render() {
 
     let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
+    
 
     return (
       
