@@ -178,35 +178,74 @@ class Tab extends React.Component {
       
       <div>
 
-        <div className="bg-contact3" style={{ backgroundImage:`url(${backgrounImage})` }}>
+        <div className="bg-contact3" style={{ backgroundImage: `url(${backgrounImage})` }}>
           <div className="container-contact3">
             <div className="wrap-contact3">
               <form className="contact3-form validate-form">
                 <span className="contact3-form-title">
                   Catalog Scolar
 					</span>
-          
-        
-        
 
-        <div className="wrap-input3 validate-input" data-validate="Name is required">
+
+
+
+                <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Clasa:</label>
-                  <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)}/>
+                  <Select options={this.state.selectOptions} onChange={this.roomClassChanged.bind(this)} />
                   <span className="focus-input3"></span>
                 </div>
 
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Materie:</label>
-                  <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)}/>
+                  <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)} />
                   <span className="focus-input3"></span>
                 </div>
 
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Elev:</label>
-                  <Select options={this.state.selectStudentOptions} onChange={this.studentChanged.bind(this)}/>
+                  <Select options={this.state.selectStudentOptions} onChange={this.studentChanged.bind(this)} />
                   <span className="focus-input3"></span>
                 </div>
 
+                <div className="wrap-input3 validate-input" data-validate="Name is required">
+                  <label className="input3" >Note:</label>
+                  <table className="table table-striped table-dark">
+                    <thead className="thead-dark">
+                      <tr>
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>CreationTime</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.dataTable()}
+                    </tbody>
+                  </table>
+                  <span className="focus-input3"></span>
+                </div>
+
+                <form onSubmit={this.handleSubmit.bind(this)}>
+                <div className="wrap-input3 validate-input" data-validate="Name is required">
+                  <label className="input3" >Nota:</label>
+                  <Select options={[{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
+                    { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]} onChange={this.markChanged.bind(this)} />
+                  <span className="focus-input3"></span>
+                </div>
+                <div className="wrap-input3 validate-input" data-validate="Name is required">
+                  <label className="input3" >Data:</label>
+                  <DatePicker
+                      onChange={this.markDateChanged.bind(this)}
+                      selected={this.state.markDisplayedDate}
+                      dateFormat="dd/MM/yyyy"
+                    />
+                  <span className="focus-input3"></span>
+                </div>
+                  <div className="wrap-input3 validate-input" data-validate="Name is required">
+                    
+                    <input type="submit" value="Submit" />
+                    <span className="focus-input3"></span>
+                  </div>
+                </form>
 
                 <div className="container-contact3-form-btn">
                   <button className="contact3-form-btn">
@@ -216,38 +255,12 @@ class Tab extends React.Component {
               </form>
             </div>
           </div>
-      <div>
-        
-      </div>
-        <table className="table table-striped table-dark">
-          <thead className="thead-dark">
-            <tr>
-              <td>ID</td>
-              <td>Name</td>
-              <td>CreationTime</td>
-            </tr>
-          </thead>
-          <tbody>
-            {this.dataTable()}
-          </tbody>
-        </table>
+          <div>
 
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <label>
-            Nota:
-          </label>
-          <Select options={[{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
-          { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]} onChange={this.markChanged.bind(this)} />
-          <label>
-            Name:
-          </label>
-          <DatePicker   
-            onChange={this.markDateChanged.bind(this)}
-            selected={this.state.markDisplayedDate}
-            dateFormat="dd/MM/yyyy"
-          />
-          <input type="submit" value="Submit" />
-        </form>
+          </div>
+          
+
+        
         
 
       </div>
