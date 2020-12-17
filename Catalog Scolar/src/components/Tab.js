@@ -16,19 +16,10 @@ class DataTable extends Component {
       return (
           <tr>
               <td>
-                  {this.props.obj.markId}
-              </td>
-              <td>
                   {this.props.obj.value}
               </td>
               <td>
                   {this.props.obj.date}
-              </td>
-              <td>
-                  {this.props.obj.creationTime}
-              </td>
-              <td>
-                <button onClick={this.eventHandler}>{this.props.obj.eventHandler}</button>
               </td>
           </tr>
       );
@@ -78,7 +69,12 @@ class Tab extends React.Component {
   dataTable() {
     return this.state.marks.filter(val => val.markId!==0).map((data, i) => {
         //data['eventHandler']=this.eventHandler.bin;
-        return <DataTable obj={data} key={i} />;
+        console.log(data.date);
+        let date=new Date(data.date+" UTC")
+        console.log(date);
+        let data2=data;
+        data2.date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+        return <DataTable obj={data2} key={i} />;
     });
   }
 
@@ -181,7 +177,7 @@ class Tab extends React.Component {
         <div className="bg-contact3" style={{ backgroundImage: `url(${backgrounImage})` }}>
           <div className="container-contact3">
             <div className="wrap-contact3">
-              <form className="contact3-form validate-form">
+              
                 <span className="contact3-form-title">
                   Catalog Scolar
 					</span>
@@ -209,12 +205,12 @@ class Tab extends React.Component {
 
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Note:</label>
+                  
                   <table className="table table-striped table-dark">
                     <thead className="thead-dark">
                       <tr>
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>CreationTime</td>
+                        <th>Nota</th>
+                        <th>Data</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -223,7 +219,6 @@ class Tab extends React.Component {
                   </table>
                   <span className="focus-input3"></span>
                 </div>
-
                 <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Nota:</label>
@@ -252,7 +247,6 @@ class Tab extends React.Component {
                     Submit
 						</button>
                 </div>
-              </form>
             </div>
           </div>
           <div>
