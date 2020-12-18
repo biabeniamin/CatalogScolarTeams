@@ -14,7 +14,8 @@ function ConvertListToTokenUsers($data)
 	{
 		$tokenUser = new TokenUser(
 		$row["Username"], 
-		$row["Password"] 
+		$row["Password"], 
+		$row["Type"] 
 		);
 	
 		$tokenUser->SetTokenUserId($row["TokenUserId"]);
@@ -88,9 +89,10 @@ function CompleteTokenUsers($database, $tokenUsers)
 
 function AddTokenUser($database, $tokenUser)
 {
-	$query = "INSERT INTO TokenUsers(Username, Password, CreationTime) VALUES(";
+	$query = "INSERT INTO TokenUsers(Username, Password, Type, CreationTime) VALUES(";
 	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$tokenUser->GetUsername()) . "', ";
 	$query = $query . "'" . mysqli_real_escape_string($database->connection ,$tokenUser->GetPassword()) . "', ";
+	$query = $query . mysqli_real_escape_string($database->connection ,$tokenUser->GetType()).", ";
 	$query = $query . "NOW()"."";
 	
 	$query = $query . ");";
@@ -123,7 +125,8 @@ function UpdateTokenUser($database, $tokenUser)
 {
 	$query = "UPDATE TokenUsers SET ";
 	$query = $query . "Username='" . $tokenUser->GetUsername() . "', ";
-	$query = $query . "Password='" . $tokenUser->GetPassword() . "'";
+	$query = $query . "Password='" . $tokenUser->GetPassword() . "', ";
+	$query = $query . "Type=" . $tokenUser->GetType()."";
 	$query = $query . " WHERE TokenUserId=" . $tokenUser->GetTokenUserId();
 	
 	$result = $database->ExecuteSqlWithoutWarning($query);
@@ -139,7 +142,8 @@ function TestAddTokenUser($database)
 {
 	$tokenUser = new TokenUser(
 		'Test',//Username
-		'Test'//Password
+		'Test',//Password
+		0//Type
 	);
 	
 	AddTokenUser($database, $tokenUser);
@@ -149,7 +153,8 @@ function GetEmptyTokenUser()
 {
 	$tokenUser = new TokenUser(
 		'',//Username
-		''//Password
+		'',//Password
+		0//Type
 	);
 	
 	return $tokenUser;
@@ -212,7 +217,8 @@ if(CheckGetParameters(["cmd"]))
 			$database = new DatabaseOperations();
 			$tokenUser = new TokenUser(
 				IssetValueNull($_POST['username']),
-				IssetValueNull($_POST['password'])
+				IssetValueNull($_POST['password']),
+				IssetValueNull($_POST['type'])
 			);
 	
 			echo json_encode(AddTokenUser($database, $tokenUser));
@@ -228,7 +234,8 @@ if(CheckGetParameters(["cmd"]))
 		$database = new DatabaseOperations();
 		$tokenUser = new TokenUser(
 			$_POST['username'],
-			$_POST['password']
+			$_POST['password'],
+			$_POST['type']
 		);
 		$tokenUser->SetTokenUserId($_POST['tokenUserId']);
 		$tokenUser->SetCreationTime($_POST['creationTime']);

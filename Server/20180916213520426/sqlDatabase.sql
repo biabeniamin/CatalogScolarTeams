@@ -116,6 +116,7 @@ CREATE TABLE `TokenUsers` (
 `TokenUserId` INT  NOT NULL,
 `Username` VARCHAR(40)  NOT NULL,
 `Password` VARCHAR(40)  NOT NULL,
+`Type` INT,
 `CreationTime` DATETIME  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
