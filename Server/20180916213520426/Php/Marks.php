@@ -6,7 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Mark.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
-//require_once 'Authentication.php';
+require_once 'Authentication.php';
 require_once 'Teachers.php';
 require_once 'Students.php';
 require_once 'Classes.php';
@@ -46,6 +46,19 @@ function GetMarks($database)
 function GetMarksByClasseIdStudentId($database, $classeId, $studentId)
 {
 	$data = $database->ReadData("SELECT * FROM Marks WHERE ClasseId = $classeId and StudentId = $studentId");
+	$marks = ConvertListToMarks($data);
+	if(0== count($marks))
+	{
+		return [GetEmptyMark()];
+	}
+	CompleteTeachers($database, $marks);
+	CompleteStudents($database, $marks);
+	CompleteClasses($database, $marks);
+	return $marks;
+}
+function GetMarksByStudentId($database, $studentId)
+{
+	$data = $database->ReadData("SELECT * FROM Marks WHERE StudentId = $studentId");
 	$marks = ConvertListToMarks($data);
 	if(0== count($marks))
 	{
@@ -210,6 +223,19 @@ if(CheckGetParameters(["cmd"]))
 			$database = new DatabaseOperations();
 			echo json_encode(GetMarksByClasseIdStudentId($database, 
 				$_GET["classeId"],
+				$_GET["studentId"]
+			));
+		}
+	
+	}
+	else if("getMarksByStudentId" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'studentId'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetMarksByStudentId($database, 
 				$_GET["studentId"]
 			));
 		}
