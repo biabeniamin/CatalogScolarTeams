@@ -41,6 +41,7 @@ class Tab extends React.Component {
       context: {},
       marks: [{ value: '' , classe: {name: ""}}],
       value: "asd",
+      student: {name: ""}
     }
   }
 
@@ -249,7 +250,7 @@ class Tab extends React.Component {
   
                   <div className="wrap-input3 validate-input" data-validate="Name is required">
                     <label className="input3" >Elev:</label>
-                    <Select options={this.state.selectStudentOptions} onChange={this.studentChanged.bind(this)} />
+                    {this.state.student.name}
                     <span className="focus-input3"></span>
                   </div>
   
