@@ -89,12 +89,17 @@ class Tab extends React.Component {
         this.state.context['userObjectId'] = "cristiana.giurgiu@avramiancutu";
         axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
-            this.setState({ token: res.data, tokenType: 0});
             console.log(res.data);
-            if (this.state.token.tokenUser.type != 1) {
+            if(res.data.tokenId===0){
+              alert("Drepturi acces lipsa!");
+              return
+            }
+            if (res.data.tokenUser.type != 1) {
               alert("Drepturi acces lipsa!");
               return;
             }
+            this.setState({ token: res.data, tokenType: 0});
+            
 
             axios.get(`https://192.168.0.100/catalog/Students.php?cmd=getStudentsByEmail&email=${this.state.token.tokenUser.username}&token=${this.state.token.value}`)
             .then(res => {
