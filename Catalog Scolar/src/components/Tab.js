@@ -85,7 +85,7 @@ class Tab extends React.Component {
           });
       }
       else if (this.state.context['userLicenseType'] === "Student") {
-        this.state.context['upn'] = "cristiana.giurgiu@avramiancutu";
+        this.state.context['upn'] = "codrut.ciurcui@avramiancuturda";
         this.state.context['userObjectId'] = "cristiana.giurgiu@avramiancutu";
         axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
@@ -109,6 +109,11 @@ class Tab extends React.Component {
               axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByStudentId&studentId=${this.state.student.studentId}&token=${this.state.token.value}`)
                 .then(res => {
                   console.log(res.data);
+                  console.log(res.data[0].markId)
+                  if(res.data[0].markId === 0)
+                  {
+                    res.data = [{ value: 'Nicio nota incarcata' , date: new Date(), classe: {name: ""}}]
+                  }
                   this.setState({ classes: res.data , marks: res.data});
                 })
                 .catch(function (error) {
