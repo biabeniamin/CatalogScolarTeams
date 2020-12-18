@@ -6,7 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Student.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
-//require_once 'Authentication.php';
+require_once 'Authentication.php';
 function ConvertListToStudents($data)
 {
 	$students = [];
@@ -34,6 +34,16 @@ function GetStudents($database)
 	return $students;
 }
 
+function GetStudentsByEmail($database, $email)
+{
+	$data = $database->ReadData("SELECT * FROM Students WHERE Email = '$email'");
+	$students = ConvertListToStudents($data);
+	if(0== count($students))
+	{
+		return [GetEmptyStudent()];
+	}
+	return $students;
+}
 function GetStudentsByStudentId($database, $studentId)
 {
 	$data = $database->ReadData("SELECT * FROM Students WHERE StudentId = $studentId");
@@ -160,6 +170,19 @@ if(CheckGetParameters(["cmd"]))
 			echo json_encode(GetLastStudent($database));
 	}
 
+	else if("getStudentsByEmail" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'email'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetStudentsByEmail($database, 
+				$_GET["email"]
+			));
+		}
+	
+	}
 	else if("getStudentsByStudentId" == $_GET["cmd"])
 	{
 		if(CheckGetParameters([

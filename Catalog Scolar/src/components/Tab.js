@@ -89,6 +89,15 @@ class Tab extends React.Component {
               alert("Drepturi acces lipsa!");
               return;
             }
+
+            axios.get(`https://192.168.0.100/catalog/Students.php?cmd=getStudentsByEmail&email=${this.state.token.tokenUser.username}&token=${this.state.token.value}`)
+            .then(res => {
+              console.log(res.data);
+              //this.setState({ classes: res.data , marks: res.data});
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
           })
           .catch(function (error) {
             console.log(error);
