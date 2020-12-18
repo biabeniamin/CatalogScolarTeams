@@ -21,6 +21,9 @@ class DataTable extends Component {
               <td>
                   {this.props.obj.date}
               </td>
+              <td>
+                  {this.props.obj.classe.name}
+              </td>
           </tr>
       );
   }
@@ -36,7 +39,7 @@ class Tab extends React.Component {
     super(props)
     this.state = {
       context: {},
-      marks: [{ value: '' }],
+      marks: [{ value: '' , classe: {name: ""}}],
       value: "asd",
     }
   }
@@ -81,6 +84,8 @@ class Tab extends React.Component {
           });
       }
       else if (this.state.context['userLicenseType'] === "Student") {
+        this.state.context['upn'] = "cristiana.giurgiu@avramiancutu";
+        this.state.context['userObjectId'] = "cristiana.giurgiu@avramiancutu";
         axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
             this.setState({ token: res.data, tokenType: 0});
@@ -93,7 +98,17 @@ class Tab extends React.Component {
             axios.get(`https://192.168.0.100/catalog/Students.php?cmd=getStudentsByEmail&email=${this.state.token.tokenUser.username}&token=${this.state.token.value}`)
             .then(res => {
               console.log(res.data);
-              //this.setState({ classes: res.data , marks: res.data});
+              this.setState({ student: res.data[0]});
+
+              axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByStudentId&studentId=${this.state.student.studentId}&token=${this.state.token.value}`)
+                .then(res => {
+                  console.log(res.data);
+                  this.setState({ classes: res.data , marks: res.data});
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+              
             })
             .catch(function (error) {
               console.log(error);
@@ -246,6 +261,7 @@ class Tab extends React.Component {
                         <tr>
                           <th>Nota</th>
                           <th>Data</th>
+                          <th>Materie</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -253,13 +269,6 @@ class Tab extends React.Component {
                       </tbody>
                     </table>
                     <span className="focus-input3"></span>
-                  </div>
-
-  
-                  <div className="container-contact3-form-btn">
-                    <button className="contact3-form-btn">
-                      Submit
-              </button>
                   </div>
               </div>
             </div>
