@@ -7,6 +7,8 @@ require_once 'Models/ClassRoom.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
 require_once 'Authentication.php';
+if($tokenResult['type'] != 0)
+	die(json_encode(["error" => "not authorized"]));
 function ConvertListToClassRooms($data)
 {
 	$classRooms = [];

@@ -39,7 +39,7 @@ function CheckToken($database, $value)
 		UpdateToken($database, $tokens[0]);
 	}
 
-	return (["isAuthorized" => $isAuthorized, "value" => $value]);
+	return (["isAuthorized" => $isAuthorized, "value" => $value, "type" => $tokens[0]->tokenUser->type]);
 }
 
 if(!CheckGetParameters(["token"]))
@@ -81,9 +81,9 @@ if(!CheckGetParameters(["token"]))
 }
 
 $database = new DatabaseOperations();
-$result = CheckToken($database, $_GET["token"]);
+$tokenResult = CheckToken($database, $_GET["token"]);
         
-if(!$result['isAuthorized'])
+if(!$tokenResult['isAuthorized'])
     die(json_encode(["error"=>"Wrong token."]));
 
 if("checkToken" == $_GET["cmd"])

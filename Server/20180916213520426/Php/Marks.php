@@ -6,7 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Mark.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
-require_once 'Authentication.php';
+//require_once 'Authentication.php';
 require_once 'Teachers.php';
 require_once 'Students.php';
 require_once 'Classes.php';
