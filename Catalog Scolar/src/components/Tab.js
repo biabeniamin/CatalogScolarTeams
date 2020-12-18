@@ -55,8 +55,13 @@ class Tab extends React.Component {
       if (this.state.context['userLicenseType'] === "Teacher") {
         axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: "test", password: "test" })
           .then(res => {
-            this.setState({ token: res.data, tokenType: 0});
+            this.setState({ token: res.data});
             console.log(res.data);
+            if(this.state.token.tokenUser.type != 0)
+            {
+              alert("Drepturi acces lipsa!");
+              return;
+            }
 
             axios.get(`https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
               .then(res => {
@@ -76,10 +81,14 @@ class Tab extends React.Component {
           });
       }
       else if (this.state.context['userLicenseType'] === "Student") {
-        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addStudentToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
+        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
             this.setState({ token: res.data, tokenType: 0});
             console.log(res.data);
+            if (this.state.token.tokenUser.type != 1) {
+              alert("Drepturi acces lipsa!");
+              return;
+            }
           })
           .catch(function (error) {
             console.log(error);
