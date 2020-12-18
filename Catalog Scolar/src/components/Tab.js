@@ -204,6 +204,68 @@ class Tab extends React.Component {
 
     let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
     
+    if(this.state.token==null)
+      return(
+        <div>Loading</div>
+      );
+    if(this.state.token.tokenUser.type === "1")
+    {
+      return (
+      
+        <div>
+  
+          <div className="bg-contact3" style={{ backgroundImage: `url(${backgrounImage})` }}>
+            <div className="container-contact3">
+              <div className="wrap-contact3">
+                
+                  <span className="contact3-form-title">
+                    Catalog Scolar
+            </span>
+
+  
+                  <div className="wrap-input3 validate-input" data-validate="Name is required">
+                    <label className="input3" >Elev:</label>
+                    <Select options={this.state.selectStudentOptions} onChange={this.studentChanged.bind(this)} />
+                    <span className="focus-input3"></span>
+                  </div>
+  
+                  <div className="wrap-input3 validate-input" data-validate="Name is required">
+                    <label className="input3" >Note:</label>
+                    
+                    <table className="table table-striped table-dark">
+                      <thead className="thead-dark">
+                        <tr>
+                          <th>Nota</th>
+                          <th>Data</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.dataTable()}
+                      </tbody>
+                    </table>
+                    <span className="focus-input3"></span>
+                  </div>
+
+  
+                  <div className="container-contact3-form-btn">
+                    <button className="contact3-form-btn">
+                      Submit
+              </button>
+                  </div>
+              </div>
+            </div>
+            <div>
+  
+            </div>
+            
+  
+          
+          
+  
+        </div>
+          </div>
+      );
+    }
 
     return (
       
