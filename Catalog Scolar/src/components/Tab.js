@@ -59,13 +59,18 @@ class Tab extends React.Component {
       if (this.state.context['userLicenseType'] === "Teacher") {
         axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
-            this.setState({ token: res.data});
             console.log(res.data);
-            if(this.state.token.tokenUser.type != 0)
+            if(res.data.tokenId === 0)
             {
               alert("Drepturi acces lipsa!");
               return;
             }
+            if(res.data.tokenUser.type != 0)
+            {
+              alert("Drepturi acces lipsa!");
+              return;
+            }
+            this.setState({ token: res.data});
 
             axios.get(`https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
               .then(res => {
@@ -85,8 +90,8 @@ class Tab extends React.Component {
           });
       }
       else if (this.state.context['userLicenseType'] === "Student") {
-        this.state.context['upn'] = "codrut.ciurcui@avramiancuturda";
-        this.state.context['userObjectId'] = "cristiana.giurgiu@avramiancutu";
+        //this.state.context['upn'] = "codrut.ciurcui@avramiancuturda";
+        //this.state.context['userObjectId'] = "cristiana.giurgiu@avramiancutu";
         axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
             console.log(res.data);
