@@ -370,16 +370,16 @@ class Tab extends React.Component {
                 </div>
                   <div className="wrap-input3 validate-input" data-validate="Name is required">
                     
-                    <input type="submit" value="Submit" />
                     <span className="focus-input3"></span>
                   </div>
-                </form>
-
-                <div className="container-contact3-form-btn">
+                  <div className="container-contact3-form-btn">
                   <button className="contact3-form-btn">
                     Submit
 						</button>
                 </div>
+                </form>
+
+                
             </div>
           </div>
           <div>
