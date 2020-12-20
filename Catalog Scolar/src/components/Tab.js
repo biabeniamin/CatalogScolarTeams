@@ -248,6 +248,8 @@ class Tab extends React.Component {
     .then(res => {
       alert('Nota introdusa!');
       console.log(res.data);
+      this.state.marks.push(res.data)
+      this.setState({marks: this.state.marks})
       //this.setState({ classes: res.data , marks: res.data});
     })
     .catch(function (error) {
