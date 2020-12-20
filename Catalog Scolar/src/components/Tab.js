@@ -41,7 +41,10 @@ class Tab extends React.Component {
       context: {},
       marks: [{ value: '' , classe: {name: ""}}],
       value: "asd",
-      student: {name: ""}
+      student: {name: ""},
+      selectedStudent: {value: "", label: "Select.."},
+      selectedClass: {value: "", label: "Select.."},
+      markValue: 0
     }
   }
 
@@ -223,10 +226,27 @@ class Tab extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
-    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark`, {classeId:this.state.selectedClass, studentId:this.state.selectedStudent, teacherId:1, 
-                                              value:this.state.markValue, date:this.state.markDate})
+    event.preventDefault();
+    if(this.state.selectedClass.value==="") {
+      alert("Nicio clasa selectata")
+      return;
+    }
+    if(this.state.selectedStudent.value==="") {
+      alert("Niciun elev selectat")
+      return;
+    }
+    if(this.state.markValue===0) {
+      alert("Nicio nota selectata")
+      return;
+    }
+    if(this.state.markDate===undefined) {
+      alert("Nicio data selectata")
+      return;
+    }
+    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark`, {classeId:this.state.selectedClass.value, studentId:this.state.selectedStudent.value, teacherId:1, 
+    value:this.state.markValue, date:this.state.markDate})
     .then(res => {
+      alert('Nota introdusa!');
       console.log(res.data);
       //this.setState({ classes: res.data , marks: res.data});
     })
@@ -234,7 +254,6 @@ class Tab extends React.Component {
       console.log(error);
     });
 
-    event.preventDefault();
   }
 
   eventHandler(event)
