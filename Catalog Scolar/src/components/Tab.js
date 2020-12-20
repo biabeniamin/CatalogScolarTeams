@@ -161,7 +161,7 @@ class Tab extends React.Component {
           "value" : d.classeId,
           "label" : d.name
         }))
-        this.setState({ classes: res.data , selectClassOptions: selectClassOptions, selectedRoomClass: e.value});
+        this.setState({ classes: res.data , selectClassOptions: selectClassOptions, selectedRoomClass: e.value, selectedClass: {value: "", label: "Select.."}});
       })
       .catch(function (error) {
         console.log(error);
@@ -170,14 +170,15 @@ class Tab extends React.Component {
 
   classChanged(e){
     console.log(e);
+    this.setState({selectedClass: e});
     axios.get(`https://192.168.0.100/catalog/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
+        console.log(res.data);
         let selectStudentOptions = res.data.map(d => ({
           "value" : d.student.studentId,
           "label" : d.student.name
         }))
-        this.setState({ classes: res.data , selectStudentOptions: selectStudentOptions, selectedClass: e.value});
-        console.log(res.data);
+        //this.setState({ classes: res.data , selectStudentOptions: selectStudentOptions, selectedClass: e.value});
       })
       .catch(function (error) {
         console.log(error);
@@ -324,7 +325,7 @@ class Tab extends React.Component {
 
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Materie:</label>
-                  <Select options={this.state.selectClassOptions} onChange={this.classChanged.bind(this)} />
+                  <Select options={this.state.selectClassOptions} value={this.state.selectedClass} onChange={this.classChanged.bind(this)} />
                   <span className="focus-input3"></span>
                 </div>
 
