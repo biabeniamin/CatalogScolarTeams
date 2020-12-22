@@ -60,7 +60,7 @@ class Tab extends React.Component {
       console.log(this.state.context);
 
       if (this.state.context['userLicenseType'] === "Teacher") {
-        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
+        axios.post('https://automations.avramiancuturda.ro/api/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
             console.log(res.data);
             if(res.data.tokenId === 0)
@@ -68,14 +68,15 @@ class Tab extends React.Component {
               alert("Drepturi acces lipsa!");
               return;
             }
-            if(res.data.tokenUser.type !== 0)
+            if(res.data.tokenUser.type !== "0")
             {
+              console.log(res.data.tokenUser);
               alert("Drepturi acces lipsa!");
               return;
             }
             this.setState({ token: res.data});
 
-            axios.get(`https://192.168.0.100/catalog/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
+            axios.get(`https://automations.avramiancuturda.ro/api/ClassRooms.php?cmd=getClassRooms&token=${this.state.token.value}`)
               .then(res => {
                 let selectOptions = res.data.map(d => ({
                   "value": d.classRoomId,
@@ -95,26 +96,26 @@ class Tab extends React.Component {
       else if (this.state.context['userLicenseType'] === "Student") {
         //this.state.context['upn'] = "codrut.ciurcui@avramiancuturda";
         //this.state.context['userObjectId'] = "cristiana.giurgiu@avramiancutu";
-        axios.post('https://192.168.0.100/catalog/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
+        axios.post('https://automations.avramiancuturda.ro/api/Authentication.php?cmd=addToken', { username: this.state.context['upn'], password: this.state.context['userObjectId'] })
           .then(res => {
             console.log(res.data);
             if(res.data.tokenId===0){
               alert("Drepturi acces lipsa!");
               return
             }
-            if (res.data.tokenUser.type !== 1) {
+            if (res.data.tokenUser.type !== "1") {
               alert("Drepturi acces lipsa!");
               return;
             }
             this.setState({ token: res.data, tokenType: 0});
             
 
-            axios.get(`https://192.168.0.100/catalog/Students.php?cmd=getStudentsByEmail&email=${this.state.token.tokenUser.username}&token=${this.state.token.value}`)
+            axios.get(`https://automations.avramiancuturda.ro/api/Students.php?cmd=getStudentsByEmail&email=${this.state.token.tokenUser.username}&token=${this.state.token.value}`)
             .then(res => {
               console.log(res.data);
               this.setState({ student: res.data[0]});
 
-              axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByStudentId&studentId=${this.state.student.studentId}&token=${this.state.token.value}`)
+              axios.get(`https://automations.avramiancuturda.ro/api/Marks.php?cmd=getMarksByStudentId&studentId=${this.state.student.studentId}&token=${this.state.token.value}`)
                 .then(res => {
                   console.log(res.data);
                   console.log(res.data[0].markId)
@@ -158,7 +159,7 @@ class Tab extends React.Component {
   roomClassChanged(e){
     console.log(e);
     this.setState({selectedStudent: {value: "", label: "Select.."}, selectedClass: {value: "", label: "Select.."},selectStudentOptions:[]})
-    axios.get(`https://192.168.0.100/catalog/Classes.php?cmd=getClassesByClassRoomId&classRoomId=${e.value}&token=${this.state.token.value}`)
+    axios.get(`https://automations.avramiancuturda.ro/api/Classes.php?cmd=getClassesByClassRoomId&classRoomId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
         let selectClassOptions = res.data.map(d => ({
@@ -175,7 +176,7 @@ class Tab extends React.Component {
   classChanged(e){
     console.log(e);
     this.setState({selectedClass: e});
-    axios.get(`https://192.168.0.100/catalog/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=${e.value}&token=${this.state.token.value}`)
+    axios.get(`https://automations.avramiancuturda.ro/api/StudentClasses.php?cmd=getStudentClassesByClasseId&classeId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
         let selectStudentOptions = res.data.map(d => ({
@@ -192,7 +193,7 @@ class Tab extends React.Component {
   studentChanged(e){
     console.log(e);
     this.setState({ selectedStudent: e});
-    axios.get(`https://192.168.0.100/catalog/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass.value}&studentId=${e.value}&token=${this.state.token.value}`)
+    axios.get(`https://automations.avramiancuturda.ro/api/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass.value}&studentId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
         this.setState({ classes: res.data , marks: res.data});
@@ -243,7 +244,7 @@ class Tab extends React.Component {
       alert("Nicio data selectata")
       return;
     }
-    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark&token=${this.state.token.value}`, {classeId:this.state.selectedClass.value, studentId:this.state.selectedStudent.value, teacherId:1, 
+    axios.post(`https://automations.avramiancuturda.ro/api/Marks.php?cmd=addMark&token=${this.state.token.value}`, {classeId:this.state.selectedClass.value, studentId:this.state.selectedStudent.value, teacherId:1, 
     value:this.state.markValue, date:this.state.markDate})
     .then(res => {
       alert('Nota introdusa!');
