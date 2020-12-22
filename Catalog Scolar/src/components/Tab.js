@@ -68,7 +68,7 @@ class Tab extends React.Component {
               alert("Drepturi acces lipsa!");
               return;
             }
-            if(res.data.tokenUser.type != 0)
+            if(res.data.tokenUser.type !== 0)
             {
               alert("Drepturi acces lipsa!");
               return;
@@ -102,7 +102,7 @@ class Tab extends React.Component {
               alert("Drepturi acces lipsa!");
               return
             }
-            if (res.data.tokenUser.type != 1) {
+            if (res.data.tokenUser.type !== 1) {
               alert("Drepturi acces lipsa!");
               return;
             }
@@ -265,7 +265,7 @@ class Tab extends React.Component {
 
   render() {
 
-    let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
+    //let userName = Object.keys(this.state.context).length > 0 ? this.state.context['upn'] : "";
     
     if(this.state.token==null)
       return(
