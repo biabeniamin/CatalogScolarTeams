@@ -243,7 +243,7 @@ class Tab extends React.Component {
       alert("Nicio data selectata")
       return;
     }
-    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark`, {classeId:this.state.selectedClass.value, studentId:this.state.selectedStudent.value, teacherId:1, 
+    axios.post(`http://localhost/catalog/Marks.php?cmd=addMark&token=${this.state.token.value}`, {classeId:this.state.selectedClass.value, studentId:this.state.selectedStudent.value, teacherId:1, 
     value:this.state.markValue, date:this.state.markDate})
     .then(res => {
       alert('Nota introdusa!');
