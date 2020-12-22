@@ -15,13 +15,17 @@ class TokenUser(Base):
 		return 'TokenUsers'
 	#Fields
 	tokenUserId = Column('TokenUserId', Integer, primary_key=True)
-	username = Column('Username', String(40))
-	password = Column('Password', String(40))
+	username = Column('Username', String(60))
+	password = Column('Password', String(60))
+	type = Column('Type', Integer)
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
 	
 	
 	#Validation
+	@validates('type')
+	def validate_type(self, key, value):
+		return validate_integer(key, value, False)
 	
 
 #Functions
@@ -76,6 +80,7 @@ def gettokenUserRequestArguments():
 	parser = reqparse.RequestParser()
 	parser.add_argument('username')
 	parser.add_argument('password')
+	parser.add_argument('type')
 	return parser
 
 

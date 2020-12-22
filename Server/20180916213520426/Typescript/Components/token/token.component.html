@@ -30,6 +30,7 @@
 				{{tokenUser.tokenUserId}}
 				{{tokenUser.username}}
 				{{tokenUser.password}}
+				{{tokenUser.type}}
 				</option>
 			</select>
 			
@@ -68,6 +69,9 @@
 					tokenUser.Password
 				</th>
 				<th>
+					tokenUser.Type
+				</th>
+				<th>
 					tokenUser.CreationTime
 				</th>
 			</tr>
@@ -98,6 +102,9 @@
 				</td>
 				<td *ngIf="token.tokenUser">
 					{{token.tokenUser.password}}
+				</td>
+				<td *ngIf="token.tokenUser">
+					{{token.tokenUser.type}}
 				</td>
 				<td *ngIf="token.tokenUser">
 					{{token.tokenUser.creationTime}}

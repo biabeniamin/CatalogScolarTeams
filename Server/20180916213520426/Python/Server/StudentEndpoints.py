@@ -15,6 +15,8 @@ class StudentEndpoints(Resource):
 	def get(self):
 		requestedArgs = getArguments(['cmd', 'studentId', 'name', 'email', 'creationTime'])
 		args  = requestedArgs.parse_args()
+		if args['cmd'] == 'getStudentsByEmail':
+			return Student.getStudentsByEmail(self.session, args['email'])
 		if args['cmd'] == 'getStudentsByStudentId':
 			return Student.getStudentsByStudentId(self.session, args['studentId'])
 		return Student.getStudents(self.session)

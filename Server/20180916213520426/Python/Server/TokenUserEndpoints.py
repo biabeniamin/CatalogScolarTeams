@@ -11,7 +11,7 @@ class TokenUserEndpoints(Resource):
 	#API endpoints
 	#get endpoint
 	def get(self):
-		requestedArgs = getArguments(['cmd', 'tokenUserId', 'username', 'password', 'creationTime'])
+		requestedArgs = getArguments(['cmd', 'tokenUserId', 'username', 'password', 'type', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		if args['cmd'] == 'getTokenUsersByUsernamePassword':
 			return TokenUser.getTokenUsersByUsernamePassword(self.session, args['username'], args['password'])
@@ -22,7 +22,7 @@ class TokenUserEndpoints(Resource):
 	
 	#post endpoint
 	def post(self):
-		requestedArgs = getArguments(['username', 'password'])
+		requestedArgs = getArguments(['username', 'password', 'type'])
 		args  = requestedArgs.parse_args()
 		tokenUser  = dict_as_obj(args, TokenUser.TokenUser())
 		return TokenUser.addTokenUser(self.session, tokenUser)
@@ -37,7 +37,7 @@ class TokenUserEndpoints(Resource):
 	
 	#patch endpoint
 	def patch(self):
-		requestedArgs = getArguments(['tokenUserId', 'username', 'password', 'creationTime'])
+		requestedArgs = getArguments(['tokenUserId', 'username', 'password', 'type', 'creationTime'])
 		args  = requestedArgs.parse_args()
 		tokenUser  = TokenUser.getTokenUsersByTokenUserId(self.session, args['tokenUserId'])[0]
 		tokenUser  = dict_as_obj(args, tokenUser)

@@ -15,6 +15,8 @@ class TeacherEndpoints(Resource):
 	def get(self):
 		requestedArgs = getArguments(['cmd', 'teacherId', 'name', 'email', 'creationTime'])
 		args  = requestedArgs.parse_args()
+		if args['cmd'] == 'getTeachersByEmail':
+			return Teacher.getTeachersByEmail(self.session, args['email'])
 		if args['cmd'] == 'getTeachersByTeacherId':
 			return Teacher.getTeachersByTeacherId(self.session, args['teacherId'])
 		return Teacher.getTeachers(self.session)

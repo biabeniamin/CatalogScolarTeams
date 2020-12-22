@@ -16,7 +16,7 @@ class Teacher(Base):
 	#Fields
 	teacherId = Column('TeacherId', Integer, primary_key=True)
 	name = Column('Name', String(50))
-	email = Column('Email', String(30))
+	email = Column('Email', String(60))
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
 	
@@ -33,6 +33,10 @@ def getTeachers(session):
 
 
 #get dedicated request funtions
+def getTeachersByEmail(session, email):
+	result = session.query(Teacher).filter(Teacher.email == email).all()
+	return result
+
 def getTeachersByTeacherId(session, teacherId):
 	result = session.query(Teacher).filter(Teacher.teacherId == teacherId).all()
 	return result

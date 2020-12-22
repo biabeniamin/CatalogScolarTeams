@@ -27,6 +27,7 @@ public class TokenUserAdapter extends BaseAdapter
 		TextView tokenUserIdTextBox;
 		TextView usernameTextBox;
 		TextView passwordTextBox;
+		TextView typeTextBox;
 		TextView creationTimeTextBox;
 		
 		tokenUser = getItem(position);
@@ -39,11 +40,13 @@ public class TokenUserAdapter extends BaseAdapter
 		tokenUserIdTextBox = (TextView) convertView.findViewById(R.id.tokenUserIdTextBox);
 		usernameTextBox = (TextView) convertView.findViewById(R.id.usernameTextBox);
 		passwordTextBox = (TextView) convertView.findViewById(R.id.passwordTextBox);
+		typeTextBox = (TextView) convertView.findViewById(R.id.typeTextBox);
 		creationTimeTextBox = (TextView) convertView.findViewById(R.id.creationTimeTextBox);
 		
 		tokenUserIdTextBox.setText(tokenUser.getTokenUserId().toString());
 		usernameTextBox.setText(tokenUser.getUsername());
 		passwordTextBox.setText(tokenUser.getPassword());
+		typeTextBox.setText(tokenUser.getType().toString());
 		creationTimeTextBox.setText(tokenUser.getCreationTime().toString());
 		
 		return convertView;

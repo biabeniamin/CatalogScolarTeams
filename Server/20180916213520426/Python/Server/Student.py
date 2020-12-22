@@ -16,7 +16,7 @@ class Student(Base):
 	#Fields
 	studentId = Column('StudentId', Integer, primary_key=True)
 	name = Column('Name', String(50))
-	email = Column('Email', String(30))
+	email = Column('Email', String(60))
 	creationTime = Column('CreationTime', DateTime, default=datetime.datetime.utcnow)
 	#Foreign Fields
 	
@@ -33,6 +33,10 @@ def getStudents(session):
 
 
 #get dedicated request funtions
+def getStudentsByEmail(session, email):
+	result = session.query(Student).filter(Student.email == email).all()
+	return result
+
 def getStudentsByStudentId(session, studentId):
 	result = session.query(Student).filter(Student.studentId == studentId).all()
 	return result

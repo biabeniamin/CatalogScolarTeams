@@ -55,6 +55,16 @@ export class MarkComponent implements OnInit
 			this.markService.marks.next(data);
 		});
 	}
+	getMarksByStudentId(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let studentId = target.querySelector('#StudentId').value;
+		console.log(studentId);
+		this.markService.GetMarksByStudentId(studentId).subscribe(data =>{
+			this.markService.marks.next(data);
+		});
+	}
 	getMarksByMarkId(event)
 	{
 		event.preventDefault();

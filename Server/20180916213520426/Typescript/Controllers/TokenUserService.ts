@@ -26,6 +26,7 @@ export class TokenUserService
 		tokenUserId : 0,
 		username : 'Test',
 		password : 'Test',
+		type : 0,
 		creationTime : '2000-01-01 00:00:00'
 		};
 	}

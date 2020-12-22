@@ -34,6 +34,16 @@ export class StudentComponent implements OnInit
 		this.studentService.AddStudent(student);
 	}
 	
+	getStudentsByEmail(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let email = target.querySelector('#Email').value;
+		console.log(email);
+		this.studentService.GetStudentsByEmail(email).subscribe(data =>{
+			this.studentService.students.next(data);
+		});
+	}
 	getStudentsByStudentId(event)
 	{
 		event.preventDefault();

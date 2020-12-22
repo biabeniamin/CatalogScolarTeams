@@ -17,6 +17,7 @@ public class TokenUser
 	private Integer  tokenUserId;
 	private String username;
 	private String password;
+	private Integer  type;
 	private Date creationTime;
 	
 	public Integer  getTokenUserId()
@@ -49,6 +50,16 @@ public class TokenUser
 		this.password = password;
 	}
 	
+	public Integer  getType()
+	{
+		return this.type;
+	}
+	
+	public void setType(Integer  type)
+	{
+		this.type = type;
+	}
+	
 	public Date getCreationTime()
 	{
 		return this.creationTime;
@@ -60,17 +71,19 @@ public class TokenUser
 	}
 	
 	
-	public TokenUser(String username, String password)
+	public TokenUser(String username, String password, Integer  type)
 	{
 		this.username = username;
 		this.password = password;
+		this.type = type;
 	}
 	
 	public TokenUser()
 	{
 		this(
 			"Test", //Username
-			"Test" //Password
+			"Test", //Password
+			0 //Type
 		);
 		this.tokenUserId = 0;
 		this.creationTime = new Date(0);

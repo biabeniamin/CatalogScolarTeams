@@ -57,6 +57,17 @@
 			</tr>
 		</tbody>
 
+		<form (submit)="getStudentsByEmail($event)">
+			<h3>Get Students by Email</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "Email" id="Email" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by Email">
+			</div>
+		</form>
+		
 		<form (submit)="getStudentsByStudentId($event)">
 			<h3>Get Students by StudentId</h3>
 			<div class="input-container">

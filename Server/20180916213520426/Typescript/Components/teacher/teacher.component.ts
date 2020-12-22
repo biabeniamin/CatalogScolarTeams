@@ -34,6 +34,16 @@ export class TeacherComponent implements OnInit
 		this.teacherService.AddTeacher(teacher);
 	}
 	
+	getTeachersByEmail(event)
+	{
+		event.preventDefault();
+		const target = event.target;
+		let email = target.querySelector('#Email').value;
+		console.log(email);
+		this.teacherService.GetTeachersByEmail(email).subscribe(data =>{
+			this.teacherService.teachers.next(data);
+		});
+	}
 	getTeachersByTeacherId(event)
 	{
 		event.preventDefault();

@@ -45,6 +45,10 @@ export class MarkService
 	{
 		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByClasseIdStudentId&classeId=${classeId}&studentId=${studentId}&token=${this.token}`);
 	}
+	GetMarksByStudentId(studentId)
+	{
+		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByStudentId&studentId=${studentId}&token=${this.token}`);
+	}
 	GetMarksByMarkId(markId)
 	{
 		return this.http.get<Mark[]>(ServerUrl.GetUrl()  + `Marks?cmd=getMarksByMarkId&markId=${markId}&token=${this.token}`);

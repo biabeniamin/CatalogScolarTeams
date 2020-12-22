@@ -17,6 +17,8 @@ class MarkEndpoints(Resource):
 		args  = requestedArgs.parse_args()
 		if args['cmd'] == 'getMarksByClasseIdStudentId':
 			return Mark.getMarksByClasseIdStudentId(self.session, args['classeId'], args['studentId'])
+		if args['cmd'] == 'getMarksByStudentId':
+			return Mark.getMarksByStudentId(self.session, args['studentId'])
 		if args['cmd'] == 'getMarksByMarkId':
 			return Mark.getMarksByMarkId(self.session, args['markId'])
 		return Mark.getMarks(self.session)

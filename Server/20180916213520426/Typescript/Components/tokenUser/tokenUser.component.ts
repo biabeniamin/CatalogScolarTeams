@@ -30,6 +30,7 @@ export class TokenUserComponent implements OnInit
 		let tokenUser = TokenUserService.GetDefaultTokenUser();
 		tokenUser.username = target.querySelector('#Username').value;
 		tokenUser.password = target.querySelector('#Password').value;
+		tokenUser.type = target.querySelector('#Type').value;
 		console.log(tokenUser);
 		this.tokenUserService.AddTokenUser(tokenUser);
 	}

@@ -13,6 +13,7 @@ namespace DatabaseFunctionsGenerator
 		private int _tokenUserId;
 		private string _username;
 		private string _password;
+		private int _type;
 		private DateTime _creationTime;
 		
 		[JsonProperty(PropertyName = "tokenUserId")]
@@ -54,6 +55,19 @@ namespace DatabaseFunctionsGenerator
 			}
 		}
 		
+		[JsonProperty(PropertyName = "type")]
+		public int Type
+		{
+			get
+			{
+				return _type;
+			}
+			set
+			{
+				_type = value;
+			}
+		}
+		
 		[JsonProperty(PropertyName = "creationTime")]
 		public DateTime CreationTime
 		{
@@ -68,24 +82,27 @@ namespace DatabaseFunctionsGenerator
 		}
 		
 		
-		public TokenUser(int tokenUserId, string username, string password, DateTime creationTime)
+		public TokenUser(int tokenUserId, string username, string password, int type, DateTime creationTime)
 		{
 			_tokenUserId = tokenUserId;
 			_username = username;
 			_password = password;
+			_type = type;
 			_creationTime = creationTime;
 		}
 		
-		public TokenUser(string username, string password)
+		public TokenUser(string username, string password, int type)
 		{
 			_username = username;
 			_password = password;
+			_type = type;
 		}
 		
 		public TokenUser()
 			 :this(
 				"Test", //Username
-				"Test" //Password
+				"Test", //Password
+				0 //Type
 			)
 		{
 			_tokenUserId = 0;

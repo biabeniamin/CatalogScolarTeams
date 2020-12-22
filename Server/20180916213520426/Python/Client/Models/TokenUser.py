@@ -7,6 +7,7 @@ class TokenUser:
 	tokenUserId : int
 	username : str
 	password : str
+	type : int
 	creationTime : str
 	
 

@@ -133,6 +133,13 @@ def getMarksByClasseIdStudentId(session, classeId, studentId):
 	result = completeTeachers(session, result)
 	return result
 
+def getMarksByStudentId(session, studentId):
+	result = session.query(Mark).filter(Mark.studentId == studentId).all()
+	result = completeClasses(session, result)
+	result = completeStudents(session, result)
+	result = completeTeachers(session, result)
+	return result
+
 def getMarksByMarkId(session, markId):
 	result = session.query(Mark).filter(Mark.markId == markId).all()
 	result = completeClasses(session, result)

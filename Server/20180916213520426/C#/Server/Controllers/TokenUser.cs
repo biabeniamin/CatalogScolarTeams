@@ -24,6 +24,7 @@ namespace DatabaseFunctionsGenerator
 					(int)reader["TokenUserId"],
 					(string)reader["Username"],
 					(string)reader["Password"],
+					(int)reader["Type"],
 					(DateTime)reader["CreationTime"]
 				));
 			}
@@ -35,10 +36,11 @@ namespace DatabaseFunctionsGenerator
 		public void Post([FromBody]TokenUser data)
 		{
 			DatabaseOperations db = new DatabaseOperations();
-			MySqlCommand command = new MySqlCommand("INSERT INTO TokenUsers(Username,  Password,  CreationTime) VALUES(@Username,  @Password,  @CreationTime)");
+			MySqlCommand command = new MySqlCommand("INSERT INTO TokenUsers(Username,  Password,  Type,  CreationTime) VALUES(@Username,  @Password,  @Type,  @CreationTime)");
 			
 			command.Parameters.AddWithValue("@Username", data.Username);
 			command.Parameters.AddWithValue("@Password", data.Password);
+			command.Parameters.AddWithValue("@Type", data.Type);
 			command.Parameters.AddWithValue("@CreationTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 			
 			db.ExecuteQuery(command);

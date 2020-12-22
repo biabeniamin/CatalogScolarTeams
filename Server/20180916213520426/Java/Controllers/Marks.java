@@ -87,6 +87,29 @@ public class Marks
 	
 	}
 	
+	public static  getMarksByStudentId(Integer  studentId)
+	{
+		 marks;
+		MarkService service;
+		Call<> call;
+		
+		marks = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(MarkService.class);
+		try
+		{
+			call = service.getMarksByStudentId(studentId);
+			marks = getMarks(call);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+		return marks;
+	
+	}
+	
 	public static  getMarksByMarkId(Integer  markId)
 	{
 		 marks;
@@ -147,6 +170,28 @@ public class Marks
 	}
 	
 	public static void getMarksByClasseIdStudentId(Integer  classeId, Integer  studentId, Callback<> callback)
+	{
+		 marks;
+		MarkService service;
+		Call<> call;
+		
+		marks = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(MarkService.class);
+		try
+		{
+		);
+			getMarks(call, callback);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+	
+	}
+	
+	public static void getMarksByStudentId(Integer  studentId, Callback<> callback)
 	{
 		 marks;
 		MarkService service;

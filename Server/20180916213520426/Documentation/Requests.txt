@@ -51,20 +51,22 @@ deletes a Classe by id and returns the Classe with id == 0 if succeeded
 ------------Teachers----------
 http://192.168.0.100:5000/Teachers.php?cmd=getTeachers - GET request -return all Teachers
 
+http://192.168.0.100:5000/Teachers.php?cmd=getTeachersByEmail&email=value - GET request -return Teachers filtered by Email
+
 http://192.168.0.100:5000/Teachers.php?cmd=getTeachersByTeacherId&teacherId=value - GET request -return Teachers filtered by TeacherId
 
 
 
 http://192.168.0.100:5000/Teachers.php?cmd=addTeacher- POST request with following parameters
 name : VARCHAR(50)
-email : VARCHAR(30)
+email : VARCHAR(60)
 add a new Teacher with specified data and returns the Teacher with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/Teachers.php?cmd=updateTeacher- PUT request with following parameters
 teacherId : INT
 name : VARCHAR(50)
-email : VARCHAR(30)
+email : VARCHAR(60)
 update a Teacher by id and returns the Teacher with id != 0 if succeeded
 
 
@@ -75,20 +77,22 @@ deletes a Teacher by id and returns the Teacher with id == 0 if succeeded
 ------------Students----------
 http://192.168.0.100:5000/Students.php?cmd=getStudents - GET request -return all Students
 
+http://192.168.0.100:5000/Students.php?cmd=getStudentsByEmail&email=value - GET request -return Students filtered by Email
+
 http://192.168.0.100:5000/Students.php?cmd=getStudentsByStudentId&studentId=value - GET request -return Students filtered by StudentId
 
 
 
 http://192.168.0.100:5000/Students.php?cmd=addStudent- POST request with following parameters
 name : VARCHAR(50)
-email : VARCHAR(30)
+email : VARCHAR(60)
 add a new Student with specified data and returns the Student with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/Students.php?cmd=updateStudent- PUT request with following parameters
 studentId : INT
 name : VARCHAR(50)
-email : VARCHAR(30)
+email : VARCHAR(60)
 update a Student by id and returns the Student with id != 0 if succeeded
 
 
@@ -128,6 +132,8 @@ deletes a StudentClasse by id and returns the StudentClasse with id == 0 if succ
 http://192.168.0.100:5000/Marks.php?cmd=getMarks - GET request -return all Marks
 
 http://192.168.0.100:5000/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=value&studentId=value - GET request -return Marks filtered by ClasseId, StudentId
+
+http://192.168.0.100:5000/Marks.php?cmd=getMarksByStudentId&studentId=value - GET request -return Marks filtered by StudentId
 
 http://192.168.0.100:5000/Marks.php?cmd=getMarksByMarkId&markId=value - GET request -return Marks filtered by MarkId
 
@@ -248,15 +254,17 @@ http://192.168.0.100:5000/TokenUsers.php?cmd=getTokenUsersByTokenUserId&tokenUse
 
 
 http://192.168.0.100:5000/TokenUsers.php?cmd=addTokenUser- POST request with following parameters
-username : VARCHAR(40)
-password : VARCHAR(40)
+username : VARCHAR(60)
+password : VARCHAR(60)
+type : INT
 add a new TokenUser with specified data and returns the TokenUser with id != 0 if succeeded
 
 
 http://192.168.0.100:5000/TokenUsers.php?cmd=updateTokenUser- PUT request with following parameters
 tokenUserId : INT
-username : VARCHAR(40)
-password : VARCHAR(40)
+username : VARCHAR(60)
+password : VARCHAR(60)
+type : INT
 update a TokenUser by id and returns the TokenUser with id != 0 if succeeded
 
 

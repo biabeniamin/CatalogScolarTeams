@@ -32,6 +32,10 @@ export class TeacherService
 		};
 	}
 	
+	GetTeachersByEmail(email)
+	{
+		return this.http.get<Teacher[]>(ServerUrl.GetUrl()  + `Teachers?cmd=getTeachersByEmail&email=${email}&token=${this.token}`);
+	}
 	GetTeachersByTeacherId(teacherId)
 	{
 		return this.http.get<Teacher[]>(ServerUrl.GetUrl()  + `Teachers?cmd=getTeachersByTeacherId&teacherId=${teacherId}&token=${this.token}`);

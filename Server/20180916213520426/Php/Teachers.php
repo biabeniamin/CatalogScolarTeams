@@ -6,7 +6,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 require_once 'Models/Teacher.php';
 require_once 'DatabaseOperations.php';
 require_once 'Helpers.php';
-//require_once 'Authentication.php';
+require_once 'Authentication.php';
 function ConvertListToTeachers($data)
 {
 	$teachers = [];
@@ -34,6 +34,16 @@ function GetTeachers($database)
 	return $teachers;
 }
 
+function GetTeachersByEmail($database, $email)
+{
+	$data = $database->ReadData("SELECT * FROM Teachers WHERE Email = '$email'");
+	$teachers = ConvertListToTeachers($data);
+	if(0== count($teachers))
+	{
+		return [GetEmptyTeacher()];
+	}
+	return $teachers;
+}
 function GetTeachersByTeacherId($database, $teacherId)
 {
 	$data = $database->ReadData("SELECT * FROM Teachers WHERE TeacherId = $teacherId");
@@ -160,6 +170,19 @@ if(CheckGetParameters(["cmd"]))
 			echo json_encode(GetLastTeacher($database));
 	}
 
+	else if("getTeachersByEmail" == $_GET["cmd"])
+	{
+		if(CheckGetParameters([
+			'email'
+			]))
+		{
+			$database = new DatabaseOperations();
+			echo json_encode(GetTeachersByEmail($database, 
+				$_GET["email"]
+			));
+		}
+	
+	}
 	else if("getTeachersByTeacherId" == $_GET["cmd"])
 	{
 		if(CheckGetParameters([

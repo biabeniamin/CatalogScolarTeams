@@ -193,6 +193,17 @@
 			</div>
 		</form>
 		
+		<form (submit)="getMarksByStudentId($event)">
+			<h3>Get Marks by StudentId</h3>
+			<div class="input-container">
+			<input type="text" placeholder= "StudentId" id="StudentId" />
+			<div class="bar"></div>
+			</div>
+			<div class="button-container">
+				<input type="submit" style="padding:20px; background:white;color:tomato;border:2px solid tomato;" value="Get by StudentId">
+			</div>
+		</form>
+		
 		<form (submit)="getMarksByMarkId($event)">
 			<h3>Get Marks by MarkId</h3>
 			<div class="input-container">

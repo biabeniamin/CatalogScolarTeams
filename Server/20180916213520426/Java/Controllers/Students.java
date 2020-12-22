@@ -64,6 +64,29 @@ public class Students
 	
 	}
 	
+	public static  getStudentsByEmail(String email)
+	{
+		 students;
+		StudentService service;
+		Call<> call;
+		
+		students = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(StudentService.class);
+		try
+		{
+			call = service.getStudentsByEmail(email);
+			students = getStudents(call);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+		return students;
+	
+	}
+	
 	public static  getStudentsByStudentId(Integer  studentId)
 	{
 		 students;
@@ -113,6 +136,28 @@ public class Students
 		try
 		{
 			call = service.getStudents();
+			getStudents(call, callback);
+		}
+		catch(Exception ee)
+		{
+			System.out.println(ee.getMessage());
+		}
+		
+	
+	}
+	
+	public static void getStudentsByEmail(String email, Callback<> callback)
+	{
+		 students;
+		StudentService service;
+		Call<> call;
+		
+		students = null;
+		
+		service = RetrofitInstance.GetRetrofitInstance().create(StudentService.class);
+		try
+		{
+		);
 			getStudents(call, callback);
 		}
 		catch(Exception ee)

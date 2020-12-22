@@ -32,6 +32,10 @@ export class StudentService
 		};
 	}
 	
+	GetStudentsByEmail(email)
+	{
+		return this.http.get<Student[]>(ServerUrl.GetUrl()  + `Students?cmd=getStudentsByEmail&email=${email}&token=${this.token}`);
+	}
 	GetStudentsByStudentId(studentId)
 	{
 		return this.http.get<Student[]>(ServerUrl.GetUrl()  + `Students?cmd=getStudentsByStudentId&studentId=${studentId}&token=${this.token}`);
