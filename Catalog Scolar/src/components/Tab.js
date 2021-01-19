@@ -45,8 +45,7 @@ class Tab extends React.Component {
       selectedStudent: {value: "", label: "Select.."},
       selectedClass: {value: "", label: "Select.."},
       markValue: 0,
-      availableMarks: [{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
-        { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]
+      
     }
   }
 
@@ -160,7 +159,12 @@ class Tab extends React.Component {
 
   roomClassChanged(e){
     console.log(e);
-    this.setState({selectedStudent: {value: "", label: "Select.."}, selectedClass: {value: "", label: "Select.."},selectStudentOptions:[]})
+    let availableMarks = [{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
+      { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]
+    if(e.label.includes("CP") || e.label.includes("a I-a") || e.label.includes("a II-a") || e.label.includes("a III-a") || e.label.includes("a IV-a")) {
+      availableMarks = [{ value: 1, label: 'I' }, { value: 2, label: 'S' }, { value: 3, label: 'B' }, { value: 4, label: 'FB' }]
+    }
+    this.setState({selectedStudent: {value: "", label: "Select.."}, selectedClass: {value: "", label: "Select.."},selectStudentOptions:[], availableMarks: availableMarks})
     axios.get(`https://automations.avramiancuturda.ro/api/Classes.php?cmd=getClassesByClassRoomId&classRoomId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
