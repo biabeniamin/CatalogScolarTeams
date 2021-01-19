@@ -71,7 +71,7 @@ class Tab extends React.Component {
             if(res.data.tokenUser.type !== "0")
             {
               console.log(res.data.tokenUser);
-              alert("Drepturi acces lipsa!");
+              alert("Drepturi acces lipsa profesor!");
               return;
             }
             this.setState({ token: res.data});
@@ -104,7 +104,7 @@ class Tab extends React.Component {
               return
             }
             if (res.data.tokenUser.type !== "1") {
-              alert("Drepturi acces lipsa!");
+              alert("Drepturi acces lipsa elev!");
               return;
             }
             this.setState({ token: res.data, tokenType: 0});
