@@ -157,11 +157,27 @@ class Tab extends React.Component {
     });
   }
 
+  checkPrimaryClass(text) {
+    return text.includes("CP") || text.includes("a I-a") || text.includes("a II-a") || text.includes("a III-a") || text.includes("a IV-a");
+  }
+
+  convertMarkToPrimaryMark(mark) {
+    if(mark === "1")
+      return "I";
+    if(mark === "2")
+      return "S";
+    if(mark === "3")
+      return "B";
+     if(mark === "4")
+      return "FB";
+    return mark;
+  }
+
   roomClassChanged(e){
     console.log(e);
     let availableMarks = [{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
       { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]
-    if(e.label.includes("CP") || e.label.includes("a I-a") || e.label.includes("a II-a") || e.label.includes("a III-a") || e.label.includes("a IV-a")) {
+    if(this.checkPrimaryClass(e.label)) {
       availableMarks = [{ value: 1, label: 'I' }, { value: 2, label: 'S' }, { value: 3, label: 'B' }, { value: 4, label: 'FB' }]
     }
     this.setState({selectedStudent: {value: "", label: "Select.."}, selectedClass: {value: "", label: "Select.."},selectStudentOptions:[], availableMarks: availableMarks})
@@ -172,7 +188,7 @@ class Tab extends React.Component {
           "value" : d.classeId,
           "label" : d.name
         }))
-        this.setState({ classes: res.data , selectClassOptions: selectClassOptions, selectedRoomClass: e.value});
+        this.setState({ classes: res.data , selectClassOptions: selectClassOptions, selectedRoomClass: e.value, selectedRoomClassLabel: e.label});
       })
       .catch(function (error) {
         console.log(error);
@@ -202,6 +218,9 @@ class Tab extends React.Component {
     axios.get(`https://automations.avramiancuturda.ro/api/Marks.php?cmd=getMarksByClasseIdStudentId&classeId=${this.state.selectedClass.value}&studentId=${e.value}&token=${this.state.token.value}`)
       .then(res => {
         console.log(res.data);
+
+        if(this.checkPrimaryClass(this.state.selectedRoomClassLabel))
+          res.data.forEach(element => element.value=this.convertMarkToPrimaryMark(element.value))
         this.setState({ classes: res.data , marks: res.data});
       })
       .catch(function (error) {
