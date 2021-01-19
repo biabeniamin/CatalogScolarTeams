@@ -124,6 +124,14 @@ class Tab extends React.Component {
                   {
                     res.data = [{ value: 'Nicio nota incarcata' , date: new Date(), classe: {name: ""}}]
                   }
+                  else
+                  {
+                    
+                    res.data.forEach(element => {
+                      if(this.checkPrimaryClass(element.classe.name))
+                        element.value=this.convertMarkToPrimaryMark(element.value)
+                    })
+                  }
                   this.setState({ classes: res.data , marks: res.data});
                 })
                 .catch(function (error) {
