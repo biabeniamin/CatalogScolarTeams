@@ -44,7 +44,9 @@ class Tab extends React.Component {
       student: {name: ""},
       selectedStudent: {value: "", label: "Select.."},
       selectedClass: {value: "", label: "Select.."},
-      markValue: 0
+      markValue: 0,
+      availableMarks: [{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
+        { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]
     }
   }
 
@@ -377,8 +379,7 @@ class Tab extends React.Component {
                 <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
                   <label className="input3" >Nota:</label>
-                  <Select options={[{ value: 1, label: 1 }, { value: 2, label: 2 }, { value: 3, label: 3 }, { value: 4, label: 4 }, { value: 5, label: 5 }, { value: 6, label: 6 },
-                    { value: 7, label: 7 }, { value: 8, label: 8 }, { value: 9, label: 9 }, { value: 10, label: 10 }]} onChange={this.markChanged.bind(this)} />
+                  <Select options={this.state.availableMarks} onChange={this.markChanged.bind(this)} />
                   <span className="focus-input3"></span>
                 </div>
                 <div className="wrap-input3 validate-input" data-validate="Name is required">
@@ -400,6 +401,7 @@ class Tab extends React.Component {
 						</button>
                 </div>
                 </form>
+                <br/><br/>
 
                 
             </div>
